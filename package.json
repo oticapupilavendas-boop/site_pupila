@@ -1,0 +1,9 @@
+{
+  "name": "site-pupila",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Site estático da Ótica Pupila",
+  "scripts": {
+    "test": "node scripts/check-site.mjs"
+  }
+}
