@@ -38,11 +38,13 @@ As rotas antigas continuam acessíveis. Links com filtros legados abrem a catego
 
 Endereço, telefone, horários, depoimentos e orientações existentes foram preservados. Os depoimentos não receberam nomes ou notas inventados. Antes de publicar, a loja deve confirmar os dados comerciais e concluir as informações da hospedagem na política de privacidade.
 
-### Ray-Ban Meta
+### RAY-BAN META WAYFARER GEN 3
 
-A página `#/ray-ban-meta/index.html` usa as seis fotografias fornecidas do RW4011 601SSB. Modelo, armação preto fosco e lentes transparentes foram conferidos no [catálogo oficial da Ray-Ban Brasil](https://www.ray-ban.com/brazil/electronics/RW4011ray-ban%20meta%20gen%203%20wayfarer-preto/8056266191008). Preço, tamanho e disponibilidade ficam sob consulta.
+A página `#/ray-ban-meta/index.html` usa as seis fotografias fornecidas do RW4011 601SSB. Modelo e armação preto fosco foram conferidos no [catálogo oficial da Ray-Ban Brasil](https://www.ray-ban.com/brazil/electronics/RW4011ray-ban%20meta%20gen%203%20wayfarer-preto/8056266191008). Preço, tamanho e disponibilidade ficam sob consulta.
 
 A galeria responde a clique, setas esquerda/direita, Home e End. Imagem, descrição, seleção e contador mudam juntos, sem dependência de GSAP ou CDN. As fotos de 720 × 386 px são apresentadas como uma galeria de ângulos; não há simulação de 3D.
+
+A descrição dos recursos da geração 3 usa também o [anúncio oficial da Meta](https://about.fb.com/news/2026/09/introducing-ray-ban-meta-audio-glasses-new-styles-plus-muse/), consultado em 28 de outubro de 2026. A apresentação utiliza o logo Meta fornecido pelo proprietário, preservado em `assets/logo-meta.png`.
 
 ## Privacidade e publicação
 

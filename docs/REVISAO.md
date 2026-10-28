@@ -15,7 +15,7 @@ Revisão de 27 de outubro de 2026, acompanhada pela Issue #5 e pelo PR #4.
 
 ## Verificação
 
-- `npm test`: passou; 14 rotas e 51 referências de imagens verificadas, além de links, âncoras, fontes, IDs e sintaxe.
+- `npm test`: passou; 14 rotas e 55 referências de imagens verificadas, além de links, âncoras, fontes, IDs e sintaxe.
 - `node --check assets/pages.js` e `node --check assets/app.js`: passaram.
 - `git diff --check`: passou.
 - Playwright/Chromium: 56 cenários, cobrindo 14 rotas em 320, 390, 768 e 1440 px; sem rolagem horizontal, falha estrutural ou erro de JavaScript detectado.
@@ -35,6 +35,19 @@ Os testes automatizados e de teclado não substituem avaliação manual com leit
 - Antes de publicar, é necessário completar as informações da hospedagem na política de privacidade.
 - Nenhum deploy foi realizado nesta revisão.
 
+## Refinamentos de 28 de outubro de 2026
+
+Solicitados pelo proprietário e acompanhados pela Issue #6:
+
+- Itálicos reduzidos ao título de abertura da home; os demais títulos usam texto normal.
+- Os dois destaques antes rosados usam o vermelho da Pupila sobre uma base clara para preservar o contraste nas áreas escuras.
+- Selo circular removido do HTML e CSS. A fundação aparece em texto na legenda da fotografia, além das informações de história existentes.
+- Links do cabeçalho no desktop aumentados de 12 para 15 px, submenu para 14 px e faixa superior para 12 px. Cabeçalho verificado também em 901, 1024, 1151 e 1280 px, sem colisões.
+- Nome do produto padronizado como RAY-BAN META WAYFARER GEN 3, sem subtítulo no nome.
+- Logo Meta fornecido pelo proprietário adicionado sem alteração de cores ou proporções.
+- Descrição atualizada com câmera, vídeo, áudio, comandos por voz e autonomia, com base no [anúncio oficial da Meta](https://about.fb.com/news/2026/09/introducing-ray-ban-meta-audio-glasses-new-styles-plus-muse/). Características do produto removidas conforme a orientação editorial do proprietário.
+- Revalidação: `npm test`, sintaxe, diff, 56 cenários de layout, 28 análises axe e 26 verificações de interação passaram.
+
 ## Prévia
 
 ![Home no desktop](previews/home-desktop.png)
@@ -42,3 +55,5 @@ Os testes automatizados e de teclado não substituem avaliação manual com leit
 ![Home no celular](previews/home-mobile.png)
 
 ![Página Ray-Ban Meta](previews/ray-ban-meta-desktop.png)
+
+![Destaque Meta atualizado](previews/meta-feature.png)
