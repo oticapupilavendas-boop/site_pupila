@@ -31,3 +31,9 @@ Abra uma Issue para cada correção, melhoria ou nova função. Trabalhe em bran
 ## Observações
 
 O conteúdo da prévia foi preservado. Os modelos de produtos e algumas marcas permanecem como áreas preparadas para atualização posterior, pois não havia dados oficiais suficientes para preenchê-los com segurança.
+
+### Destaque Ray-Ban Meta
+
+A página `#/ray-ban-meta/index.html` e o destaque na home usam seis fotografias fornecidas para o modelo RW4011 601SSB. A identificação, a cor da armação e as lentes foram conferidas no [catálogo oficial da Ray-Ban Brasil](https://www.ray-ban.com/brazil/electronics/RW4011ray-ban%20meta%20gen%203%20wayfarer-preto/8056266191008). Tamanho, preço e disponibilidade devem ser confirmados pela loja.
+
+As imagens têm 720 × 386 px. Elas permitem uma galeria de ângulos fiel às fotografias, mas não comprovam detalhes suficientes para um 3D fotorrealista. Um modelo 3D futuro exigirá um GLB/CAD oficial com permissão de uso ou fotografias próprias em alta resolução, com vistas ortogonais e closes para validação. A galeria atual funciona sem GSAP e com movimento reduzido.
