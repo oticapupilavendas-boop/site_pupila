@@ -51,7 +51,7 @@ As rotas antigas continuam acessíveis. Links com filtros legados abrem a catego
 
 O menu **Lentes** abre **Lentes para óculos** e **Lentes de contato**. As páginas de óculos, HOYA, ZEISS, Essilor e contato têm endereços reais sob `lentes/`. Qualquer venda de lentes exige receita médica. O site apresenta famílias e tecnologias, sem preços, estoque, aconselhamento médico, consulta ou adaptação. O certificado original da loja destaca o reconhecimento **Essilor Varilux Especialista Select 2026**.
 
-As fontes dos nomes, famílias e logotipos de fornecedores estão registradas em [`docs/LENTES.md`](docs/LENTES.md). O conteúdo é gerado a partir de `assets/lens-pages.js`; execute `npm run build:lenses` ao editá-lo.
+As fontes dos nomes e famílias estão registradas em [`docs/LENTES.md`](docs/LENTES.md). Os fabricantes de lentes de contato aparecem em texto até a loja enviar logotipos PNG transparentes. O conteúdo é gerado a partir de `assets/lens-pages.js`; execute `npm run build:lenses` ao editá-lo.
 
 Endereço, telefone, horários, depoimentos e orientações existentes foram preservados. Os depoimentos não receberam nomes ou notas inventados. Antes de publicar, a loja deve confirmar os dados comerciais e concluir as informações da hospedagem na política de privacidade.
 

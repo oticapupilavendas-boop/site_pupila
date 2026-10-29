@@ -78,7 +78,10 @@ for (const route of ['lentes/index.html', 'lentes/hoya/index.html', 'lentes/zeis
   }
 }
 assert(read('lentes/essilor/index.html').includes('Essilor Varilux Especialista Select 2026'), 'certificação Select ausente');
-assert(read('lentes/contato/index.html').includes('a loja não realiza consulta ou adaptação médica'), 'limite do atendimento ausente');
+assert(read('lentes/index.html').indexOf('Como funciona o atendimento.') < read('lentes/index.html').indexOf('Três referências em lentes.'), 'atendimento de óculos deve vir antes das marcas');
+assert(read('lentes/contato/index.html').indexOf('Como funciona o atendimento.') < read('lentes/contato/index.html').indexOf('Linhas com que trabalhamos.'), 'atendimento de contato deve vir antes das linhas');
+assert(read('lentes/contato/index.html').includes('não são realizados na loja'), 'limite do atendimento ausente');
+assert(['lentes/index.html', 'lentes/hoya/index.html', 'lentes/zeiss/index.html', 'lentes/essilor/index.html'].every(route => read(route).toLowerCase().includes('lentes multifocais progressivas')), 'terminologia multifocal ausente');
 
 if (failures.length) {
   console.error(failures.map(message => `✗ ${message}`).join('\n'));
