@@ -10,6 +10,13 @@ Node.js 20 ou superior para as verificações:
 npm test
 ```
 
+Quando alterar textos ou navegação de lentes, gere novamente as cinco páginas estáticas antes de testar:
+
+```sh
+npm run build:lenses
+npm test
+```
+
 Sirva a pasta com qualquer servidor estático. Com Python:
 
 ```sh
@@ -22,10 +29,14 @@ Abra `http://127.0.0.1:4173`. Não há build, instalação de dependências ou s
 
 - `index.html`: metadados, carregamento local e contato acessível mesmo sem JavaScript.
 - `assets/pages.js`: conteúdo das páginas, cabeçalho/rodapé compartilhados, informações da loja e seis ângulos do Ray-Ban Meta.
+- `assets/lens-pages.js`: conteúdo editorial das lentes para óculos e de contato.
+- `lentes/`: cinco páginas HTML com endereços próprios, conteúdo e metadados indexáveis sem JavaScript.
+- `assets/lens-ui.js`: menu e WhatsApp nas páginas estáticas de lentes.
 - `assets/app.js`: navegação pelo hash, histórico, foco, menu, galeria e abertura do WhatsApp.
 - `assets/site.css`: cores, tipografia, componentes, responsividade, foco e movimento reduzido.
 - `assets/fonts/`: fontes WOFF2 locais DM Sans e Cormorant Garamond, com licenças OFL; aproximadamente 61 KB no total.
-- `scripts/check-site.mjs`: valida as 14 rotas, imagens, dimensões, links, âncoras, IDs, sintaxe e recursos locais.
+- `scripts/build-lens-pages.mjs`: gera as páginas estáticas a partir do conteúdo compartilhado.
+- `scripts/check-site.mjs`: valida rotas, imagens, dimensões, links, âncoras, IDs, sintaxe e recursos locais.
 - `.github/workflows/quality.yml`: executa `npm test` em PRs e em `main`.
 - `docs/REVISAO.md`: escopo, validação e limitações da revisão.
 - `docs/previews/`: capturas da home e da página de produto.
@@ -35,6 +46,12 @@ Abra `http://127.0.0.1:4173`. Não há build, instalação de dependências ou s
 As quatro categorias apresentam a seleção da loja e direcionam para atendimento. Os cartões de produtos fictícios e filtros sem estoque foram removidos. O catálogo com produtos individuais depende do envio de fotografias, modelos e informações oficiais. Não há preços, estoque, checkout ou promessas de disponibilidade inventados.
 
 As rotas antigas continuam acessíveis. Links com filtros legados abrem a categoria correspondente; a antiga página-modelo de marca agora apresenta a página de marcas.
+
+### Lentes
+
+O menu **Lentes** abre **Lentes para óculos** e **Lentes de contato**. As páginas de óculos, HOYA, ZEISS, Essilor e contato têm endereços reais sob `lentes/`. Qualquer venda de lentes exige receita médica. O site apresenta famílias e tecnologias, sem preços, estoque, aconselhamento médico, consulta ou adaptação. O certificado original da loja destaca o reconhecimento **Essilor Varilux Especialista Select 2026**.
+
+As fontes dos nomes e famílias estão registradas em [`docs/LENTES.md`](docs/LENTES.md). Os fabricantes de lentes de contato aparecem em texto até a loja enviar logotipos PNG transparentes. O conteúdo é gerado a partir de `assets/lens-pages.js`; execute `npm run build:lenses` ao editá-lo.
 
 Endereço, telefone, horários, depoimentos e orientações existentes foram preservados. Os depoimentos não receberam nomes ou notas inventados. Antes de publicar, a loja deve confirmar os dados comerciais e concluir as informações da hospedagem na política de privacidade.
 

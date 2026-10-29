@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="45 55 430 310" fill="none">
+  <defs>
+    <linearGradient id="surface" x1="102" y1="82" x2="409" y2="319" gradientUnits="userSpaceOnUse"><stop stop-color="#fff" stop-opacity=".94"/><stop offset=".44" stop-color="#eff7f7" stop-opacity=".44"/><stop offset="1" stop-color="#a4c1ca" stop-opacity=".54"/></linearGradient>
+    <linearGradient id="edge" x1="82" y1="87" x2="420" y2="324" gradientUnits="userSpaceOnUse"><stop stop-color="#e6e8e4"/><stop offset=".28" stop-color="#fbffff"/><stop offset=".58" stop-color="#234457"/><stop offset=".78" stop-color="#869da5"/><stop offset="1" stop-color="#162d39"/></linearGradient>
+    <linearGradient id="glint" x1="130" y1="122" x2="345" y2="295" gradientUnits="userSpaceOnUse"><stop stop-color="#fff" stop-opacity=".9"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+    <filter id="shadow" x="-30%" y="-200%" width="160%" height="500%"><feGaussianBlur stdDeviation="14"/></filter>
+  </defs>
+  <ellipse cx="262" cy="341" rx="196" ry="14" fill="#123442" opacity=".12" filter="url(#shadow)"/>
+  <g transform="rotate(-13 181 196)">
+    <path d="M101 107c30-20 119-24 153 0 20 14 25 42 23 84-2 55-11 91-35 112-27 23-102 27-138 6-31-18-35-55-35-105 0-48 7-80 32-97Z" fill="url(#surface)" stroke="url(#edge)" stroke-width="6"/>
+    <path d="M103 122c26-17 116-21 144-1" stroke="#fff" stroke-opacity=".86" stroke-width="4" stroke-linecap="round"/>
+    <path d="M76 221c4 50 15 76 36 85" stroke="#5c7480" stroke-opacity=".42" stroke-width="3"/>
+    <path d="M100 188c39 10 90 11 146-3" stroke="url(#glint)" stroke-width="11" stroke-linecap="round"/>
+  </g>
+  <g transform="rotate(7 339 240)">
+    <path d="M247 178c28-14 128-19 173-4 29 10 36 34 35 68-1 32-12 60-34 69-32 13-139 14-171 1-21-8-27-33-27-63 0-34 4-59 24-71Z" fill="url(#surface)" stroke="url(#edge)" stroke-width="6"/>
+    <path d="M251 190c30-14 123-15 166-3" stroke="#fff" stroke-opacity=".9" stroke-width="4" stroke-linecap="round"/>
+    <path d="M235 277c4 20 11 29 22 33 37 13 128 11 159 0" stroke="#27495b" stroke-opacity=".35" stroke-width="3"/>
+    <path d="M268 213c53 8 105 5 158-6" stroke="url(#glint)" stroke-width="10" stroke-linecap="round"/>
+  </g>
+</svg>

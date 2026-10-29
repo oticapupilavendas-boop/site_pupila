@@ -12,14 +12,16 @@ const attributes = tag => Object.fromEntries([...tag.matchAll(/([\w-]+)="([^"]*)
 const context = { window: {} };
 vm.createContext(context);
 vm.runInContext(read('assets/pages.js'), context, { timeout: 1000 });
+vm.runInContext(read('assets/lens-pages.js'), context, { timeout: 1000 });
 new vm.Script(read('assets/app.js'));
+new vm.Script(read('assets/lens-ui.js'));
 const { PUPILA_PAGES: pages, PUPILA_ASSETS: assets, PUPILA_META_VIEWS: views } = context.window;
 
 assert(html.trimStart().startsWith('<!doctype html>'), 'doctype HTML5 ausente');
 assert(html.includes('<html lang="pt-BR">'), 'idioma pt-BR ausente');
 assert(html.includes('name="viewport"'), 'viewport ausente');
 assert(!/<(?:script|link)[^>]+(?:src|href)="https?:/.test(html), 'dependência externa no carregamento');
-assert(Object.keys(pages).length >= 14, 'rotas esperadas ausentes');
+assert(Object.keys(pages).length >= 18, 'rotas esperadas ausentes');
 assert(views.length === 6, 'a galeria deve oferecer seis ângulos');
 assert(/data-catalog-empty>/.test(pages['oculos-de-grau/index.html'].html), 'catálogo sem produtos deve exibir sua orientação inicial');
 
@@ -63,6 +65,27 @@ for (const [, file] of read('assets/site.css').matchAll(/url\('([^']+)'\)/g)) {
   assert(fs.existsSync(path.join(root, 'assets', file)), `fonte ausente: ${file}`);
 }
 assert(read('assets/site.css').includes('prefers-reduced-motion: reduce'), 'movimento reduzido ausente');
+
+for (const route of ['lentes/index.html', 'lentes/hoya/index.html', 'lentes/zeiss/index.html', 'lentes/essilor/index.html', 'lentes/contato/index.html']) {
+  const source = read(route);
+  assert(source.includes('<html lang="pt-BR">'), `${route}: idioma ausente`);
+  assert(source.includes('receita médica'), `${route}: orientação sobre receita ausente`);
+  assert(source.includes('<meta name="description"'), `${route}: descrição SEO ausente`);
+  assert(source.includes('href="' + '../'.repeat(route.split('/').length - 1) + 'assets/site.css"'), `${route}: CSS ausente`);
+  for (const [tag] of source.matchAll(/<img\b[^>]*>/g)) {
+    const attr = attributes(tag);
+    assert(Boolean(attr.src) && fs.existsSync(path.resolve(path.dirname(path.join(root, route)), attr.src)), `${route}: imagem estática ausente ${attr.src}`);
+  }
+}
+assert(read('lentes/essilor/index.html').includes('Essilor Varilux Especialista Select 2026'), 'certificação Select ausente');
+assert(pages['index.html'].html.includes('home-select-section') && pages['index.html'].html.includes('Essilor Varilux'), 'destaque Select ausente na página inicial');
+assert(read('lentes/index.html').indexOf('Como funciona o atendimento.') < read('lentes/index.html').indexOf('UM RECONHECIMENTO DA ESSILORLUXOTTICA') && read('lentes/index.html').indexOf('UM RECONHECIMENTO DA ESSILORLUXOTTICA') < read('lentes/index.html').indexOf('Três referências em lentes.'), 'destaque Select deve aparecer após atendimento e antes das marcas');
+assert(read('lentes/index.html').includes('Comparação conceitual') && read('lentes/index.html').includes('lens-comparison-range') && read('lentes/index.html').includes('Filtro de luz azul'), 'guia visual de tecnologias ausente');
+assert(!read('lentes/index.html').includes('TAMBÉM NA PUPILA'), 'chamada para lentes de contato não deve aparecer na página de óculos');
+assert(read('lentes/index.html').indexOf('Como funciona o atendimento.') < read('lentes/index.html').indexOf('Três referências em lentes.'), 'atendimento de óculos deve vir antes das marcas');
+assert(read('lentes/contato/index.html').indexOf('Como funciona o atendimento.') < read('lentes/contato/index.html').indexOf('Linhas com que trabalhamos.'), 'atendimento de contato deve vir antes das linhas');
+assert(read('lentes/contato/index.html').includes('não são realizados na loja'), 'limite do atendimento ausente');
+assert(['lentes/index.html', 'lentes/hoya/index.html', 'lentes/zeiss/index.html', 'lentes/essilor/index.html'].every(route => read(route).toLowerCase().includes('lentes multifocais progressivas')), 'terminologia multifocal ausente');
 
 if (failures.length) {
   console.error(failures.map(message => `✗ ${message}`).join('\n'));

@@ -4,6 +4,7 @@
   "version": "0.1.0",
   "description": "Site estático da Ótica Pupila",
   "scripts": {
-    "test": "node scripts/check-site.mjs"
+    "build:lenses": "node scripts/build-lens-pages.mjs",
+    "test": "node scripts/build-lens-pages.mjs --check && node scripts/check-site.mjs"
   }
 }

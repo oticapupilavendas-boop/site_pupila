@@ -582,3 +582,160 @@ summary::-webkit-details-marker { display: none; }
   .meta-feature-art figcaption { align-items: start; }
   .meta-feature-copy > .product-name { font-size: 11px; }
 }
+
+/* Lentes: mesma identidade Pupila, com marcas e tecnologias em destaque. */
+.lens-page-intro { padding-bottom: clamp(34px, 4vw, 56px); border-bottom: 1px solid var(--line); }
+.lens-page-intro .lede { max-width: 780px; }
+.lens-page-intro--illustrated { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(280px, .75fr); gap: clamp(30px, 4vw, 65px); align-items: center; }
+.lens-intro-copy { min-width: 0; }
+.lens-hero-art { display: grid; place-items: center; width: 100%; max-width: 430px; aspect-ratio: 520 / 400; }
+.lens-hero-art img { display: block; width: 100%; height: 100%; object-fit: contain; }
+.lens-prescription { max-width: 830px; margin: 28px 0 0; padding: 18px 24px; border-left: 3px solid var(--red); background: var(--soft); color: var(--navy); font-size: 14px; line-height: 1.75; }
+.lens-prescription strong { font-weight: 700; }
+body[data-page="lentes"] .section { padding-block: clamp(44px, 5vw, 72px); }
+.lens-service { background: var(--soft); }
+.lens-service-heading { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: end; margin-bottom: 30px; }
+.lens-service-heading h2 { font-size: clamp(34px, 3.3vw, 45px); }
+.lens-service-heading > p { max-width: 55ch; margin: 0; font-size: 14px; }
+.lens-service-steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin-bottom: 25px; border: 1px solid var(--line); background: var(--line); gap: 1px; }
+.lens-service-steps > div { padding: 22px 26px; background: var(--paper); }
+.lens-service-steps span { display: block; margin-bottom: 14px; color: var(--red); font-size: 11px; font-weight: 700; }
+.lens-service-steps h3 { margin-bottom: 9px; font-size: 19px; }
+.lens-service-steps p { margin: 0; font-size: 13px; }
+.lens-section-heading { align-items: end; }
+.lens-section-heading > p { max-width: 410px; font-size: 14px; line-height: 1.7; }
+.lens-brand-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+.lens-brand-card { display: flex; flex-direction: column; min-height: 325px; background: white; border: 1px solid var(--line); transition: transform .25s var(--ease), box-shadow .25s var(--ease); }
+.lens-brand-card:hover { transform: translateY(-4px); box-shadow: 0 16px 30px #12344213; }
+.lens-brand-card-logo { display: grid; place-items: center; height: 180px; padding: 15px 25px; overflow: hidden; border-bottom: 1px solid var(--line); }
+.lens-logo { width: auto; max-width: 100%; height: 90px; object-fit: contain; }
+.lens-brand-card-logo .lens-logo { height: 150px; }
+.lens-brand-card-logo img[src$="zeiss.png"] { height: 150px; }
+.lens-brand-card-copy { display: flex; flex-direction: column; align-items: start; flex: 1; padding: 26px; }
+.lens-brand-card-copy > strong { font-size: 23px; font-weight: 550; letter-spacing: -.04em; }
+.lens-brand-card-copy > span:nth-child(2) { margin-top: 10px; color: var(--muted); font-size: 14px; line-height: 1.7; }
+.lens-brand-card-copy .text-link { margin-top: auto; padding-top: 22px; }
+.lens-needs { background: var(--soft); }
+.lens-explain-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); }
+.lens-explain-card { min-height: 170px; padding: 25px 28px; background: white; }
+.lens-explain-card h3 { margin-bottom: 12px; font-size: 22px; }
+.lens-explain-card p { margin: 0; font-size: 13px; line-height: 1.75; }
+.lens-fields { display: grid; grid-template-columns: .85fr 1.15fr; gap: 40px; align-items: center; margin-top: 32px; padding: 42px; background: var(--navy); color: var(--paper); }
+.lens-fields .eyebrow, .lens-fields p { color: var(--paper); }
+.lens-fields h3 { margin-bottom: 18px; font-size: clamp(28px, 2.8vw, 38px); }
+.lens-fields p { max-width: 48ch; margin-bottom: 0; font-size: 14px; }
+.lens-comparison { min-width: 0; }
+.lens-comparison-legend { display: flex; justify-content: space-between; gap: 12px; padding: 8px 11px; background: var(--paper); color: var(--navy); font-size: 11px; font-weight: 650; }
+.lens-comparison-legend span:last-child { text-align: right; }
+.lens-comparison-stage { position: relative; width: 100%; aspect-ratio: 640 / 430; overflow: hidden; background: #d9e8e9; border: 3px solid var(--paper); }
+.lens-comparison-view { position: absolute; inset: 0; background: url('lenses/vision-scene.svg') center / 100% 100% no-repeat; }
+.lens-comparison-view--narrow { --veil-width: 29%; }
+.lens-comparison-view--wide { --veil-width: 13%; clip-path: inset(0 0 0 var(--comparison-position)); }
+.lens-comparison-veil { position: absolute; top: 0; bottom: 0; width: var(--veil-width); background: #a6b9c29c; backdrop-filter: blur(5px); }
+.lens-comparison-veil--left { left: 0; border-right: 2px dashed #1234429c; }
+.lens-comparison-veil--right { right: 0; border-left: 2px dashed #1234429c; }
+.lens-comparison-range { position: absolute; z-index: 3; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: ew-resize; }
+.lens-comparison-handle { position: absolute; z-index: 2; top: 0; bottom: 0; left: var(--comparison-position); display: flex; align-items: center; justify-content: space-between; width: 48px; transform: translateX(-50%); color: var(--navy); font-size: 32px; line-height: 1; pointer-events: none; }
+.lens-comparison-handle::before { position: absolute; top: 0; bottom: 0; left: 50%; width: 2px; background: var(--red); transform: translateX(-50%); content: ''; }
+.lens-comparison-handle::after { position: absolute; z-index: -1; top: 50%; left: 50%; width: 48px; height: 48px; border: 2px solid var(--red); border-radius: 50%; background: white; transform: translate(-50%, -50%); box-shadow: 0 5px 18px #12344233; content: ''; }
+.lens-comparison-handle span { position: relative; }
+.lens-comparison-range:focus-visible + .lens-comparison-handle::after { outline: 3px solid white; outline-offset: 4px; }
+.lens-comparison-instruction { margin: 10px 0 0 !important; font-size: 12px !important; }
+.lens-field-note { margin: 14px 0 20px; font-size: 12px; }
+.lens-guide-sources { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 22px; font-size: 12px; }
+.lens-guide-sources .source-link { font-size: 12px; }
+.lens-family-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); }
+.lens-family-grid-three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.lens-family-grid-five { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+.lens-family-grid-five .lens-family { grid-column: span 2; }
+.lens-family-grid-five .lens-family:nth-child(n+4) { grid-column: span 3; }
+.lens-family-grid-two { max-width: 900px; }
+.lens-family { padding: 24px 28px; background: var(--paper); }
+.lens-family-number { display: block; margin-bottom: 13px; color: var(--red); font-size: 11px; font-weight: 650; letter-spacing: .13em; }
+.lens-family h3 { margin-bottom: 10px; font-size: 21px; }
+.lens-family p { max-width: 48ch; margin: 0; font-size: 14px; line-height: 1.75; }
+.lens-needs .source-link { display: inline-block; margin-top: 32px; }
+.lens-select-feature { display: grid; grid-template-columns: .8fr 1.2fr; gap: clamp(35px, 6vw, 90px); align-items: center; }
+.home-select-section { background: #e9eeeb; border-block: 1px solid var(--line); }
+.home-select-section .lens-select-feature { padding-block: clamp(60px, 7vw, 100px); }
+.lens-select-feature em, .lens-select-banner em { color: var(--red); }
+.lens-select-feature p:not(.eyebrow) { max-width: 55ch; margin: 25px 0; }
+.lens-select-feature figure, .lens-certificate figure { padding: 12px; background: white; border: 1px solid var(--line); }
+.lens-select-feature figure img, .lens-certificate figure img { width: 100%; height: auto; }
+.lens-select-feature figcaption, .lens-certificate figcaption { padding: 12px 5px 3px; color: var(--muted); font-size: 11px; }
+.lens-consultation { padding: clamp(30px, 5vw, 60px); }
+.lens-consultation .button { margin-bottom: 20px; }
+.lens-small-note { margin: 16px 0 0; color: var(--muted); font-size: 12px !important; }
+.lens-brand-heading { display: flex; align-items: center; justify-content: space-between; gap: 40px; }
+.lens-brand-heading > div { max-width: 750px; }
+.lens-brand-mark { flex: none; display: grid; place-items: center; width: 300px; min-height: 190px; overflow: hidden; background: white; border: 1px solid var(--line); }
+.lens-brand-mark .lens-logo { width: 260px; height: 165px; }
+.lens-brand-mark img[src$="hoya.png"] { transform: scale(1.2); }
+.lens-brand-mark img[src$="essilor.png"] { transform: scale(1.6); }
+.lens-brand-mark img[src$="zeiss.png"] { transform: scale(1.15); }
+.lens-select-banner { background: var(--navy); color: white; padding-block: clamp(48px, 6vw, 82px); }
+.lens-select-banner .eyebrow, .lens-select-banner p { color: var(--paper); }
+.lens-select-banner em { color: #ffb7b9; }
+.lens-select-banner h2 { max-width: 830px; }
+.lens-select-banner p:last-child { margin: 25px 0 0; }
+.lens-certificate { display: grid; grid-template-columns: .7fr 1.3fr; gap: 50px; align-items: center; border-top: 1px solid var(--line); }
+.lens-certificate h2 { margin-bottom: 20px; }
+.contact-supplier-list { border-top: 1px solid var(--line); }
+.contact-supplier { display: grid; grid-template-columns: .8fr 1.2fr; gap: clamp(30px, 5vw, 80px); padding: 28px 0; border-bottom: 1px solid var(--line); }
+.contact-supplier-label { display: block; margin-bottom: 12px; color: var(--red); font-size: 10px; font-weight: 700; letter-spacing: .14em; }
+.contact-supplier-brand h2 { font-size: 26px; }
+.contact-supplier-brand p { max-width: 35ch; margin-top: 10px; font-size: 13px; }
+.contact-supplier-products h3 { font-size: 18px; margin-bottom: 18px; }
+.contact-supplier-products ul { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 28px; padding: 0; margin: 0 0 18px; list-style: none; }
+.contact-supplier-products li { padding: 10px 0; border-top: 1px solid var(--line); font-size: 14px; }
+.contact-supplier-products .source-link { font-size: 12px; }
+
+@media (max-width: 900px) {
+  .lens-page-intro--illustrated { grid-template-columns: minmax(0, 1fr) minmax(220px, .55fr); gap: 22px; }
+  .lens-brand-grid { gap: 10px; }
+  .lens-brand-card-copy { padding: 20px; }
+  .lens-brand-card-logo { padding-inline: 18px; }
+  .lens-explain-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .lens-fields { grid-template-columns: 1fr; }
+  .lens-select-feature, .lens-certificate { gap: 35px; }
+  .lens-select-feature { grid-template-columns: 1fr; }
+  .lens-select-feature figure { width: 100%; max-width: 680px; }
+  .lens-brand-mark { width: 230px; min-height: 160px; }
+  .lens-brand-mark .lens-logo { width: 200px; height: 135px; }
+}
+@media (max-width: 650px) {
+  .lens-page-intro { padding-bottom: 32px; }
+  .lens-page-intro--illustrated { grid-template-columns: 1fr; gap: 25px; }
+  .lens-hero-art { width: min(100%, 270px); justify-self: center; }
+  .lens-prescription { margin-top: 24px; padding: 16px 18px; font-size: 13px; }
+  .lens-service-heading, .lens-service-steps { grid-template-columns: 1fr; }
+  .lens-service-heading { gap: 15px; }
+  .lens-service-steps > div { padding: 18px 22px; }
+  .lens-section-heading { display: block; }
+  .lens-section-heading > p { margin-top: 20px; }
+  .lens-explain-grid { grid-template-columns: 1fr; }
+  .lens-explain-card { min-height: 0; padding: 22px 25px; }
+  .lens-fields { gap: 25px; padding: 27px 20px; }
+  .lens-comparison-legend { font-size: 10px; }
+  .lens-brand-grid, .lens-family-grid { grid-template-columns: 1fr; }
+  .lens-family-grid-five .lens-family, .lens-family-grid-five .lens-family:nth-child(n+4) { grid-column: auto; }
+  .lens-brand-card { min-height: 0; }
+  .lens-brand-card-logo { height: 165px; }
+  .lens-brand-card-logo .lens-logo { height: 140px; }
+  .lens-brand-card-logo img[src$="zeiss.png"] { height: 130px; }
+  .lens-brand-card-copy .text-link { margin-top: 10px; }
+  .lens-family { min-height: 0; padding: 22px 25px; }
+  .lens-family-number { margin-bottom: 14px; }
+  .lens-select-feature, .lens-certificate, .contact-supplier { grid-template-columns: 1fr; }
+  .lens-select-feature, .lens-certificate { gap: 25px; }
+  .lens-brand-heading { align-items: start; flex-direction: column-reverse; gap: 20px; }
+  .lens-brand-mark { width: 100%; min-height: 145px; }
+  .lens-brand-mark .lens-logo { width: 230px; height: 125px; }
+  .contact-supplier { gap: 20px; padding-block: 30px; }
+  .contact-supplier-brand p { margin-bottom: 0; }
+  .contact-supplier-products ul { grid-template-columns: 1fr; gap: 0; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .lens-hero-art img { animation: lens-float 7s ease-in-out infinite; }
+}
+@keyframes lens-float { 50% { transform: translateY(-8px) rotate(1deg); } }
