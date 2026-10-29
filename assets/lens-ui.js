@@ -5,6 +5,11 @@
   if (!root) return;
   const nav = root.querySelector('#main-nav');
   const toggle = root.querySelector('.menu-toggle');
+  root.querySelectorAll('.lens-comparison-range').forEach(input => {
+    input.addEventListener('input', () => {
+      input.closest('.lens-comparison').style.setProperty('--comparison-position', `${input.value}%`);
+    });
+  });
   const closeMenu = () => {
     nav?.classList.remove('menu-open');
     toggle?.setAttribute('aria-expanded', 'false');

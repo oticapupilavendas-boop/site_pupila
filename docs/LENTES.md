@@ -26,6 +26,8 @@ O site usa os nomes das linhas como texto, sem recortar marcas de embalagens ou 
 
 O guia da página de óculos explica visão simples, bifocal, multifocal progressiva, antirreflexo, filtro de luz azul e polarização. O desenho dos campos de visão é esquemático e não representa a geometria ou o desempenho de qualquer produto específico.
 
+O comparador interativo usa uma cena SVG criada para a Pupila e sobrepõe duas representações conceituais de campos laterais mais estreitos ou mais amplos. A interação foi inspirada no controle de arrastar da [página de progressivas da ZEISS](https://www.zeiss.com.br/vision-care/precisa-de-lentes-novas/lentes-progressivas.html); não reutiliza imagens, código ou medidas da fabricante. O controle funciona com toque, mouse e teclado. As ilustrações dos títulos das páginas de óculos e contato também são SVGs originais, animados apenas quando o usuário não pede movimento reduzido.
+
 - [ZEISS: visão simples](https://www.zeiss.com.br/vision-care/precisa-de-lentes-novas/lentes-de-visao-simples.html) e [lentes progressivas](https://www.zeiss.com.br/vision-care/precisa-de-lentes-novas/lentes-progressivas.html): grau único e zonas de visão de longe, intermediária e perto.
 - [ZEISS: bifocais e progressivas](https://www.zeiss.com.br/vision-care/saude-e-tratamento-dos-olhos/vida-profissional/lentes-progressivas-pequenas-obras-primas.html): linha visível nas bifocais e transição gradual nas progressivas.
 - [ZEISS: antirreflexo](https://www.zeiss.com.br/vision-care/saude-e-tratamento-dos-olhos/saude-e-prevencao/tratamentos-de-lentes-tratamento-antirreflexo-camada-rigida-cleancoat-etc.html) e [lentes polarizadas](https://www.zeiss.com.br/vision-care/saude-e-tratamento-dos-olhos/conducao-e-mobilidade/mais-luz-para-sua-visao.html).

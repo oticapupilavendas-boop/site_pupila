@@ -586,6 +586,15 @@ summary::-webkit-details-marker { display: none; }
 /* Lentes: mesma identidade Pupila, com marcas e tecnologias em destaque. */
 .lens-page-intro { padding-bottom: clamp(34px, 4vw, 56px); border-bottom: 1px solid var(--line); }
 .lens-page-intro .lede { max-width: 780px; }
+.lens-page-intro--illustrated { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(280px, .75fr); gap: clamp(30px, 4vw, 65px); align-items: center; }
+.lens-intro-copy { min-width: 0; }
+.lens-hero-art { position: relative; display: grid; place-items: center; width: 100%; max-width: 430px; aspect-ratio: 1; overflow: hidden; border: 1px solid var(--line); background: radial-gradient(circle at 52% 42%, #f9f9f4 0 29%, #e7eded 71%, #dbe5e4 100%); }
+.lens-hero-art::before { position: absolute; inset: 8%; border: 1px solid #72959b65; border-radius: 50%; content: ''; }
+.lens-hero-art::after { position: absolute; inset: auto -15% 18%; height: 1px; background: #12344255; transform: rotate(-28deg); content: ''; }
+.lens-hero-art img { position: relative; z-index: 1; display: block; width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 19px 12px #1234421f); }
+.lens-hero-orbit { position: absolute; inset: 3%; border: 1px dashed #8ca9aa; border-radius: 50%; }
+.lens-hero-signature { position: absolute; z-index: 2; right: 17px; bottom: 15px; display: flex; flex-direction: column; align-items: end; color: var(--navy); font-size: 11px; font-weight: 750; letter-spacing: .16em; line-height: 1.5; }
+.lens-hero-signature span { font-size: 8px; font-weight: 500; letter-spacing: .13em; }
 .lens-prescription { max-width: 830px; margin: 28px 0 0; padding: 18px 24px; border-left: 3px solid var(--red); background: var(--soft); color: var(--navy); font-size: 14px; line-height: 1.75; }
 .lens-prescription strong { font-weight: 700; }
 body[data-page="lentes"] .section { padding-block: clamp(44px, 5vw, 72px); }
@@ -620,17 +629,23 @@ body[data-page="lentes"] .section { padding-block: clamp(44px, 5vw, 72px); }
 .lens-fields .eyebrow, .lens-fields p { color: var(--paper); }
 .lens-fields h3 { margin-bottom: 18px; font-size: clamp(28px, 2.8vw, 38px); }
 .lens-fields p { max-width: 48ch; margin-bottom: 0; font-size: 14px; }
-.lens-field-examples { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
-.lens-field-examples figure { display: flex; flex-direction: column; align-items: center; padding: 18px 14px; background: var(--paper); color: var(--navy); }
-.lens-field-shape { display: flex; flex-direction: column; width: min(165px, 100%); height: 195px; margin-bottom: 16px; overflow: hidden; border: 2px solid var(--navy); border-radius: 46% 46% 40% 40% / 31% 31% 50% 50%; text-align: center; }
-.lens-field-shape span { display: grid; place-items: center; color: var(--navy); font-size: 11px; font-weight: 700; }
-.lens-field-shape.bifocal span:first-child { flex: 2; background: #d8e7e7; }
-.lens-field-shape.bifocal span:last-child { flex: 1; border-top: 3px solid var(--navy); background: #f2ddc4; }
-.lens-field-shape.progressive { background: linear-gradient(to bottom, #d8e7e7 15%, #c1d8da 52%, #f2ddc4 90%); }
-.lens-field-shape.progressive span { flex: 1; }
-.lens-field-examples figcaption { display: flex; flex-direction: column; align-items: center; gap: 6px; text-align: center; }
-.lens-field-examples figcaption strong { font-size: 15px; }
-.lens-field-examples figcaption span { color: var(--muted); font-size: 12px; line-height: 1.55; }
+.lens-comparison { min-width: 0; }
+.lens-comparison-legend { display: flex; justify-content: space-between; gap: 12px; padding: 8px 11px; background: var(--paper); color: var(--navy); font-size: 11px; font-weight: 650; }
+.lens-comparison-legend span:last-child { text-align: right; }
+.lens-comparison-stage { position: relative; width: 100%; aspect-ratio: 640 / 430; overflow: hidden; background: #d9e8e9; border: 3px solid var(--paper); }
+.lens-comparison-view { position: absolute; inset: 0; background: url('lenses/vision-scene.svg') center / 100% 100% no-repeat; }
+.lens-comparison-view--narrow { --veil-width: 29%; }
+.lens-comparison-view--wide { --veil-width: 13%; clip-path: inset(0 0 0 var(--comparison-position)); }
+.lens-comparison-veil { position: absolute; top: 0; bottom: 0; width: var(--veil-width); background: #a6b9c29c; backdrop-filter: blur(5px); }
+.lens-comparison-veil--left { left: 0; border-right: 2px dashed #1234429c; }
+.lens-comparison-veil--right { right: 0; border-left: 2px dashed #1234429c; }
+.lens-comparison-range { position: absolute; z-index: 3; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: ew-resize; }
+.lens-comparison-handle { position: absolute; z-index: 2; top: 0; bottom: 0; left: var(--comparison-position); display: flex; align-items: center; justify-content: space-between; width: 48px; transform: translateX(-50%); color: var(--navy); font-size: 32px; line-height: 1; pointer-events: none; }
+.lens-comparison-handle::before { position: absolute; top: 0; bottom: 0; left: 50%; width: 2px; background: var(--red); transform: translateX(-50%); content: ''; }
+.lens-comparison-handle::after { position: absolute; z-index: -1; top: 50%; left: 50%; width: 48px; height: 48px; border: 2px solid var(--red); border-radius: 50%; background: white; transform: translate(-50%, -50%); box-shadow: 0 5px 18px #12344233; content: ''; }
+.lens-comparison-handle span { position: relative; }
+.lens-comparison-range:focus-visible + .lens-comparison-handle::after { outline: 3px solid white; outline-offset: 4px; }
+.lens-comparison-instruction { margin: 10px 0 0 !important; font-size: 12px !important; }
 .lens-field-note { margin: 14px 0 20px; font-size: 12px; }
 .lens-guide-sources { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 22px; font-size: 12px; }
 .lens-guide-sources .source-link { font-size: 12px; }
@@ -679,6 +694,7 @@ body[data-page="lentes"] .section { padding-block: clamp(44px, 5vw, 72px); }
 .contact-supplier-products .source-link { font-size: 12px; }
 
 @media (max-width: 900px) {
+  .lens-page-intro--illustrated { grid-template-columns: minmax(0, 1fr) minmax(220px, .55fr); gap: 22px; }
   .lens-brand-grid { gap: 10px; }
   .lens-brand-card-copy { padding: 20px; }
   .lens-brand-card-logo { padding-inline: 18px; }
@@ -690,6 +706,8 @@ body[data-page="lentes"] .section { padding-block: clamp(44px, 5vw, 72px); }
 }
 @media (max-width: 650px) {
   .lens-page-intro { padding-bottom: 32px; }
+  .lens-page-intro--illustrated { grid-template-columns: 1fr; gap: 25px; }
+  .lens-hero-art { width: min(100%, 270px); justify-self: center; }
   .lens-prescription { margin-top: 24px; padding: 16px 18px; font-size: 13px; }
   .lens-service-heading, .lens-service-steps { grid-template-columns: 1fr; }
   .lens-service-heading { gap: 15px; }
@@ -699,10 +717,7 @@ body[data-page="lentes"] .section { padding-block: clamp(44px, 5vw, 72px); }
   .lens-explain-grid { grid-template-columns: 1fr; }
   .lens-explain-card { min-height: 0; padding: 22px 25px; }
   .lens-fields { gap: 25px; padding: 27px 20px; }
-  .lens-field-examples { gap: 8px; }
-  .lens-field-examples figure { padding: 12px 8px; }
-  .lens-field-shape { height: 170px; }
-  .lens-field-shape span { font-size: 10px; }
+  .lens-comparison-legend { font-size: 10px; }
   .lens-brand-grid, .lens-family-grid { grid-template-columns: 1fr; }
   .lens-family-grid-five .lens-family, .lens-family-grid-five .lens-family:nth-child(n+4) { grid-column: auto; }
   .lens-brand-card { min-height: 0; }
@@ -721,3 +736,9 @@ body[data-page="lentes"] .section { padding-block: clamp(44px, 5vw, 72px); }
   .contact-supplier-brand p { margin-bottom: 0; }
   .contact-supplier-products ul { grid-template-columns: 1fr; gap: 0; }
 }
+@media (prefers-reduced-motion: no-preference) {
+  .lens-hero-art img { animation: lens-float 7s ease-in-out infinite; }
+  .lens-hero-orbit { animation: lens-orbit 55s linear infinite; }
+}
+@keyframes lens-float { 50% { transform: translateY(-8px) rotate(1deg); } }
+@keyframes lens-orbit { to { transform: rotate(360deg); } }

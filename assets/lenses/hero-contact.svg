@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 480" fill="none">
+  <defs>
+    <radialGradient id="contact" cx="0" cy="0" r="1" gradientTransform="translate(211 193) rotate(49) scale(206 182)" gradientUnits="userSpaceOnUse"><stop stop-color="#F7FFFF" stop-opacity=".96"/><stop offset=".48" stop-color="#BCDCE2" stop-opacity=".68"/><stop offset=".84" stop-color="#6EA5B9" stop-opacity=".47"/><stop offset="1" stop-color="#D9F4F0" stop-opacity=".82"/></radialGradient>
+    <linearGradient id="rim" x1="96" y1="132" x2="372" y2="337" gradientUnits="userSpaceOnUse"><stop stop-color="white"/><stop offset=".5" stop-color="#6A9FB0"/><stop offset="1" stop-color="#123442"/></linearGradient>
+    <filter id="shadow"><feGaussianBlur stdDeviation="15"/></filter>
+  </defs>
+  <ellipse cx="241" cy="407" rx="141" ry="20" fill="#123442" opacity=".14" filter="url(#shadow)"/>
+  <circle cx="238" cy="220" r="170" stroke="#B2CFD0" stroke-width="1.5" stroke-dasharray="3 10"/>
+  <circle cx="238" cy="220" r="142" stroke="#C0D4D2" stroke-width="1"/>
+  <g transform="rotate(-19 242 222)">
+    <ellipse cx="242" cy="222" rx="143" ry="107" fill="url(#contact)" stroke="url(#rim)" stroke-width="6"/>
+    <path d="M108 232c21 51 66 91 130 93 71 2 125-43 143-99" stroke="#5D9DB0" stroke-width="3" opacity=".7"/>
+    <ellipse cx="242" cy="215" rx="106" ry="78" stroke="white" stroke-opacity=".7" stroke-width="2"/>
+    <path d="M135 186c32-55 115-74 178-31" stroke="white" stroke-width="10" stroke-linecap="round" opacity=".62"/>
+    <path d="M145 273c55 47 133 47 188 2" stroke="#7BA9B2" stroke-width="2" opacity=".65"/>
+  </g>
+  <circle cx="91" cy="334" r="14" fill="#B73445"/>
+  <circle cx="91" cy="334" r="4" fill="white"/>
+  <path d="M380 89h35m-17-17v35" stroke="#B73445" stroke-width="2" stroke-linecap="round"/>
+</svg>
