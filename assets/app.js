@@ -65,17 +65,38 @@
     render(route, true);
   }
 
-  function showView(index) {
-    const view = window.PUPILA_META_VIEWS[index];
-    const main = root.querySelector('#meta-main-image');
+  function showProductView(index) {
+    const gallery = root.querySelector('[data-product-gallery]');
+    const product = window.PUPILA_DATA.products.find(item => item.slug === gallery?.dataset.productGallery);
+    const view = product?.views[index];
+    const main = root.querySelector('#product-main-image');
     if (!main || !view) return;
     // Update synchronously so rapid clicks cannot leave a stale selected angle.
-    main.src = `assets/0RW4011__601SSB__P21__shad__${view[0]}.avif`;
-    main.alt = view[2];
-    root.querySelectorAll('[data-meta-view]').forEach(button => {
-      button.setAttribute('aria-pressed', String(Number(button.dataset.metaView) === index));
+    main.src = view.image;
+    main.alt = view.alt;
+    root.querySelectorAll('[data-product-view]').forEach(button => {
+      button.setAttribute('aria-pressed', String(Number(button.dataset.productView) === index));
     });
-    root.querySelector('.meta-gallery-count').textContent = `${String(index + 1).padStart(2, '0')} / 06`;
+    root.querySelector('.meta-gallery-count').textContent = `${String(index + 1).padStart(2, '0')} / ${String(product.views.length).padStart(2, '0')}`;
+  }
+
+  function updateCatalog(catalog, audience = catalog.dataset.audience || 'todos') {
+    const brand = catalog.querySelector('[data-catalog-brand]').value;
+    const cards = [...catalog.querySelectorAll('[data-catalog-card]')];
+    let visible = 0;
+    cards.forEach(card => {
+      const audienceMatch = audience === 'todos' || card.dataset.audience.split(' ').includes(audience);
+      const brandMatch = brand === 'todas' || card.dataset.brand === brand;
+      const matches = audienceMatch && brandMatch;
+      card.hidden = !matches;
+      if (matches) visible += 1;
+    });
+    catalog.dataset.audience = audience;
+    catalog.querySelectorAll('[data-catalog-filter]').forEach(button => {
+      button.setAttribute('aria-pressed', String(button.dataset.catalogFilter === audience));
+    });
+    catalog.querySelector('[data-catalog-result]').textContent = visible === 1 ? '1 modelo disponível' : `${visible} modelos disponíveis`;
+    catalog.querySelector('[data-catalog-empty]').hidden = visible !== 0;
   }
 
   root.addEventListener('click', event => {
@@ -88,7 +109,8 @@
       nav.classList.toggle('menu-open', open);
       if (open) nav.querySelector('summary, a[href]')?.focus();
     }
-    if (target.matches('[data-meta-view]')) showView(Number(target.dataset.metaView));
+    if (target.matches('[data-product-view]')) showProductView(Number(target.dataset.productView));
+    if (target.matches('[data-catalog-filter]')) updateCatalog(target.closest('[data-catalog]'), target.dataset.catalogFilter);
     if (target.matches('[data-whatsapp]')) {
       const number = window.PUPILA_DATA.company.whatsapp;
       if (/^\d{10,15}$/.test(number)) {
@@ -108,15 +130,21 @@
   });
 
   root.addEventListener('keydown', event => {
-    const button = event.target.closest('[data-meta-view]');
+    const button = event.target.closest('[data-product-view]');
     if (button && ['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) {
       event.preventDefault();
-      const length = window.PUPILA_META_VIEWS.length;
+      const gallery = button.closest('[data-product-gallery]');
+      const product = window.PUPILA_DATA.products.find(item => item.slug === gallery?.dataset.productGallery);
+      const length = product?.views.length;
+      if (!length) return;
       const delta = event.key === 'ArrowRight' ? 1 : -1;
-      const index = event.key === 'Home' ? 0 : event.key === 'End' ? length - 1 : (Number(button.dataset.metaView) + delta + length) % length;
-      showView(index);
-      root.querySelector(`[data-meta-view="${index}"]`)?.focus();
+      const index = event.key === 'Home' ? 0 : event.key === 'End' ? length - 1 : (Number(button.dataset.productView) + delta + length) % length;
+      showProductView(index);
+      root.querySelector(`[data-product-view="${index}"]`)?.focus();
     }
+  });
+  root.addEventListener('change', event => {
+    if (event.target.matches('[data-catalog-brand]')) updateCatalog(event.target.closest('[data-catalog]'));
   });
   root.addEventListener('toggle', event => {
     if (event.target.matches('.nav-group[open]')) {
