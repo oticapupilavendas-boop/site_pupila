@@ -614,6 +614,12 @@ const existing = {
 <span class="category-arrow" aria-hidden="true">${icon('diagonal')}</span>
 </a>`).join('')}</div>
 </section>
+    <section class="home-select-section" aria-labelledby="home-select-title">
+<div class="wrap section lens-select-feature">
+<div><p class="eyebrow">UM RECONHECIMENTO DA ESSILORLUXOTTICA</p><h2 id="home-select-title">Essilor Varilux<br><em>Especialista Select 2026.</em></h2><p>A Ótica Pupila de Joinville recebeu a certificação Essilor Varilux Especialista Select 2026. Conheça as lentes e tecnologias Essilor com que trabalhamos.</p><a class="text-link" href="lentes/essilor/">Conheça as lentes Essilor ${icon('diagonal')}</a></div>
+<figure><img src="assets/lenses/essilor-select-2026.jpeg" width="3956" height="2666" alt="Certificado Essilor Varilux Especialista Select 2026 da Ótica Pupila de Joinville" loading="lazy" decoding="async"><figcaption>Certificado EssilorLuxottica · 2026</figcaption></figure>
+</div>
+</section>
     <section class="meta-feature" aria-labelledby="meta-feature-title">
 <div class="wrap">
 <div class="feature-topline">

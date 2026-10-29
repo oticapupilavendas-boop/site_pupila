@@ -78,6 +78,8 @@ for (const route of ['lentes/index.html', 'lentes/hoya/index.html', 'lentes/zeis
   }
 }
 assert(read('lentes/essilor/index.html').includes('Essilor Varilux Especialista Select 2026'), 'certificação Select ausente');
+assert(pages['index.html'].html.includes('home-select-section') && pages['index.html'].html.includes('Essilor Varilux'), 'destaque Select ausente na página inicial');
+assert(read('lentes/index.html').indexOf('Como funciona o atendimento.') < read('lentes/index.html').indexOf('UM RECONHECIMENTO DA ESSILORLUXOTTICA') && read('lentes/index.html').indexOf('UM RECONHECIMENTO DA ESSILORLUXOTTICA') < read('lentes/index.html').indexOf('Três referências em lentes.'), 'destaque Select deve aparecer após atendimento e antes das marcas');
 assert(read('lentes/index.html').includes('Comparação conceitual') && read('lentes/index.html').includes('lens-comparison-range') && read('lentes/index.html').includes('Filtro de luz azul'), 'guia visual de tecnologias ausente');
 assert(!read('lentes/index.html').includes('TAMBÉM NA PUPILA'), 'chamada para lentes de contato não deve aparecer na página de óculos');
 assert(read('lentes/index.html').indexOf('Como funciona o atendimento.') < read('lentes/index.html').indexOf('Três referências em lentes.'), 'atendimento de óculos deve vir antes das marcas');
