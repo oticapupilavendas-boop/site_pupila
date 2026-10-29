@@ -21,3 +21,12 @@ Pesquisa consultada em 29 de outubro de 2026. As páginas mostram famílias de p
 Os logotipos de contato encontrados nos sites dos fornecedores tinham fundos e proporções inconsistentes. A loja enviará arquivos PNG transparentes posteriormente. Até lá, a página identifica os fabricantes e fornecedores por nome, sem exibir esses logotipos.
 
 O site usa os nomes das linhas como texto, sem recortar marcas de embalagens ou reproduzir peças de campanha. A Pupila informou que atua apenas na venda mediante prescrição médica, sem consulta ou adaptação por oftalmologista na loja.
+
+## Guia de tipos e tratamentos
+
+O guia da página de óculos explica visão simples, bifocal, multifocal progressiva, antirreflexo, filtro de luz azul e polarização. O desenho dos campos de visão é esquemático e não representa a geometria ou o desempenho de qualquer produto específico.
+
+- [ZEISS: visão simples](https://www.zeiss.com.br/vision-care/precisa-de-lentes-novas/lentes-de-visao-simples.html) e [lentes progressivas](https://www.zeiss.com.br/vision-care/precisa-de-lentes-novas/lentes-progressivas.html): grau único e zonas de visão de longe, intermediária e perto.
+- [ZEISS: bifocais e progressivas](https://www.zeiss.com.br/vision-care/saude-e-tratamento-dos-olhos/vida-profissional/lentes-progressivas-pequenas-obras-primas.html): linha visível nas bifocais e transição gradual nas progressivas.
+- [ZEISS: antirreflexo](https://www.zeiss.com.br/vision-care/saude-e-tratamento-dos-olhos/saude-e-prevencao/tratamentos-de-lentes-tratamento-antirreflexo-camada-rigida-cleancoat-etc.html) e [lentes polarizadas](https://www.zeiss.com.br/vision-care/saude-e-tratamento-dos-olhos/conducao-e-mobilidade/mais-luz-para-sua-visao.html).
+- [Cochrane: revisão sobre filtros de luz azul](https://www.cochrane.org/evidence/CD013244_blue-light-filtering-spectacle-lenses-visual-performance-macular-back-part-eye-protection-and): os ensaios não demonstraram benefício consistente de curto prazo para fadiga visual causada por telas. Por isso o site descreve a filtragem sem prometer esse efeito.
