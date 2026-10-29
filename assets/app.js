@@ -83,8 +83,10 @@
     if (!target) return;
     if (target.matches('.menu-toggle')) {
       const open = target.getAttribute('aria-expanded') !== 'true';
+      const nav = root.querySelector('#main-nav');
       target.setAttribute('aria-expanded', String(open));
-      root.querySelector('#main-nav').classList.toggle('menu-open', open);
+      nav.classList.toggle('menu-open', open);
+      if (open) nav.querySelector('summary, a[href]')?.focus();
     }
     if (target.matches('[data-meta-view]')) showView(Number(target.dataset.metaView));
     if (target.matches('[data-whatsapp]')) {
