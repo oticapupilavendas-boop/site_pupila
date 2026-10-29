@@ -715,7 +715,7 @@ ${productBrands}
 <div class="catalog-toolbar"><div class="catalog-audience" role="group" aria-label="Filtrar por público"><button type="button" class="catalog-filter" data-catalog-filter="todos" aria-pressed="true">Todos</button><button type="button" class="catalog-filter" data-catalog-filter="feminino" aria-pressed="false">Feminino</button><button type="button" class="catalog-filter" data-catalog-filter="masculino" aria-pressed="false">Masculino</button></div><label class="catalog-brand-filter"><span>Marca</span><select data-catalog-brand aria-label="Filtrar por marca"><option value="todas">Todas as marcas</option>${brands.map(brand => `<option value="${brand}">${brand}</option>`).join('')}</select></label></div>
 <p class="catalog-result" data-catalog-result aria-live="polite">${availableProducts.length === 1 ? '1 modelo disponível' : `${availableProducts.length} modelos disponíveis`}</p>
 <div class="catalog-grid" data-catalog-grid>${availableProducts.map(productCard).join('')}</div>
-<p class="catalog-empty" data-catalog-empty hidden>Nenhum modelo publicado corresponde a estes filtros no momento. Fale com a Pupila para conhecer outras opções.</p>
+<p class="catalog-empty" data-catalog-empty${availableProducts.length ? ' hidden' : ''}>Nenhum modelo publicado corresponde a estes filtros no momento. Fale com a Pupila para conhecer outras opções.</p>
 </section>`;
   }
 

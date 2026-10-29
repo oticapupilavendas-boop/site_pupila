@@ -21,6 +21,7 @@ assert(html.includes('name="viewport"'), 'viewport ausente');
 assert(!/<(?:script|link)[^>]+(?:src|href)="https?:/.test(html), 'dependência externa no carregamento');
 assert(Object.keys(pages).length >= 14, 'rotas esperadas ausentes');
 assert(views.length === 6, 'a galeria deve oferecer seis ângulos');
+assert(/data-catalog-empty>/.test(pages['oculos-de-grau/index.html'].html), 'catálogo sem produtos deve exibir sua orientação inicial');
 
 let imageCount = 0;
 for (const [route, page] of Object.entries(pages)) {
