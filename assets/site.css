@@ -582,3 +582,98 @@ summary::-webkit-details-marker { display: none; }
   .meta-feature-art figcaption { align-items: start; }
   .meta-feature-copy > .product-name { font-size: 11px; }
 }
+
+/* Lentes: mesma identidade Pupila, com marcas e tecnologias em destaque. */
+.lens-page-intro { padding-bottom: clamp(56px, 7vw, 100px); border-bottom: 1px solid var(--line); }
+.lens-page-intro .lede { max-width: 780px; }
+.lens-prescription { max-width: 830px; margin: 42px 0 0; padding: 22px 26px; border-left: 3px solid var(--red); background: var(--soft); color: var(--navy); font-size: 14px; line-height: 1.75; }
+.lens-prescription strong { font-weight: 700; }
+.lens-section-heading { align-items: end; }
+.lens-section-heading > p { max-width: 410px; font-size: 14px; line-height: 1.7; }
+.lens-brand-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+.lens-brand-card { display: flex; flex-direction: column; min-height: 360px; background: white; border: 1px solid var(--line); transition: transform .25s var(--ease), box-shadow .25s var(--ease); }
+.lens-brand-card:hover { transform: translateY(-4px); box-shadow: 0 16px 30px #12344213; }
+.lens-brand-card-logo { display: grid; place-items: center; height: 175px; padding: 23px 35px; border-bottom: 1px solid var(--line); }
+.lens-logo { width: auto; max-width: 100%; height: 90px; object-fit: contain; }
+.lens-brand-card-logo .lens-logo { height: 105px; }
+.lens-brand-card-logo img[src$="zeiss.png"] { height: 140px; }
+.lens-brand-card-copy { display: flex; flex-direction: column; align-items: start; flex: 1; padding: 26px; }
+.lens-brand-card-copy > strong { font-size: 23px; font-weight: 550; letter-spacing: -.04em; }
+.lens-brand-card-copy > span:nth-child(2) { margin-top: 10px; color: var(--muted); font-size: 14px; line-height: 1.7; }
+.lens-brand-card-copy .text-link { margin-top: auto; padding-top: 22px; }
+.lens-needs { background: var(--soft); }
+.lens-family-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); }
+.lens-family-grid-two { max-width: 900px; }
+.lens-family { min-height: 205px; padding: 32px 36px; background: var(--paper); }
+.lens-family-number { display: block; margin-bottom: 20px; color: var(--red); font-size: 11px; font-weight: 650; letter-spacing: .13em; }
+.lens-family h3 { margin-bottom: 14px; font-size: 23px; }
+.lens-family p { max-width: 48ch; margin: 0; font-size: 14px; line-height: 1.75; }
+.lens-needs .source-link { display: inline-block; margin-top: 32px; }
+.lens-select-feature { display: grid; grid-template-columns: .8fr 1.2fr; gap: clamp(35px, 6vw, 90px); align-items: center; }
+.lens-select-feature em, .lens-select-banner em { color: var(--red); }
+.lens-select-feature p:not(.eyebrow) { max-width: 55ch; margin: 25px 0; }
+.lens-select-feature figure, .lens-certificate figure { padding: 12px; background: white; border: 1px solid var(--line); }
+.lens-select-feature figure img, .lens-certificate figure img { width: 100%; height: auto; }
+.lens-select-feature figcaption, .lens-certificate figcaption { padding: 12px 5px 3px; color: var(--muted); font-size: 11px; }
+.lens-contact-teaser { display: flex; align-items: center; justify-content: space-between; gap: 40px; padding-block: 45px; border-block: 1px solid var(--line); }
+.lens-contact-teaser > div { max-width: 600px; }
+.lens-contact-teaser h2 { margin-bottom: 16px; }
+.lens-contact-teaser > img { width: min(250px, 30%); }
+.lens-consultation { padding: clamp(30px, 5vw, 60px); }
+.lens-consultation .button { margin-bottom: 20px; }
+.lens-small-note { margin: 16px 0 0; color: var(--muted); font-size: 12px !important; }
+.lens-brand-heading { display: flex; align-items: center; justify-content: space-between; gap: 40px; }
+.lens-brand-heading > div { max-width: 750px; }
+.lens-brand-heading > .lens-logo { flex: none; width: 170px; max-height: 110px; }
+.lens-brand-heading > img[src$="zeiss.png"] { width: 180px; height: 105px; }
+.lens-select-banner { background: var(--navy); color: white; padding-block: clamp(48px, 6vw, 82px); }
+.lens-select-banner .eyebrow, .lens-select-banner p { color: var(--paper); }
+.lens-select-banner em { color: #ffb7b9; }
+.lens-select-banner h2 { max-width: 830px; }
+.lens-select-banner p:last-child { margin: 25px 0 0; }
+.lens-certificate { display: grid; grid-template-columns: .7fr 1.3fr; gap: 50px; align-items: center; border-top: 1px solid var(--line); }
+.lens-certificate h2 { margin-bottom: 20px; }
+.contact-supplier-list { border-top: 1px solid var(--line); }
+.contact-supplier { display: grid; grid-template-columns: .8fr 1.2fr; gap: clamp(30px, 5vw, 80px); padding: 40px 0; border-bottom: 1px solid var(--line); }
+.contact-supplier-brand .lens-logo { display: block; max-width: 220px; margin-bottom: 20px; }
+.contact-supplier-brand img[src$="interojo.png"] { width: 220px; }
+.contact-supplier-brand h2 { font-size: 26px; }
+.contact-supplier-brand p { max-width: 35ch; margin-top: 10px; font-size: 13px; }
+.lens-distributor { display: flex; align-items: center; gap: 16px; margin-top: 15px; color: var(--muted); font-size: 11px; }
+.lens-distributor .lens-logo { width: 105px; height: 52px; margin: 0; }
+.contact-supplier-products h3 { font-size: 18px; margin-bottom: 18px; }
+.contact-supplier-products ul { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 28px; padding: 0; margin: 0 0 18px; list-style: none; }
+.contact-supplier-products li { padding: 10px 0; border-top: 1px solid var(--line); font-size: 14px; }
+.contact-supplier-products .source-link { font-size: 12px; }
+.lens-contact-guidance { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; }
+.lens-contact-guidance p { max-width: 60ch; }
+
+@media (max-width: 900px) {
+  .lens-brand-grid { gap: 10px; }
+  .lens-brand-card-copy { padding: 20px; }
+  .lens-brand-card-logo { padding-inline: 18px; }
+  .lens-select-feature, .lens-certificate { gap: 35px; }
+}
+@media (max-width: 650px) {
+  .lens-page-intro { padding-bottom: 50px; }
+  .lens-prescription { margin-top: 30px; padding: 18px 20px; font-size: 13px; }
+  .lens-section-heading { display: block; }
+  .lens-section-heading > p { margin-top: 20px; }
+  .lens-brand-grid, .lens-family-grid { grid-template-columns: 1fr; }
+  .lens-brand-card { min-height: 0; }
+  .lens-brand-card-logo { height: 140px; }
+  .lens-brand-card-logo .lens-logo { height: 95px; }
+  .lens-brand-card-copy .text-link { margin-top: 10px; }
+  .lens-family { min-height: 0; padding: 27px 25px; }
+  .lens-family-number { margin-bottom: 14px; }
+  .lens-select-feature, .lens-certificate, .lens-contact-guidance, .contact-supplier { grid-template-columns: 1fr; }
+  .lens-select-feature, .lens-certificate { gap: 25px; }
+  .lens-contact-teaser > img { display: none; }
+  .lens-brand-heading { align-items: start; flex-direction: column-reverse; gap: 20px; }
+  .lens-brand-heading > .lens-logo { width: 120px; max-height: 70px; }
+  .lens-brand-heading > img[src$="zeiss.png"] { width: 145px; height: 75px; }
+  .contact-supplier { gap: 20px; padding-block: 30px; }
+  .contact-supplier-brand .lens-logo { height: 70px; }
+  .contact-supplier-brand p { margin-bottom: 0; }
+  .contact-supplier-products ul { grid-template-columns: 1fr; gap: 0; }
+}

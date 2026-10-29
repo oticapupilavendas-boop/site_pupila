@@ -12,14 +12,16 @@ const attributes = tag => Object.fromEntries([...tag.matchAll(/([\w-]+)="([^"]*)
 const context = { window: {} };
 vm.createContext(context);
 vm.runInContext(read('assets/pages.js'), context, { timeout: 1000 });
+vm.runInContext(read('assets/lens-pages.js'), context, { timeout: 1000 });
 new vm.Script(read('assets/app.js'));
+new vm.Script(read('assets/lens-ui.js'));
 const { PUPILA_PAGES: pages, PUPILA_ASSETS: assets, PUPILA_META_VIEWS: views } = context.window;
 
 assert(html.trimStart().startsWith('<!doctype html>'), 'doctype HTML5 ausente');
 assert(html.includes('<html lang="pt-BR">'), 'idioma pt-BR ausente');
 assert(html.includes('name="viewport"'), 'viewport ausente');
 assert(!/<(?:script|link)[^>]+(?:src|href)="https?:/.test(html), 'dependência externa no carregamento');
-assert(Object.keys(pages).length >= 14, 'rotas esperadas ausentes');
+assert(Object.keys(pages).length >= 18, 'rotas esperadas ausentes');
 assert(views.length === 6, 'a galeria deve oferecer seis ângulos');
 assert(/data-catalog-empty>/.test(pages['oculos-de-grau/index.html'].html), 'catálogo sem produtos deve exibir sua orientação inicial');
 
@@ -63,6 +65,20 @@ for (const [, file] of read('assets/site.css').matchAll(/url\('([^']+)'\)/g)) {
   assert(fs.existsSync(path.join(root, 'assets', file)), `fonte ausente: ${file}`);
 }
 assert(read('assets/site.css').includes('prefers-reduced-motion: reduce'), 'movimento reduzido ausente');
+
+for (const route of ['lentes/index.html', 'lentes/hoya/index.html', 'lentes/zeiss/index.html', 'lentes/essilor/index.html', 'lentes/contato/index.html']) {
+  const source = read(route);
+  assert(source.includes('<html lang="pt-BR">'), `${route}: idioma ausente`);
+  assert(source.includes('receita médica'), `${route}: orientação sobre receita ausente`);
+  assert(source.includes('<meta name="description"'), `${route}: descrição SEO ausente`);
+  assert(source.includes('href="' + '../'.repeat(route.split('/').length - 1) + 'assets/site.css"'), `${route}: CSS ausente`);
+  for (const [tag] of source.matchAll(/<img\b[^>]*>/g)) {
+    const attr = attributes(tag);
+    assert(Boolean(attr.src) && fs.existsSync(path.resolve(path.dirname(path.join(root, route)), attr.src)), `${route}: imagem estática ausente ${attr.src}`);
+  }
+}
+assert(read('lentes/essilor/index.html').includes('Essilor Varilux Especialista Select 2026'), 'certificação Select ausente');
+assert(read('lentes/contato/index.html').includes('a loja não realiza consulta ou adaptação médica'), 'limite do atendimento ausente');
 
 if (failures.length) {
   console.error(failures.map(message => `✗ ${message}`).join('\n'));

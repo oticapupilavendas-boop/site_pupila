@@ -471,7 +471,14 @@ const existing = {
   const icon = name => `<svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
 <path d="${paths[name] || paths.arrow}"/>
 </svg>`;
-  const link = (route, label, classes = '') => `<a class="${classes}" href="#/${route}/index.html">${label}</a>`;
+  const lensPaths = {
+    lentes: 'lentes/',
+    'lentes/hoya': 'lentes/hoya/',
+    'lentes/zeiss': 'lentes/zeiss/',
+    'lentes/essilor': 'lentes/essilor/',
+    'lentes/contato': 'lentes/contato/'
+  };
+  const link = (route, label, classes = '') => `<a class="${classes}" href="${lensPaths[route] || `#/${route}/index.html`}">${label}</a>`;
   const chat = (label = 'Fale com a Pupila', message = 'Olá! Conheci a Ótica Pupila pelo site e gostaria de atendimento.', classes = 'button primary') => `<button type="button" class="${classes}" data-whatsapp="${message}">${label}${icon('diagonal')}</button>`;
   const crumb = label => `<nav class="breadcrumb wrap" aria-label="Caminho da página">
 <a href="#/index.html">Início</a>
@@ -483,7 +490,7 @@ const existing = {
     ['oculos-de-sol', 'Óculos de sol', 'Seu estilo sob uma nova luz.', 'sun'],
     ['relogios', 'Relógios', 'O seu tempo merece um detalhe a mais.', 'watch'],
     ['semijoias', 'Semijoias', 'Pequenos detalhes. Grandes significados.', 'gem'],
-    ['lentes', 'Lentes oftálmicas', 'Precisão que acompanha o seu olhar.', 'lens']
+    ['lentes', 'Lentes para óculos', 'Tecnologia e cuidado para cada olhar.', 'lens']
   ];
   const header = `
     <a href="#conteudo" class="skip-link">Pular para o conteúdo</a>
@@ -503,7 +510,11 @@ const existing = {
 <summary>Óculos ${icon('chevron')}</summary>
 <div class="submenu">${link('oculos-de-grau', 'Óculos de grau')}${link('oculos-de-sol', 'Óculos de sol')}${link('ray-ban-meta', 'Ray-Ban Meta ↗')}</div>
 </details>
-        ${link('relogios', 'Relógios', 'nav-link')}${link('semijoias', 'Semijoias', 'nav-link')}${link('lentes', 'Lentes', 'nav-link')}
+        ${link('relogios', 'Relógios', 'nav-link')}${link('semijoias', 'Semijoias', 'nav-link')}
+        <details class="nav-group nav-lenses">
+<summary>Lentes ${icon('chevron')}</summary>
+<div class="submenu">${link('lentes', 'Lentes para óculos')}${link('lentes/contato', 'Lentes de contato')}</div>
+</details>
         <details class="nav-group nav-about">
 <summary>A Pupila ${icon('chevron')}</summary>
 <div class="submenu">${link('nossa-historia', 'Nossa história')}${link('marcas', 'Nossas marcas')}<a href="#/index.html#avaliacoes">Avaliações</a>${link('perguntas-frequentes', 'Perguntas frequentes')}</div>
@@ -595,7 +606,7 @@ const existing = {
 </div>
 <p>Escolhas que fazem parte<br>de quem você é.</p>
 </div>
-<div class="categories-grid">${categories.map((c, i) => `<a href="#/${c[0]}/index.html" class="category-card">
+<div class="categories-grid">${categories.map((c, i) => `<a href="${lensPaths[c[0]] || `#/${c[0]}/index.html`}" class="category-card">
 <div class="category-top">
 <span class="category-index">0${i + 1}</span>${icon(c[3])}</div>
 <h3>${c[1]}</h3>
