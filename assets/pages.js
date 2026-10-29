@@ -659,8 +659,69 @@ ${productBrands}
 </section>
     ${reviews}${faq}${location}`;
 
+  const metaViews = [
+    { image: 'assets/0RW4011__601SSB__P21__shad__qt.avif', label: 'Três quartos', alt: 'RAY-BAN META WAYFARER GEN 3: vista de três quartos com haste direita' },
+    { image: 'assets/0RW4011__601SSB__P21__shad__fr.avif', label: 'Frente', alt: 'RAY-BAN META WAYFARER GEN 3: vista frontal da armação preta' },
+    { image: 'assets/0RW4011__601SSB__P21__shad__al2.avif', label: 'Outro lado', alt: 'RAY-BAN META WAYFARER GEN 3: vista de três quartos com haste esquerda' },
+    { image: 'assets/0RW4011__601SSB__P21__shad__lt.avif', label: 'Lateral', alt: 'RAY-BAN META WAYFARER GEN 3: vista lateral da haste' },
+    { image: 'assets/0RW4011__601SSB__P21__shad__bk.avif', label: 'Traseira', alt: 'RAY-BAN META WAYFARER GEN 3: vista posterior da armação' },
+    { image: 'assets/0RW4011__601SSB__P21__shad__cfr.avif', label: 'Interior', alt: 'RAY-BAN META WAYFARER GEN 3: vista frontal pelo interior da armação' }
+  ];
+  const products = [{
+    slug: 'ray-ban-meta',
+    route: 'ray-ban-meta',
+    name: productName,
+    brand: 'Ray-Ban',
+    categories: ['oculos-de-sol'],
+    audiences: ['todos'],
+    label: 'ÓCULOS INTELIGENTES',
+    image: metaViews[0].image,
+    imageAlt: metaViews[0].alt,
+    views: metaViews,
+    branding: productBrands,
+    description: 'O design icônico do Wayfarer com tecnologia para acompanhar sua rotina. Capture fotos com a câmera de 12 MP e grave vídeos em 3K sem usar as mãos. Ouça músicas e podcasts, faça chamadas com áudio aberto e acesse a Meta AI por comandos de voz.',
+    facts: [
+      ['Modelo', 'RW4011 601SSB'],
+      ['Armação', 'Preto fosco'],
+      ['Câmera e vídeo', '12 MP · gravação em 3K Ultra HD'],
+      ['Áudio', 'Alto-falantes abertos e seis microfones'],
+      ['Autonomia', 'Até 9 horas de uso por carga']
+    ],
+    support: 'Recursos de IA variam conforme país, idioma e atualizações. A autonomia varia com o uso.',
+    source: { href: 'https://about.fb.com/news/2026/09/introducing-ray-ban-meta-audio-glasses-new-styles-plus-muse/', label: 'Conheça os recursos no site da Meta ↗' },
+    whatsapp: 'Olá! Gostaria de saber mais sobre o RAY-BAN META WAYFARER GEN 3 RW4011 601SSB.'
+  }];
+  window.PUPILA_META_VIEWS = metaViews;
+  window.PUPILA_DATA.products = products;
+
+  function productCard(product) {
+    return `<a class="catalog-card" data-catalog-card data-audience="${product.audiences.join(' ')}" data-brand="${product.brand}" href="#/${product.route}/index.html">
+<figure><img src="${product.image}" width="720" height="386" alt="${product.imageAlt}" loading="lazy" decoding="async"></figure>
+<div class="catalog-card-copy"><p class="eyebrow">${product.brand}</p><h2>${product.name}</h2><p>${product.label}</p><span class="text-link">Ver detalhes ${icon('diagonal')}</span></div>
+</a>`;
+  }
+
+  function eyewearCatalog(category) {
+    const [route, name, description] = category;
+    const availableProducts = products.filter(product => product.categories.includes(route));
+    const brands = [...new Set(availableProducts.map(product => product.brand))];
+    return `${crumb(name)}<section class="page-intro wrap">
+<p class="eyebrow">NOSSA SELEÇÃO</p>
+<h1>${name}, do seu jeito.</h1>
+<p class="lede">${description} Explore os modelos que já estão disponíveis para conhecer com mais calma.</p>
+</section>
+<section class="wrap catalog-section catalog-listing" data-catalog data-category="${route}" aria-labelledby="catalog-title">
+<div class="catalog-heading"><div><p class="eyebrow">MODELOS EM DESTAQUE</p><h2 id="catalog-title">Escolha pelo seu olhar.</h2></div><p>As peças publicadas aqui já têm imagens e informações confirmadas pela loja.</p></div>
+<div class="catalog-toolbar"><div class="catalog-audience" role="group" aria-label="Filtrar por público"><button type="button" class="catalog-filter" data-catalog-filter="todos" aria-pressed="true">Todos</button><button type="button" class="catalog-filter" data-catalog-filter="feminino" aria-pressed="false">Feminino</button><button type="button" class="catalog-filter" data-catalog-filter="masculino" aria-pressed="false">Masculino</button></div><label class="catalog-brand-filter"><span>Marca</span><select data-catalog-brand aria-label="Filtrar por marca"><option value="todas">Todas as marcas</option>${brands.map(brand => `<option value="${brand}">${brand}</option>`).join('')}</select></label></div>
+<p class="catalog-result" data-catalog-result aria-live="polite">${availableProducts.length === 1 ? '1 modelo disponível' : `${availableProducts.length} modelos disponíveis`}</p>
+<div class="catalog-grid" data-catalog-grid>${availableProducts.map(productCard).join('')}</div>
+<p class="catalog-empty" data-catalog-empty hidden>Nenhum modelo publicado corresponde a estes filtros no momento. Fale com a Pupila para conhecer outras opções.</p>
+</section>`;
+  }
+
   function catalog(category) {
     const [route, name, description, symbol] = category;
+    if (route === 'oculos-de-grau' || route === 'oculos-de-sol') return eyewearCatalog(category);
     const accessories = route === 'relogios' || route === 'semijoias';
     return `${crumb(name)}<section class="page-intro wrap">
 <p class="eyebrow">NOSSA SELEÇÃO</p>
@@ -685,52 +746,30 @@ ${productBrands}
 </div>
 </section>`;
   }
-  const metaViews = [
-    ['qt', 'Três quartos', 'RAY-BAN META WAYFARER GEN 3: vista de três quartos com haste direita'],
-    ['fr', 'Frente', 'RAY-BAN META WAYFARER GEN 3: vista frontal da armação preta'],
-    ['al2', 'Outro lado', 'RAY-BAN META WAYFARER GEN 3: vista de três quartos com haste esquerda'],
-    ['lt', 'Lateral', 'RAY-BAN META WAYFARER GEN 3: vista lateral da haste'],
-    ['bk', 'Traseira', 'RAY-BAN META WAYFARER GEN 3: vista posterior da armação'],
-    ['cfr', 'Interior', 'RAY-BAN META WAYFARER GEN 3: vista frontal pelo interior da armação']
-  ];
-  window.PUPILA_META_VIEWS = metaViews;
-  const meta = `${crumb('Ray-Ban Meta')}
-    <section class="meta-page wrap" aria-labelledby="meta-title">
-<div class="meta-gallery" aria-label="Galeria de imagens do Ray-Ban Meta">
-<div class="meta-gallery-main">
+  function productPage(product) {
+    return `${crumb(product.brand)}
+    <section class="product-page wrap" aria-labelledby="product-title">
+<div class="product-gallery" data-product-gallery="${product.slug}" aria-label="Galeria de imagens do ${product.name}">
+<div class="product-gallery-main">
 <span class="gallery-label">SELEÇÃO PUPILA</span>
-<img id="meta-main-image" src="assets/0RW4011__601SSB__P21__shad__qt.avif" width="720" height="386" alt="${metaViews[0][2]}" fetchpriority="high" decoding="async">
-<span class="meta-gallery-count" aria-live="polite">01 / 06</span>
+<img id="product-main-image" src="${product.views[0].image}" width="720" height="386" alt="${product.views[0].alt}" fetchpriority="high" decoding="async">
+<span class="meta-gallery-count" aria-live="polite">01 / ${String(product.views.length).padStart(2, '0')}</span>
 </div>
-<div class="meta-gallery-controls" role="group" aria-label="Escolha um ângulo">${metaViews.map((v, i) => `<button type="button" class="meta-view" data-meta-view="${i}" aria-pressed="${i === 0}" aria-label="Ver ângulo ${i + 1}: ${v[1]}">
-<img src="assets/0RW4011__601SSB__P21__shad__${v[0]}.avif" width="720" height="386" alt="" loading="lazy" decoding="async">
-<span>${v[1]}</span>
+<div class="product-gallery-controls" role="group" aria-label="Escolha um ângulo">${product.views.map((view, i) => `<button type="button" class="product-view" data-product-view="${i}" aria-pressed="${i === 0}" aria-label="Ver ângulo ${i + 1}: ${view.label}">
+<img src="${view.image}" width="720" height="386" alt="" loading="lazy" decoding="async">
+<span>${view.label}</span>
 </button>`).join('')}</div>
-<p class="meta-gallery-help">Explore os ângulos. Você também pode usar ← e → nos botões.</p>
+<p class="product-gallery-help">Explore os ângulos. Você também pode usar ← e → nos botões.</p>
 </div>
-    <div class="meta-page-heading">
+    <div class="product-page-heading">
 <p class="eyebrow">O CLÁSSICO, EM UMA NOVA PERSPECTIVA</p>
-${productBrands}
-<h1 id="meta-title">${productName}</h1>
-<p>O design icônico do Wayfarer com tecnologia para acompanhar sua rotina. Capture fotos com a câmera de 12 MP e grave vídeos em 3K sem usar as mãos. Ouça músicas e podcasts, faça chamadas com áudio aberto e acesse a Meta AI por comandos de voz.</p>
-<dl class="product-facts">
-<div>
-<dt>Modelo</dt>
-<dd>RW4011 601SSB</dd>
-</div>
-<div>
-<dt>Armação</dt>
-<dd>Preto fosco</dd>
-</div>
-<div>
-<dt>Câmera e vídeo</dt>
-<dd>12 MP · gravação em 3K Ultra HD</dd>
-</div>
-<div><dt>Áudio</dt><dd>Alto-falantes abertos e seis microfones</dd></div>
-<div><dt>Autonomia</dt><dd>Até 9 horas de uso por carga</dd></div>
-</dl><p class="product-support-note">Recursos de IA variam conforme país, idioma e atualizações. A autonomia varia com o uso.</p><a class="source-link" href="https://about.fb.com/news/2026/09/introducing-ray-ban-meta-audio-glasses-new-styles-plus-muse/" target="_blank" rel="noopener noreferrer">Conheça os recursos no site da Meta ↗</a>
-${chat('Quero conhecer de perto', 'Olá! Gostaria de saber mais sobre o RAY-BAN META WAYFARER GEN 3 RW4011 601SSB.')}<p class="availability-note">Tamanho, preço e disponibilidade sob consulta à loja.</p>${link('contato', 'Experimente na Pupila', 'text-link')}</div>
+${product.branding || `<p class="product-brand">${product.brand}</p>`}
+<h1 id="product-title">${product.name}</h1>
+<p>${product.description}</p>
+<dl class="product-facts">${product.facts.map(([term, detail]) => `<div><dt>${term}</dt><dd>${detail}</dd></div>`).join('')}</dl>${product.support ? `<p class="product-support-note">${product.support}</p>` : ''}${product.source ? `<a class="source-link" href="${product.source.href}" target="_blank" rel="noopener noreferrer">${product.source.label}</a>` : ''}
+${chat('Quero conhecer de perto', product.whatsapp)}<p class="availability-note">Tamanho, preço e disponibilidade sob consulta à loja.</p>${link('contato', 'Experimente na Pupila', 'text-link')}</div>
 </section>`;
+  }
   const brands = `${crumb('Nossas marcas')}<section class="page-intro wrap">
 <p class="eyebrow">DESIGN, IDENTIDADE & ESCOLHA</p>
 <h1>Encontre sua assinatura.
@@ -755,9 +794,11 @@ ${productBrands}
     ...existing,
     'index.html': { title: 'Ótica Pupila | Ótica em Joinville desde 1992', content: home },
     'marcas/index.html': { title: 'Nossas marcas | Ótica Pupila', content: brands },
-    'marcas/modelo/index.html': { title: 'Nossas marcas | Ótica Pupila', content: brands },
-    'ray-ban-meta/index.html': { title: 'RAY-BAN META WAYFARER GEN 3 | Ótica Pupila', content: meta }
+    'marcas/modelo/index.html': { title: 'Nossas marcas | Ótica Pupila', content: brands }
   };
+  products.forEach(product => {
+    pages[`${product.route}/index.html`] = { title: `${product.name} | Ótica Pupila`, content: productPage(product) };
+  });
   categories.filter(c => c[0] !== 'lentes').forEach(c => {
     pages[`${c[0]}/index.html`] = { title: `${c[1]} | Ótica Pupila`, content: catalog(c) };
   });
