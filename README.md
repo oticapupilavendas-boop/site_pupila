@@ -1,70 +1,71 @@
 # Ótica Pupila
 
-Site estático da Ótica Pupila, em Joinville/SC. A direção visual combina o logo original, azul-marinho, vermelho e fundo claro, com tipografia editorial e fotografias reais da loja.
+Site estático da Ótica Pupila em Joinville/SC. Mantém o logo, a paleta azul-marinho/vermelho, as fontes locais e as fotografias da loja.
 
 ## Desenvolvimento
 
-Node.js 20 ou superior para as verificações:
+Use Node.js 24 ou superior. Não é necessário instalar dependências para gerar o site ou executar os testes estáticos.
 
 ```sh
+npm run build
 npm test
-```
-
-Quando alterar textos ou navegação de lentes, gere novamente as cinco páginas estáticas antes de testar:
-
-```sh
-npm run build:lenses
-npm test
-```
-
-Sirva a pasta com qualquer servidor estático. Com Python:
-
-```sh
 python -m http.server 4173 --bind 127.0.0.1
 ```
 
-Abra `http://127.0.0.1:4173`. Não há build, instalação de dependências ou serviços externos necessários para o site funcionar.
+Abra `http://127.0.0.1:4173/`. Sempre execute `npm run build` após alterar conteúdo ou configuração: os 18 arquivos HTML gerados são versionados e `npm test` confere se estão atualizados. `npm run build:lenses` continua disponível como alias do build completo.
 
-## Estrutura
+## Estrutura e navegação
 
-- `index.html`: metadados, carregamento local e contato acessível mesmo sem JavaScript.
-- `assets/pages.js`: conteúdo das páginas, cabeçalho/rodapé compartilhados, informações da loja e seis ângulos do Ray-Ban Meta.
-- `assets/lens-pages.js`: conteúdo editorial das lentes para óculos e de contato.
-- `lentes/`: cinco páginas HTML com endereços próprios, conteúdo e metadados indexáveis sem JavaScript.
-- `assets/lens-ui.js`: menu e WhatsApp nas páginas estáticas de lentes.
-- `assets/app.js`: navegação pelo hash, histórico, foco, menu, galeria e abertura do WhatsApp.
-- `assets/site.css`: cores, tipografia, componentes, responsividade, foco e movimento reduzido.
-- `assets/fonts/`: fontes WOFF2 locais DM Sans e Cormorant Garamond, com licenças OFL; aproximadamente 61 KB no total.
-- `scripts/build-lens-pages.mjs`: gera as páginas estáticas a partir do conteúdo compartilhado.
-- `scripts/check-site.mjs`: valida rotas, imagens, dimensões, links, âncoras, IDs, sintaxe e recursos locais.
-- `.github/workflows/quality.yml`: executa `npm test` em PRs e em `main`.
-- `docs/REVISAO.md`: escopo, validação e limitações da revisão.
-- `docs/previews/`: capturas da home e da página de produto.
+- `assets/pages.js`: conteúdo, dados comerciais, cabeçalho e rodapé compartilhados; usado apenas na geração.
+- `assets/lens-pages.js`: conteúdo de lentes; compartilha o cabeçalho/rodapé sem extrair HTML de uma página antiga.
+- `scripts/build-site.mjs`: gera home, categorias, marcas, produto, história, FAQ, contato, privacidade e lentes, com títulos e descrições próprios.
+- `assets/app.js`: menu, teclado, galeria, filtros quando há seleção suficiente e comparador de lentes. Não recria o conteúdo da página.
+- `assets/routes.js`: mapa gerado para redirecionar endereços antigos `#/rota`, com ou sem `/index.html`, para os arquivos estáticos.
+- `404.html`: página da marca. A resposta HTTP 404 e sua ativação dependem da configuração da hospedagem.
+- `site-config.json`: domínio e dados empresariais/de hospedagem para finalizar a privacidade.
+- `docs/REVISAO.md`: validação desta revisão. `docs/PENDENCIAS.md`: dados ainda necessários.
+- `docs/previews/`: 25 capturas históricas de versões anteriores; não representam automaticamente a versão atual e não são incluídas no pacote de publicação.
 
-## Conteúdo comercial
+Cada página funciona sem JavaScript, inclusive o acesso à navegação no celular e os links de WhatsApp. Scripts acrescentam menu recolhível, galeria e comparador. Rotas por hash exigem JavaScript apenas para o redirecionamento legado; os links atuais são URLs normais. `marcas/modelo/` é um alias com `noindex` e canonical para `marcas/` quando o domínio está definido.
 
-As quatro categorias apresentam a seleção da loja e direcionam para atendimento. Os cartões de produtos fictícios e filtros sem estoque foram removidos. O catálogo com produtos individuais depende do envio de fotografias, modelos e informações oficiais. Não há preços, estoque, checkout ou promessas de disponibilidade inventados.
+## Conteúdo
 
-As rotas antigas continuam acessíveis. Links com filtros legados abrem a categoria correspondente; a antiga página-modelo de marca agora apresenta a página de marcas.
+Categorias com menos de dois produtos usam apresentação editorial, contato e visita; os destaques reais existentes são mantidos. Produtos, cores, configurações e disponibilidade devem ser consultados com a loja. Não há checkout ou preços. As citações de avaliações e a afirmação de revenda autorizada foram removidas enquanto não há comprovação; o link para as avaliações permanece.
 
-### Lentes
+As lentes exigem receita médica. Não se oferece consulta ou adaptação médica na loja. As fontes de linhas e tecnologias, a origem das marcas e o certificado Select 2026 estão em `docs/LENTES.md`. O ano da certificação é histórico e não é atualizado automaticamente. O rodapé usa “Desde 1992”, sem depender do relógio do build.
 
-O menu **Lentes** abre **Lentes para óculos** e **Lentes de contato**. As páginas de óculos, HOYA, ZEISS, Essilor e contato têm endereços reais sob `lentes/`. Qualquer venda de lentes exige receita médica. O site apresenta famílias e tecnologias, sem preços, estoque, aconselhamento médico, consulta ou adaptação. O certificado original da loja destaca o reconhecimento **Essilor Varilux Especialista Select 2026**.
+As seis fotos fornecidas do Ray-Ban Meta foram preservadas também em WebP para compatibilidade. O logo original continua guardado, com versão compacta para uso no site. Os recursos descritos têm como referência o [anúncio oficial da Meta](https://about.fb.com/news/2026/09/introducing-ray-ban-meta-audio-glasses-new-styles-plus-muse/); recursos de IA dependem do país e do idioma.
 
-As fontes dos nomes e famílias estão registradas em [`docs/LENTES.md`](docs/LENTES.md). Os fabricantes de lentes de contato aparecem em texto até a loja enviar logotipos PNG transparentes. O conteúdo é gerado a partir de `assets/lens-pages.js`; execute `npm run build:lenses` ao editá-lo.
+## Testes reproduzíveis
 
-Endereço, telefone, horários, depoimentos e orientações existentes foram preservados. Os depoimentos não receberam nomes ou notas inventados. Antes de publicar, a loja deve confirmar os dados comerciais e concluir as informações da hospedagem na política de privacidade.
+`npm test` verifica o HTML das 18 páginas, imagens e variantes responsivas, metadados, links e âncoras, mensagens de WhatsApp, limites de tamanho de imagens e sintaxe. Também simula o build em 2027/2028 e testa publicação em uma fixture isolada com domínio reservado `.invalid`.
 
-### RAY-BAN META WAYFARER GEN 3
+Para os testes opcionais de navegador, instale Playwright e axe-core em um ambiente de testes (sem mudar as dependências do projeto):
 
-A página `#/ray-ban-meta/index.html` usa as seis fotografias fornecidas do RW4011 601SSB. Modelo e armação preto fosco foram conferidos no [catálogo oficial da Ray-Ban Brasil](https://www.ray-ban.com/brazil/electronics/RW4011ray-ban%20meta%20gen%203%20wayfarer-preto/8056266191008). Preço, tamanho e disponibilidade ficam sob consulta.
+```sh
+npm install --no-save --package-lock=false playwright axe-core@4.10.3
+npx playwright install chromium
+npm run test:browser
+```
 
-A galeria responde a clique, setas esquerda/direita, Home e End. Imagem, descrição, seleção e contador mudam juntos, sem dependência de GSAP ou CDN. As fotos de 720 × 386 px são apresentadas como uma galeria de ângulos; não há simulação de 3D.
+Para incluir a análise axe, defina `AXE_SCRIPT` como caminho absoluto de `node_modules/axe-core/axe.min.js`. O teste informa no JSON se axe foi executado. Aceita `BROWSER=chromium|firefox|webkit`, `BROWSER_CHANNEL=chrome|msedge` e `PLAYWRIGHT_MODULE` com o caminho absoluto do módulo Playwright, permitindo usar a instalação isolada local. Os motores devem estar instalados. O teste inicia seu próprio servidor e salva resultados em `test-results/` (ignorado pelo Git).
 
-A descrição dos recursos da geração 3 usa também o [anúncio oficial da Meta](https://about.fb.com/news/2026/09/introducing-ray-ban-meta-audio-glasses-new-styles-plus-muse/), consultado em 28 de outubro de 2026. A apresentação utiliza o logo Meta fornecido pelo proprietário, preservado em `assets/logo-meta.png`.
+O navegador cobre 18 páginas em 320, 375, 768, 901, 1024 e 1440 px, imagens, tamanho de texto, menu/Escape, galeria por teclado, histórico, comparador, URLs legadas e 18 páginas sem JavaScript. Axe verifica nove páginas quando configurado. Testes automatizados não substituem leitores de tela e aparelhos reais.
 
-## Privacidade e publicação
+## Preparação para publicação
 
-O carregamento usa apenas arquivos locais. Não há cookies, rastreadores, formulários ou fontes externas. Google Maps, avaliações no Google e WhatsApp abrem somente após uma ação da pessoa. A mensagem no WhatsApp depende de envio pelo próprio usuário.
+O domínio e a hospedagem ainda não foram escolhidos. Na prévia, não há canonical, `og:url`, `og:image` absoluto ou sitemap com domínio inventado. `robots.txt` e a imagem social de 1200 × 630 já existem.
 
-Siga `AGENTS.md`: Issue antes de alterar, branch de trabalho, testes no PR e publicação somente após aprovação e merge.
+Depois de preencher `site-config.json` com os dados confirmados, execute:
+
+```sh
+npm run build
+npm test
+npm run build:publish
+```
+
+Com domínio HTTPS configurado, o build emite canonical, `og:url`, `og:image` e `sitemap.xml` com as 16 páginas principais; exclui 404 e o alias de marcas. `build:publish` exige também todos os campos de privacidade e produz `dist/`, sem documentação interna, scripts de geração, configuração ou originais pesados. Esse comando prepara arquivos e não envia nada para uma hospedagem. A adequação da política deve ser revisada pelo responsável da empresa.
+
+Configure o diretório publicado como `dist/` e a página de erro como `404.html`. Cabeçalhos de segurança, cache e redirecionamentos de servidor serão definidos conforme a hospedagem escolhida. Depois do deploy, conferir os canais reais da loja, o domínio HTTPS, as prévias sociais e o PageSpeed/CrUX.
+
+Siga `AGENTS.md`: Issue antes das alterações, branch própria, testes no PR e publicação somente após aprovação e merge.
