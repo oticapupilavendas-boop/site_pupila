@@ -21,7 +21,7 @@ Endereço da loja: Rua Abdon Batista, 59 — Centro, Joinville/SC
 Telefone: (47) 3422-3223
 WhatsApp: +55 47 3422-3223
 Segunda a sexta: 08h30 às 18h
-Sábado: ____ às 12h30 (falta o horário de abertura)
+Sábado: 08h30 às 12h30 — confirmado pelo proprietário em 04/11/2026
 Domingo: fechado
 Feriados: qual orientação devemos mostrar?
 
@@ -42,12 +42,12 @@ Prazo de retenção e finalidade dos logs, se informados pelo serviço:
 
 O CNPJ e a razão social podem ser enviados como texto ou por comprovante cadastral. O endereço legal pode ser diferente do endereço da loja; informe ambos nesse caso. Para os logs, basta inicialmente o nome do serviço e o link da política: eu verifico a documentação pública e identifico o que depender de configuração da conta.
 
-Com essas respostas, finalizo `site-config.json`, o horário em todas as páginas, os dados empresariais e a política de privacidade. A loja deve revisar o texto final antes da publicação. Depois gero canonical, `og:url`, `og:image` e sitemap com o domínio real, preparo `dist/` e os ajustes específicos da hospedagem. O deploy segue a aprovação do PR prevista em `AGENTS.md`.
+Com essas respostas, finalizo `site-config.json`, os demais dados empresariais e a política de privacidade. A loja deve revisar o texto final antes da publicação. Depois gero canonical, `og:url`, `og:image` e sitemap com o domínio real, preparo `dist/` e os ajustes específicos da hospedagem. O deploy segue a aprovação do PR prevista em `AGENTS.md`.
 
 ## Só envie se quiser restaurar ou ampliar estes conteúdos
 
 - **“Revendedora autorizada” de HOYA/ZEISS/Essilor:** envie comprovação vigente de cada marca (contrato, credenciamento ou confirmação escrita do representante que permita essa afirmação). Enquanto isso, o site usa “Trabalhamos com lentes...”. O certificado Select 2026 continua exibido porque a imagem foi fornecida pela loja.
-- **Depoimentos no próprio site:** envie o link individual da avaliação, texto autorizado, nome que pode aparecer, data e confirmação de autorização para republicar. Por enquanto, há somente o link para as avaliações no Google.
+- **Depoimentos no próprio site:** os trechos existentes voltaram a aparecer por solicitação do proprietário, sem inventar nomes ou notas. Para acrescentar autoria/data ou novos depoimentos, envie o link individual da avaliação e os dados que podem ser publicados.
 - **Catálogo de armações:** para cada modelo, envie fotos autorizadas e a identificação oficial (marca, modelo/referência, cor, medidas se conhecidas, grau/solar, público se aplicável). Diga se devemos mostrar apenas “sob consulta” ou alguma informação comercial confirmada. Fotos sem identificação podem ser enviadas, mas não vou deduzir marca ou modelo. Não é necessário completar o catálogo para publicar: as categorias já funcionam com atendimento e visita.
 - **Textos de miopia infantil:** peça ao representante os materiais brasileiros atuais de MiYOSMART, MyoCare e Stellest e, se houver, a redação aprovada para revendedores. Envie PDFs ou links oficiais e qualquer orientação de revisão da loja. Os textos atuais continuam breves, condicionados à avaliação/prescrição do oftalmologista e sem promessa de resultado.
 - **Ray-Ban/Meta:** se houver regra específica para revendedores, envie o manual de uso das marcas ou a orientação do representante. O logo fornecido foi preservado em versão otimizada; a IA é apresentada como dependente de país/idioma, sem garantir disponibilidade em português no Brasil.
@@ -84,9 +84,9 @@ Com essas respostas, finalizo `site-config.json`, o horário em todas as página
 | 18 — Manutenção | Interações e cabeçalho/rodapé unificados; dependência da página legada removida. Reescrita geral dos templates/CSS não é necessária para concluir. |
 | 19 — Documentação/testes | Atualizados; testes de navegador versionados. Capturas antigas identificadas como históricas. |
 | 20 — Imagens responsivas | Corrigido com srcset e WebP; fachada móvel com 44 KB. |
-| 21 — Abertura no sábado | Falta confirmar horário; não foi inventado. |
+| 21 — Abertura no sábado | Confirmado pelo proprietário: 08h30 às 12h30; atualizado em toda a página. |
 | P1/P3/P11 | Falta confirmação dos canais e dados da loja. |
-| P2/P4 | Afirmações/citações retiradas; comprovação só é necessária para restaurá-las. |
+| P2/P4 | Revenda autorizada continua sem afirmação; avaliações anteriores reexibidas por solicitação do proprietário, em trechos sem superlativo de preço. |
 | P5/P6 | Linguagem cautelosa mantida; materiais específicos/revisão comercial opcionais conforme acima. |
 | P7/P8 | Edge, Chrome e testes automatizados feitos; faltam testes nos aparelhos/aplicativos indicados. |
 | P9 | CI atualizado para Node 24. |

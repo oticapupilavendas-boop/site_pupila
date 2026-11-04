@@ -33,8 +33,16 @@ Os cenários estão versionados em `scripts/check-browser.mjs`; o teste de naveg
 
 - Razão social, CNPJ, endereço legal, contato de privacidade e revisão do texto pela empresa.
 - Domínio, hospedagem, país/processamento e prazo/política de logs. A página de privacidade da prévia explicita a ausência desses dados; não foi apresentada como política final.
-- Confirmação comercial do WhatsApp, endereço, telefone e horários. A abertura aos sábados não foi presumida.
+- Confirmação comercial do WhatsApp, endereço, telefone e demais horários. O sábado foi confirmado pelo proprietário: 08h30 às 12h30.
 - Safari iOS, Firefox, leitores de tela, aparelhos físicos e abertura do WhatsApp em aplicativos como Instagram/Facebook.
 - Validação na hospedagem real: HTTP 404, cache, cabeçalhos, HTTPS, sitemap, compartilhamento social e PageSpeed/CrUX. Não se atribui nota de produção a testes locais.
 
 Dados estruturados de negócio local e as melhorias opcionais de apresentação ficam para depois da confirmação dos dados comerciais. Catálogo com mais produtos exige identificação e informações fornecidas pela loja. O detalhamento está em `docs/PENDENCIAS.md`.
+
+## Ajustes solicitados pelo proprietário após a revisão — Issue #14
+
+- Sábado confirmado: 08h30 às 12h30; atualizado na home, no contato e nas perguntas frequentes.
+- Dois depoimentos anteriores reexibidos na home por solicitação do proprietário, sem inventar autores ou notas. O segundo usa um trecho que termina antes do superlativo de preço; o link para o Google foi mantido.
+- Arte de lentes para óculos encostada na borda direita, com parte da armação recortada pelo limite da seção. O recorte é local à abertura da página, preservando o texto e evitando rolagem horizontal.
+- Verificação de geometria da borda acrescentada aos cenários de navegador para impedir que a margem vazia retorne.
+- Validação destes ajustes: npm test; 108 cenários e nove análises axe no Edge; Chrome com 11 larguras entre 375 e 1920 px, conferindo borda direita, ausência de rolagem, duas avaliações e horário na home/contato/FAQ.

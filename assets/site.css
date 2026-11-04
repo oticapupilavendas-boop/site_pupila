@@ -592,7 +592,7 @@ summary::-webkit-details-marker { display: none; }
 .lens-hero-art { display: grid; place-items: center; width: 100%; max-width: 430px; aspect-ratio: 520 / 400; }
 .lens-hero-art img { display: block; width: 100%; height: 100%; object-fit: contain; }
 .lens-hero-art--glasses { width: 100%; max-width: none; aspect-ratio: 1.15; overflow: hidden; }
-.lens-hero-art--glasses img { object-fit: cover; object-position: 58% center; filter: brightness(1.018); mask-image: linear-gradient(to right, transparent, black 10%), linear-gradient(to bottom, transparent, black 8%, black 96%, transparent); mask-composite: intersect; }
+.lens-hero-art--glasses img { object-fit: cover; object-position: left center; filter: brightness(1.018); mask-image: linear-gradient(to right, transparent, black 10%), linear-gradient(to bottom, transparent, black 8%, black 96%, transparent); mask-composite: intersect; }
 .lens-prescription { max-width: 830px; margin: 28px 0 0; padding: 18px 24px; border-left: 3px solid var(--red); background: var(--soft); color: var(--navy); font-size: 14px; line-height: 1.75; }
 .lens-prescription strong { font-weight: 700; }
 body[data-page="lentes"] .section { padding-block: clamp(44px, 5vw, 72px); }
@@ -712,7 +712,7 @@ body[data-page="lentes"] .section { padding-block: clamp(44px, 5vw, 72px); }
   .lens-page-intro--illustrated { grid-template-columns: 1fr; gap: 25px; }
   .lens-page-intro--illustrated:has(.lens-hero-art--glasses) { grid-template-columns: 1fr; gap: 25px; }
   .lens-hero-art { width: min(100%, 270px); justify-self: center; }
-  .lens-hero-art--glasses { width: 100%; max-width: none; aspect-ratio: 1.5; justify-self: start; }
+  .lens-hero-art--glasses { width: 100%; max-width: none; aspect-ratio: 1.15; justify-self: start; }
   .lens-prescription { margin-top: 24px; padding: 16px 18px; font-size: 13px; }
   .lens-service-heading, .lens-service-steps { grid-template-columns: 1fr; }
   .lens-service-heading { gap: 15px; }
@@ -758,4 +758,15 @@ body[data-page="lentes"] .section { padding-block: clamp(44px, 5vw, 72px); }
   .topline .wrap { flex-wrap: wrap; gap: 4px 12px; }
   .topline { letter-spacing: 0; }
   .meta-feature-art figcaption { flex-wrap: wrap; }
+}
+
+/* A arte de óculos termina na borda da página, com o corte dentro da seção. */
+.lens-glasses-hero { overflow: hidden; }
+.lens-glasses-hero > .lens-page-intro { width: auto; margin-left: max(56px, calc((100% - 1280px) / 2)); margin-right: 0; }
+@media (max-width: 1150px) {
+  .lens-glasses-hero > .lens-page-intro { margin-left: 36px; }
+}
+@media (max-width: 650px) {
+  .lens-glasses-hero > .lens-page-intro { margin-left: 20px; }
+  .lens-glasses-hero .lens-intro-copy { padding-right: 20px; }
 }

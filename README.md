@@ -30,7 +30,7 @@ Cada página funciona sem JavaScript, inclusive o acesso à navegação no celul
 
 ## Conteúdo
 
-Categorias com menos de dois produtos usam apresentação editorial, contato e visita; os destaques reais existentes são mantidos. Produtos, cores, configurações e disponibilidade devem ser consultados com a loja. Não há checkout ou preços. As citações de avaliações e a afirmação de revenda autorizada foram removidas enquanto não há comprovação; o link para as avaliações permanece.
+Categorias com menos de dois produtos usam apresentação editorial, contato e visita; os destaques reais existentes são mantidos. Produtos, cores, configurações e disponibilidade devem ser consultados com a loja. Não há checkout ou preços. A afirmação de revenda autorizada foi retirada. Por solicitação do proprietário, as avaliações existentes aparecem em trechos, sem autores/notas inventados nem superlativo de preço; o link para as avaliações no Google permanece.
 
 As lentes exigem receita médica. Não se oferece consulta ou adaptação médica na loja. As fontes de linhas e tecnologias, a origem das marcas e o certificado Select 2026 estão em `docs/LENTES.md`. O ano da certificação é histórico e não é atualizado automaticamente. O rodapé usa “Desde 1992”, sem depender do relógio do build.
 

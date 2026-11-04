@@ -60,7 +60,22 @@ const reviews = `<section class="section wrap reviews-section" id="avaliacoes" a
 <a href="https://maps.app.goo.gl/fx92AvEfJ51patQ48" class="text-link" target="_blank" rel="noopener noreferrer">Ver avaliações no Google <span aria-hidden="true">↗</span>
 </a>
 </div>
-<p>Leia as avaliações no perfil da loja e conheça as experiências compartilhadas por nossos clientes.</p>
+<div class="testimonials-grid">
+<figure class="testimonial">
+<span class="testimonial-mark" aria-hidden="true">“</span>
+<blockquote>
+<p>Quero agradecer imensamente pelo atendimento maravilhoso na ótica. A equipe foi super atenciosa, esclareceu todas as minhas dúvidas e me ajudou a escolher a armação perfeita. Recomendo de olhos fechados, sem trocadilho!</p>
+</blockquote>
+<figcaption>Trecho de avaliação de cliente</figcaption>
+</figure>
+<figure class="testimonial">
+<span class="testimonial-mark" aria-hidden="true">“</span>
+<blockquote>
+<p>Eu amo essa Ótica, saio de Curitiba pra fazer meus óculos nela, super bem atendida, atendimento nota mil, sem forçar compra, deixando super a vontade na escolha [...]</p>
+</blockquote>
+<figcaption>Trecho de avaliação de cliente</figcaption>
+</figure>
+</div>
 </section>`;
 
 const faq = `<section class="section faq-section">
@@ -131,7 +146,7 @@ const location = `<section class="section wrap location-layout">
 </div>
 <div>
 <dt>Sábado</dt>
-<dd>Atendimento até 12h30; consulte o horário de abertura</dd>
+<dd>08h30 às 12h30</dd>
 </div>
 <div>
 <dt>Domingo</dt>
@@ -230,7 +245,7 @@ const existing = {
 </div>
 <div>
 <dt>Sábado</dt>
-<dd>Atendimento até 12h30; consulte o horário de abertura</dd>
+<dd>08h30 às 12h30</dd>
 </div>
 <div>
 <dt>Domingo</dt>
@@ -346,7 +361,7 @@ const existing = {
 <summary>Onde fica a loja e quais são os horários?<span aria-hidden="true">+</span>
 </summary>
 <div class="faq-answer">
-<p>Estamos na Rua Abdon Batista, 59, Centro, Joinville/SC. Atendemos de segunda a sexta, das 08h30 às 18h; aos sábados, até 12h30. Aos domingos, a loja está fechada.</p>
+<p>Estamos na Rua Abdon Batista, 59, Centro, Joinville/SC. Atendemos de segunda a sexta, das 08h30 às 18h; aos sábados, das 08h30 às 12h30. Aos domingos, a loja está fechada.</p>
 </div>
 </details>
 </div>

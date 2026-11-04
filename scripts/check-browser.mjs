@@ -55,6 +55,11 @@ try {
       assert.deepEqual(result.broken,[],`${route}: imagens quebradas`);
       assert.equal(result.h1,1,route);
       assert.deepEqual(result.small,[],`${route} em ${width}px: texto informativo pequeno`);
+      if (route === 'lentes/') {
+        const edge = await page.locator('.lens-hero-art--glasses').evaluate(el => ({right:el.getBoundingClientRect().right,viewport:document.documentElement.clientWidth}));
+        assert(Math.abs(edge.right-edge.viewport) <= 1, `lentes em ${width}px: vazio na borda direita`);
+      }
+
       layoutChecks++;
     }
     console.log(`✓ Layout de ${routes.length} páginas em ${width}px`);
