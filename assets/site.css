@@ -592,7 +592,7 @@ summary::-webkit-details-marker { display: none; }
 .lens-hero-art { display: grid; place-items: center; width: 100%; max-width: 430px; aspect-ratio: 520 / 400; }
 .lens-hero-art img { display: block; width: 100%; height: 100%; object-fit: contain; }
 .lens-hero-art--glasses { width: 100%; max-width: none; aspect-ratio: 1.15; overflow: hidden; }
-.lens-hero-art--glasses img { object-fit: cover; object-position: left center; filter: brightness(1.018); mask-image: linear-gradient(to right, transparent, black 10%), linear-gradient(to bottom, transparent, black 8%, black 96%, transparent); mask-composite: intersect; }
+.lens-hero-art--glasses img { object-fit: cover; object-position: 25% center; filter: brightness(1.018); mask-image: linear-gradient(to right, transparent, black 10%), linear-gradient(to bottom, transparent, black 8%, black 96%, transparent); mask-composite: intersect; }
 .lens-prescription { max-width: 830px; margin: 28px 0 0; padding: 18px 24px; border-left: 3px solid var(--red); background: var(--soft); color: var(--navy); font-size: 14px; line-height: 1.75; }
 .lens-prescription strong { font-weight: 700; }
 body[data-page="lentes"] .section { padding-block: clamp(44px, 5vw, 72px); }
