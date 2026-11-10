@@ -21,7 +21,15 @@ document.addEventListener('DOMContentLoaded', () => {
   root.classList.add('js');
   const nav = root.querySelector('#main-nav');
   const toggle = root.querySelector('.menu-toggle');
+  const catalog = root.querySelector('[data-catalog]');
   const brandMenu = root.querySelector('[data-catalog-brand]');
+  const pendingCards = new Map();
+  const observeCatalog = catalog && 'IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const cardObserver = observeCatalog ? new IntersectionObserver(entries => {
+    entries.forEach(({ target, isIntersecting }) => {
+      if (isIntersecting) revealCatalogGroup(target);
+    });
+  }, { threshold: .08 }) : null;
   const closeGroups = () => root.querySelectorAll('.nav-group[open]').forEach(group => { group.open = false; });
   const closeMenu = (returnFocus = false) => {
     const wasOpen = toggle?.getAttribute('aria-expanded') === 'true';
@@ -40,6 +48,33 @@ document.addEventListener('DOMContentLoaded', () => {
     buttons.forEach(item => item.setAttribute('aria-pressed', String(item === button)));
     root.querySelector('.meta-gallery-count').textContent = `${String(index + 1).padStart(2, '0')} / ${String(buttons.length).padStart(2, '0')}`;
   }
+  function revealCatalogGroup(card) {
+    const group = pendingCards.get(card);
+    if (!group) return;
+    for (const member of group) {
+      pendingCards.delete(member);
+      cardObserver.unobserve(member);
+      member.classList.replace('catalog-pending', 'catalog-entering');
+    }
+  }
+  function prepareCatalogEntrance() {
+    if (!cardObserver) return;
+    cardObserver.disconnect();
+    cardObserver.takeRecords();
+    pendingCards.clear();
+    const cards = [...catalog.querySelectorAll('[data-catalog-card]')];
+    cards.forEach(card => card.classList.remove('catalog-pending', 'catalog-entering'));
+    const visible = cards.filter(card => !card.hidden);
+    for (let start = 0; start < visible.length; start += 3) {
+      const group = visible.slice(start, start + 3);
+      group.forEach((card, index) => {
+        card.style.setProperty('--catalog-delay', `${index * 70}ms`);
+        card.classList.add('catalog-pending');
+        pendingCards.set(card, group);
+        cardObserver.observe(card);
+      });
+    }
+  }
   function updateCatalog(catalog, audience = catalog.dataset.audience || 'todos') {
     const brand = catalog.querySelector('[data-catalog-brand-option][aria-pressed="true"]').dataset.catalogBrandOption;
     let visible = 0;
@@ -52,7 +87,53 @@ document.addEventListener('DOMContentLoaded', () => {
     catalog.querySelectorAll('[data-catalog-filter]').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.catalogFilter === audience)));
     catalog.querySelector('[data-catalog-result]').textContent = visible === 1 ? '1 modelo em destaque' : `${visible} modelos em destaque`;
     catalog.querySelector('[data-catalog-empty]').hidden = visible !== 0;
+    prepareCatalogEntrance();
   }
+  prepareCatalogEntrance();
+  catalog?.addEventListener('focusin', event => revealCatalogGroup(event.target.closest('[data-catalog-card]')));
+
+  for (const carousel of root.querySelectorAll('[data-carousel]')) {
+    const track = carousel.querySelector('.carousel-slides');
+    const slides = [...track.children];
+    const controls = carousel.querySelector('.carousel-controls');
+    const position = controls.querySelector('[data-carousel-position]');
+    let current = 0;
+
+    slides.forEach((slide, index) => {
+      slide.setAttribute('role', 'group');
+      slide.setAttribute('aria-roledescription', 'item');
+      slide.setAttribute('aria-label', `${index + 1} de ${slides.length}`);
+      slide.setAttribute('aria-hidden', String(index !== 0));
+    });
+    carousel.classList.add('carousel-enhanced');
+    carousel.setAttribute('aria-roledescription', 'carrossel');
+    track.setAttribute('aria-live', 'polite');
+    position.textContent = `1 / ${slides.length}`;
+    controls.hidden = false;
+    controls.addEventListener('click', event => {
+      const step = event.target.closest('[data-carousel-step]');
+      if (!step) return;
+      slides[current].setAttribute('aria-hidden', 'true');
+      current = (current + Number(step.dataset.carouselStep) + slides.length) % slides.length;
+      slides[current].setAttribute('aria-hidden', 'false');
+      position.textContent = `${current + 1} / ${slides.length}`;
+    });
+  }
+
+  const copyWhatsapp = root.querySelector('[data-copy-whatsapp]');
+  if (copyWhatsapp && navigator.clipboard?.writeText) {
+    const status = root.querySelector('.copy-status');
+    copyWhatsapp.hidden = false;
+    copyWhatsapp.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(copyWhatsapp.dataset.copyWhatsapp);
+        status.textContent = 'Número copiado.';
+      } catch {
+        status.textContent = 'Selecione o número acima para copiar.';
+      }
+    });
+  }
+
   root.addEventListener('click', event => {
     const target = event.target.closest('a, button');
     if (!target) return;

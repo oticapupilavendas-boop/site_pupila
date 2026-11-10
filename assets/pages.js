@@ -20,14 +20,14 @@ window.PUPILA_DATA = {
     "phoneDisplay": "(47) 3422-3223",
     "whatsapp": "554734223223",
     "address": "Rua Abdon Batista, 59 — Centro, Joinville/SC",
-    "maps": "https://www.google.com/maps/search/?api=1&query=%C3%93tica%20Pupila%20Rua%20Abdon%20Batista%2059%20Joinville%20SC",
-    "googleProfile": "https://maps.app.goo.gl/fx92AvEfJ51patQ48",
     "siteUrl": "",
     "instagram": ""
   },
-  "products": [],
-  "brands": []
+  "products": []
 };
+
+const company = window.PUPILA_DATA.company;
+const whatsappIcon = '<img class="whatsapp-icon" src="assets/whatsapp.svg" width="26" height="26" alt="">';
 
 const story = `<section class="story-block wrap">
 <figure class="story-photo reveal">
@@ -51,31 +51,23 @@ const story = `<section class="story-block wrap">
 </div>
 </section>`;
 
+const reviewQuotes = [
+  'Quero agradecer imensamente pelo atendimento maravilhoso na ótica. A equipe foi super atenciosa, esclareceu todas as minhas dúvidas e me ajudou a escolher a armação perfeita. Recomendo de olhos fechados, sem trocadilho!',
+  'Eu amo essa Ótica, saio de Curitiba pra fazer meus óculos nela, super bem atendida, atendimento nota mil, sem forçar compra, deixando super a vontade na escolha [...]'
+];
+const testimonial = quote => `<figure class="testimonial">
+<span class="testimonial-mark" aria-hidden="true">“</span>
+<blockquote><p>${quote}</p></blockquote>
+<figcaption>Trecho de avaliação de cliente</figcaption>
+</figure>`;
 const reviews = `<section class="section wrap reviews-section" id="avaliacoes" aria-labelledby="reviews-title">
 <div class="section-heading">
 <div>
 <p class="eyebrow">EXPERIÊNCIAS DE CLIENTES</p>
 <h2 id="reviews-title">Conheça as avaliações<br>da nossa loja.</h2>
 </div>
-<a href="https://maps.app.goo.gl/fx92AvEfJ51patQ48" class="text-link" target="_blank" rel="noopener noreferrer">Ver avaliações no Google <span aria-hidden="true">↗</span>
-</a>
 </div>
-<div class="testimonials-grid">
-<figure class="testimonial">
-<span class="testimonial-mark" aria-hidden="true">“</span>
-<blockquote>
-<p>Quero agradecer imensamente pelo atendimento maravilhoso na ótica. A equipe foi super atenciosa, esclareceu todas as minhas dúvidas e me ajudou a escolher a armação perfeita. Recomendo de olhos fechados, sem trocadilho!</p>
-</blockquote>
-<figcaption>Trecho de avaliação de cliente</figcaption>
-</figure>
-<figure class="testimonial">
-<span class="testimonial-mark" aria-hidden="true">“</span>
-<blockquote>
-<p>Eu amo essa Ótica, saio de Curitiba pra fazer meus óculos nela, super bem atendida, atendimento nota mil, sem forçar compra, deixando super a vontade na escolha [...]</p>
-</blockquote>
-<figcaption>Trecho de avaliação de cliente</figcaption>
-</figure>
-</div>
+<div class="testimonials-grid">${reviewQuotes.map(testimonial).join('')}</div>
 </section>`;
 
 const faq = `<section class="section faq-section">
@@ -95,7 +87,6 @@ const faq = `<section class="section faq-section">
 </summary>
 <div class="faq-answer">
 <p>Enxágue para retirar partículas, use um produto indicado para suas lentes ou uma pequena quantidade de detergente neutro, enxágue e seque com uma microfibra limpa. Evite água quente e siga as orientações do fabricante.</p>
-<a href="https://www.zeiss.com/vision-care/en/eye-health-and-care/health-prevention/how-should-i-take-care-of-my-prescription-spectacle-lenses.html" class="source-link" target="_blank" rel="noopener noreferrer">Referência técnica (em inglês) <span aria-hidden="true">↗</span></a>
 </div>
 </details>
 <details>
@@ -103,7 +94,6 @@ const faq = `<section class="section faq-section">
 </summary>
 <div class="faq-answer">
 <p>Evite. O tecido e a poeira podem riscar as lentes. Prefira uma microfibra própria e limpa, retirando a sujeira antes de esfregar.</p>
-<a href="https://www.zeiss.com/vision-care/en/eye-health-and-care/health-prevention/how-should-i-take-care-of-my-prescription-spectacle-lenses.html" class="source-link" target="_blank" rel="noopener noreferrer">Referência técnica (em inglês) <span aria-hidden="true">↗</span></a>
 </div>
 </details>
 <details>
@@ -111,7 +101,6 @@ const faq = `<section class="section faq-section">
 </summary>
 <div class="faq-answer">
 <p>A cor, sozinha, não comprova proteção. Ao escolher os óculos solares, verifique a indicação de proteção UVA e UVB do fabricante, como 100% UV ou UV400.</p>
-<a href="https://aao.org/eye-health/tips-prevention/sun" class="source-link" target="_blank" rel="noopener noreferrer">Referência técnica (em inglês) <span aria-hidden="true">↗</span></a>
 </div>
 </details>
 <details>
@@ -119,7 +108,6 @@ const faq = `<section class="section faq-section">
 </summary>
 <div class="faq-answer">
 <p>Use um estojo adequado e evite apoiar as lentes diretamente nas superfícies. Não deixe os óculos expostos ao calor intenso, como no painel de um carro.</p>
-<a href="https://www.zeiss.com/vision-care/en/eye-health-and-care/health-prevention/how-should-i-take-care-of-my-prescription-spectacle-lenses.html" class="source-link" target="_blank" rel="noopener noreferrer">Referência técnica (em inglês) <span aria-hidden="true">↗</span></a>
 </div>
 </details>
 <details>
@@ -154,7 +142,7 @@ const location = `<section class="section wrap location-layout">
 </div>
 </dl>
 <div class="button-row">
-<a href="https://www.google.com/maps/search/?api=1&amp;query=%C3%93tica%20Pupila%20Rua%20Abdon%20Batista%2059%20Joinville%20SC" class="button primary" target="_blank" rel="noopener noreferrer">Como chegar <svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<a href="#/contato/index.html#localizacao" class="button primary">Como chegar <svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
 <path d="M4 12h16M13 5l7 7-7 7"/>
 </svg>
 </a>
@@ -219,17 +207,13 @@ const existing = {
 </section>
 <section class="wrap contact-layout">
 <div>
-<div class="contact-item">
+<div class="contact-item" id="localizacao">
 <svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
 <path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 1 1 16 0ZM15 10a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
 </svg>
 <div>
 <h2>Nosso endereço</h2>
 <p>Rua Abdon Batista, 59<br>Centro · Joinville/SC</p>
-<a href="https://www.google.com/maps/search/?api=1&amp;query=%C3%93tica%20Pupila%20Rua%20Abdon%20Batista%2059%20Joinville%20SC" class="text-link" target="_blank" rel="noopener noreferrer">Abrir no Google Maps <svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-<path d="M4 12h16M13 5l7 7-7 7"/>
-</svg>
-</a>
 </div>
 </div>
 <div class="contact-item">
@@ -254,20 +238,16 @@ const existing = {
 </dl>
 </div>
 </div>
-<div class="contact-item">
+<div class="contact-item" id="atendimento">
 <svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
 <path d="M7 3H4a1 1 0 0 0-1 1c0 9.4 7.6 17 17 17a1 1 0 0 0 1-1v-3l-5-2-2 2a15 15 0 0 1-7-7l2-2-2-5Z"/>
 </svg>
 <div>
 <h2>Fale com a Pupila</h2>
-<a href="tel:+554734223223" class="contact-phone" >(47) 3422-3223</a>
-<div class="button-row">
-<a class="button primary" href="https://wa.me/${window.PUPILA_DATA.company.whatsapp}?text=${encodeURIComponent('Olá! Conheci a Ótica Pupila pelo site e gostaria de atendimento.')}" target="_blank" rel="noopener noreferrer">
-<svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-<path d="M21 11.5a9 9 0 0 1-9 9 10 10 0 0 1-4-.9L3 21l1.4-4.5a9 9 0 1 1 16.6-5ZM8 11h8M8 7h5M8 15h5"/>
-</svg>Falar pelo WhatsApp</a>
-</div>
-<p class="small">Atendimento pelo WhatsApp: (47) 3422-3223.</p>
+<a href="tel:${company.phone}" class="contact-phone">${company.phoneDisplay}</a>
+<p class="small">Use esse número para ligar ou conversar pelo WhatsApp.</p>
+<button type="button" class="button primary" data-copy-whatsapp="+${company.whatsapp}" hidden>${whatsappIcon} Copiar número do WhatsApp</button>
+<p class="copy-status" role="status"></p>
 </div>
 </div>
 </div>
@@ -281,12 +261,7 @@ const existing = {
 </svg>
 <div>
 <h3>Seu caminho até a Pupila.</h3>
-<p>Veja a localização e trace sua rota no Google Maps.</p>
-<a href="https://www.google.com/maps/search/?api=1&amp;query=%C3%93tica%20Pupila%20Rua%20Abdon%20Batista%2059%20Joinville%20SC" class="text-link" target="_blank" rel="noopener noreferrer">Ver mapa e rotas <svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-<path d="M4 12h16M13 5l7 7-7 7"/>
-</svg>
-</a>
-<small>O mapa abre no Google somente quando você clicar.</small>
+<p>Procure a fachada azul e vermelha na Rua Abdon Batista, 59, no Centro de Joinville.</p>
 </div>
 </div>
 </div>
@@ -309,7 +284,6 @@ const existing = {
 </summary>
 <div class="faq-answer">
 <p>Enxágue para retirar partículas, use um produto indicado para suas lentes ou uma pequena quantidade de detergente neutro, enxágue e seque com uma microfibra limpa. Evite água quente e siga as orientações do fabricante.</p>
-<a href="https://www.zeiss.com/vision-care/en/eye-health-and-care/health-prevention/how-should-i-take-care-of-my-prescription-spectacle-lenses.html" class="source-link" target="_blank" rel="noopener noreferrer">Referência técnica (em inglês) <span aria-hidden="true">↗</span></a>
 </div>
 </details>
 <details>
@@ -317,7 +291,6 @@ const existing = {
 </summary>
 <div class="faq-answer">
 <p>Evite. O tecido e a poeira podem riscar as lentes. Prefira uma microfibra própria e limpa, retirando a sujeira antes de esfregar.</p>
-<a href="https://www.zeiss.com/vision-care/en/eye-health-and-care/health-prevention/how-should-i-take-care-of-my-prescription-spectacle-lenses.html" class="source-link" target="_blank" rel="noopener noreferrer">Referência técnica (em inglês) <span aria-hidden="true">↗</span></a>
 </div>
 </details>
 <details>
@@ -325,7 +298,6 @@ const existing = {
 </summary>
 <div class="faq-answer">
 <p>A cor, sozinha, não comprova proteção. Ao escolher os óculos solares, verifique a indicação de proteção UVA e UVB do fabricante, como 100% UV ou UV400.</p>
-<a href="https://aao.org/eye-health/tips-prevention/sun" class="source-link" target="_blank" rel="noopener noreferrer">Referência técnica (em inglês) <span aria-hidden="true">↗</span></a>
 </div>
 </details>
 <details>
@@ -333,7 +305,6 @@ const existing = {
 </summary>
 <div class="faq-answer">
 <p>Use um estojo adequado e evite apoiar as lentes diretamente nas superfícies. Não deixe os óculos expostos ao calor intenso, como no painel de um carro.</p>
-<a href="https://www.zeiss.com/vision-care/en/eye-health-and-care/health-prevention/how-should-i-take-care-of-my-prescription-spectacle-lenses.html" class="source-link" target="_blank" rel="noopener noreferrer">Referência técnica (em inglês) <span aria-hidden="true">↗</span></a>
 </div>
 </details>
 <details>
@@ -402,8 +373,7 @@ const existing = {
     sun: 'M7 12a5 5 0 1 0 10 0 5 5 0 0 0-10 0ZM12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5 19 19M5 19l1.5-1.5M17.5 6.5 19 5',
     watch: 'M7 7 8 1h8l1 6M7 17l1 6h8l1-6M5 12a7 7 0 1 0 14 0 7 7 0 0 0-14 0ZM12 8v4l3 2',
     gem: 'M3 7l4-5h10l4 5-9 15L3 7ZM3 7h18M7 2l5 20 5-20',
-    lens: 'M3 12a9 9 0 1 0 18 0 9 9 0 0 0-18 0ZM8 6c-3 3-3 9 0 12M12 3c7 4 7 14 0 18',
-    chat: 'M21 11.5a9 9 0 0 1-9 9 10 10 0 0 1-4-.9L3 21l1.4-4.5a9 9 0 1 1 16.6-5ZM8 9h8M8 13h5'
+    lens: 'M3 12a9 9 0 1 0 18 0 9 9 0 0 0-18 0ZM8 6c-3 3-3 9 0 12M12 3c7 4 7 14 0 18'
   };
   const icon = name => `<svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
 <path d="${paths[name] || paths.arrow}"/>
@@ -416,7 +386,7 @@ const existing = {
     'lentes/contato': 'lentes/contato/'
   };
   const link = (route, label, classes = '') => `<a class="${classes}" href="${lensPaths[route] || `#/${route}/index.html`}">${label}</a>`;
-  const chat = (label = 'Fale com a Pupila', message = 'Olá! Conheci a Ótica Pupila pelo site e gostaria de atendimento.', classes = 'button primary') => `<a class="${classes}" href="https://wa.me/${window.PUPILA_DATA.company.whatsapp}?text=${encodeURIComponent(message)}" target="_blank" rel="noopener noreferrer">${label}${icon('diagonal')}</a>`;
+  const chat = (label, classes = 'button primary') => `<a class="${classes}" href="#/contato/index.html#atendimento">${label}${icon('arrow')}</a>`;
   const crumb = (label, parent) => `<nav class="breadcrumb wrap" aria-label="Caminho da página">
 <a href="#/index.html">Início</a>
 <span aria-hidden="true">/</span>${parent ? `
@@ -430,6 +400,56 @@ ${link(parent[0], parent[1])}<span aria-hidden="true">/</span>` : ''}
     ['semijoias', 'Semijoias', 'Pequenos detalhes. Grandes significados.', 'gem'],
     ['lentes', 'Lentes para óculos', 'Tecnologia e cuidado para cada olhar.', 'lens']
   ];
+  const catalogFaqs = {
+    'oculos-de-grau': [
+      ['O que devo levar para escolher meus óculos de grau?', 'Traga sua receita médica e, se já usa óculos, leve o par atual. Conte à equipe em quais atividades você mais usa as lentes.'],
+      ['Qualquer armação funciona com a minha receita?', 'A combinação depende da prescrição, do tamanho e do formato da armação. A equipe pode conferir as opções de lente e montagem com você.'],
+      ['Posso experimentar as armações na loja?', 'Sim. Consulte a disponibilidade antes da visita e experimente as armações para comparar o peso e o ajuste.']
+    ],
+    'oculos-de-sol': [
+      ['Como conferir a proteção UV dos óculos de sol?', 'Confira na descrição do fabricante a indicação de proteção UVA e UVB, como UV400 ou 100% UV. A cor da lente, por si só, não comprova proteção.'],
+      ['Lente polarizada e proteção UV são a mesma coisa?', 'A polarização reduz o brilho refletido em superfícies como água e asfalto. A proteção UV é uma característica separada que deve ser conferida na lente escolhida.'],
+      ['Posso fazer um óculos de sol com grau?', 'Depende da prescrição e da armação. Traga sua receita para a equipe conferir quais modelos e opções de lentes podem ser combinados.']
+    ],
+    relogios: [
+      ['Como saber se um relógio pode molhar?', 'A resistência à água depende do modelo. Confira a indicação do fabricante e as orientações de uso antes de molhar o relógio.'],
+      ['Posso experimentar o relógio antes de escolher?', 'Consulte os modelos na loja e experimente para comparar o tamanho da caixa e o ajuste da pulseira no pulso.'],
+      ['Como consultar modelos e preços de relógios?', 'Fale com a Pupila ou visite a loja. A equipe pode informar quais modelos estão disponíveis e os valores de cada peça.']
+    ],
+    semijoias: [
+      ['Como consultar o material e o acabamento de uma peça?', 'Pergunte à equipe sobre a composição e o acabamento da peça escolhida. As características variam conforme o modelo.'],
+      ['Como guardar minhas semijoias?', 'Guarde as peças secas e separadas para evitar atrito. Siga as orientações de cuidado indicadas para cada acabamento.'],
+      ['Como saber quais semijoias estão disponíveis?', 'Consulte a equipe da Pupila ou visite a loja para conhecer as peças, tamanhos e acabamentos disponíveis.']
+    ]
+  };
+
+  function carousel({ id, heading, kicker, description, slides, previous, next }) {
+    return `<section class="section product-carousel${id === 'produto-perguntas' ? ' faq-section' : ''}" id="${id}" data-carousel aria-labelledby="${id}-title">
+<div class="wrap carousel-layout">
+<div><p class="eyebrow">${kicker}</p><h2 id="${id}-title">${heading}</h2>${description ? `<p class="carousel-description">${description}</p>` : ''}</div>
+<div>
+<div class="carousel-slides" id="${id}-slides">${slides.map(slide => `<div class="carousel-slide">${slide}</div>`).join('')}</div>
+<div class="carousel-controls" hidden>
+<button class="carousel-control" type="button" data-carousel-step="-1" aria-controls="${id}-slides" aria-label="${previous}">${icon('arrow')}</button>
+<span class="carousel-position" data-carousel-position aria-hidden="true"></span>
+<button class="carousel-control" type="button" data-carousel-step="1" aria-controls="${id}-slides" aria-label="${next}">${icon('arrow')}</button>
+</div>
+</div>
+</div>
+</section>`;
+  }
+
+  const productReviews = carousel({
+    id: 'produto-avaliacoes', heading: 'Avaliações da nossa loja.', kicker: 'EXPERIÊNCIAS DE CLIENTES',
+    description: 'O que os clientes contam sobre o atendimento na Pupila.',
+    slides: reviewQuotes.map(testimonial), previous: 'Avaliação anterior', next: 'Próxima avaliação'
+  });
+  const productHelp = questions => productReviews + carousel({
+    id: 'produto-perguntas', heading: 'Perguntas frequentes.', kicker: 'BOM SABER',
+    slides: questions.map(([question, answer]) => `<article class="carousel-question"><h3>${question}</h3><p>${answer}</p></article>`),
+    previous: 'Pergunta anterior', next: 'Próxima pergunta'
+  });
+
   const header = `
     <a href="#conteudo" class="skip-link">Pular para o conteúdo</a>
     <aside class="topline" aria-label="Informações da loja">
@@ -444,9 +464,10 @@ ${link(parent[0], parent[1])}<span aria-hidden="true">/</span>` : ''}
 <img src="assets/image-01.webp" width="650" height="318" alt="Ótica Pupila" class="brand-logo" decoding="async">
 </a>
       <nav id="main-nav" class="main-nav" aria-label="Navegação principal">
+        <a href="#/index.html" class="nav-link">Início</a>
         <details class="nav-group">
 <summary>Óculos ${icon('chevron')}</summary>
-<div class="submenu">${link('oculos-de-grau', 'Óculos de grau')}${link('oculos-de-sol', 'Óculos de sol')}${link('ray-ban-meta', 'Ray-Ban Meta ↗')}</div>
+<div class="submenu">${link('oculos-de-grau', 'Óculos de grau')}${link('oculos-de-sol', 'Óculos de sol')}</div>
 </details>
         ${link('relogios', 'Relógios', 'nav-link')}${link('semijoias', 'Semijoias', 'nav-link')}
         <details class="nav-group nav-lenses">
@@ -455,9 +476,9 @@ ${link(parent[0], parent[1])}<span aria-hidden="true">/</span>` : ''}
 </details>
         <details class="nav-group nav-about">
 <summary>A Pupila ${icon('chevron')}</summary>
-<div class="submenu">${link('nossa-historia', 'Nossa história')}${link('marcas', 'Nossas marcas')}<a href="#/index.html#avaliacoes">Avaliações</a>${link('perguntas-frequentes', 'Perguntas frequentes')}</div>
+<div class="submenu">${link('nossa-historia', 'Nossa história')}${link('perguntas-frequentes', 'Perguntas frequentes')}</div>
 </details>
-        ${link('ray-ban-meta', 'Ray-Ban Meta', 'nav-link meta-nav-link')}${link('contato', 'Visite a loja', 'nav-link mobile-visit')}
+        ${link('contato', 'Visite a loja', 'nav-link mobile-visit')}
       </nav>
       <div class="header-actions">${link('contato', `Visite a loja ${icon('diagonal')}`, 'button outline header-visit')}<button type="button" class="menu-toggle" aria-controls="main-nav" aria-expanded="false">${icon('menu')}<span>Menu</span>
 </button>
@@ -484,20 +505,20 @@ ${link(parent[0], parent[1])}<span aria-hidden="true">/</span>` : ''}
 <span class="footer-city">JOINVILLE · SANTA CATARINA</span>
 </div>
       <div>
-<h2>Encontre seu estilo</h2>${categories.map(c => link(c[0], c[1])).join('')}${link('ray-ban-meta', 'Ray-Ban Meta')}</div>
+<h2>Encontre seu estilo</h2>${categories.map(c => link(c[0], c[1])).join('')}</div>
       <div>
-<h2>Conheça a Pupila</h2>${link('nossa-historia', 'Nossa história')}${link('marcas', 'Nossas marcas')}${link('perguntas-frequentes', 'Perguntas frequentes')}${link('contato', 'Contato')}</div>
+<h2>Conheça a Pupila</h2>${link('nossa-historia', 'Nossa história')}${link('perguntas-frequentes', 'Perguntas frequentes')}${link('contato', 'Contato')}</div>
       <div>
 <h2>Vamos nos encontrar</h2>
 <p>Rua Abdon Batista, 59<br>Centro · Joinville/SC</p>
 <a href="tel:+554734223223">(47) 3422-3223</a>
-<a class="text-link" href="${window.PUPILA_DATA.company.maps.replaceAll('&', '&amp;')}" target="_blank" rel="noopener noreferrer">Como chegar ${icon('diagonal')}</a>
+<a class="text-link" href="#/contato/index.html#localizacao">Como chegar ${icon('arrow')}</a>
 </div>
     </div>
 <div class="wrap footer-bottom">
 <span>Ótica Pupila · Desde 1992</span>${link('privacidade', 'Política de privacidade')}<a href="#/index.html">Feito para olhar de perto. ↑</a>
 </div>
-    <a class="floating-contact" href="https://wa.me/${window.PUPILA_DATA.company.whatsapp}?text=${encodeURIComponent('Olá! Conheci a Ótica Pupila pelo site e gostaria de atendimento.')}" target="_blank" rel="noopener noreferrer" aria-label="Falar com a Pupila pelo WhatsApp">${icon('chat')}<span>Fale com a Pupila</span>
+    <a class="floating-contact" href="#/contato/index.html#atendimento">${whatsappIcon}<span>Fale com a Pupila</span>
 </a>
 </footer>`;
 
@@ -512,7 +533,7 @@ ${link(parent[0], parent[1])}<span aria-hidden="true">/</span>` : ''}
 </h1>
 <p class="hero-description">O estilo é seu. O cuidado é nosso.<br>Óculos, relógios e semijoias para acompanhar<br class="desktop-break"> quem você é, em cada momento.</p>
 <div class="hero-buttons">
-<a href="#/index.html#categorias" class="button primary">Encontre seu estilo ${icon('diagonal')}</a>${chat('Converse com a gente', undefined, 'text-link')}</div>
+<a href="#/index.html#categorias" class="button primary">Encontre seu estilo ${whatsappIcon}</a>${chat('Converse com a gente', 'button accent')}</div>
 <div class="hero-signature">
 <span class="signature-line">
 </span>
@@ -631,64 +652,27 @@ ${productBrands}
     'clip-levantado': ['Clip levantado', 'com clip solar levantado'],
     'clip-oliva': ['Clip oliva', 'com clip solar oliva']
   };
-  const catalogProducts = [
-    {
-      category: 'oculos-de-grau', slug: 'ray-ban-tartaruga', name: 'Thalia Optics',
-      description: 'Armação tartaruga com aros arredondados e um pequeno detalhe metálico em cada canto.',
-      facts: [['Armação', 'Tartaruga'], ['Formato', 'Arredondado, com linhas angulares no topo'], ['Detalhes', 'Rebites frontais e assinatura Ray-Ban na haste']],
-      story: 'O Thalia recupera um desenho do arquivo da Ray-Ban. As linhas finas remetem aos anos 1970, com uma frente que combina curvas e ângulos.',
-      catalogUrl: 'https://www.ray-ban.com/brazil/graduados/RX5395thalia%20optics-havana/8056597364270'
-    },
-    {
-      category: 'oculos-de-grau', slug: 'ray-ban-preta', name: 'RB7027 Optics',
-      description: 'Armação preta com aros retangulares, cantos suaves e assinatura Ray-Ban na haste.',
-      facts: [['Armação', 'Preta'], ['Formato', 'Retangular, com cantos arredondados'], ['Hastes', 'Largas junto à frente, com pontas curvas']],
-      catalogUrl: 'https://www.ray-ban.com/brazil/graduados/RX7027L%20MALE%20rb7027%20optics-preto/7895653130388',
-      audience: 'masculino',
-      identificationPending: true
-    },
-    {
-      category: 'oculos-de-sol', slug: 'ray-ban-marrom-translucido', name: 'State Street',
-      description: 'Óculos de sol com armação marrom-clara translúcida e lentes marrons em degradê.',
-      facts: [['Armação', 'Marrom-clara translúcida'], ['Lentes', 'Marrom em degradê'], ['Material da referência', 'Acetato']],
-      story: 'O State Street faz parte da família Wayfarer. A frente quadrada mais marcada dá à linha uma leitura contemporânea do desenho clássico.',
-      catalogUrl: 'https://www.ray-ban.com/brazil/oculos-de-sol/RB2186state%20street-marrom-claro%20transparente/8056262581278'
-    },
-    {
-      category: 'oculos-de-sol', slug: 'ray-ban-preto-lentes-verdes', name: 'Original Wayfarer Classic',
-      description: 'Óculos de sol com armação preta, lentes verdes e detalhes metálicos nas laterais da frente.',
-      facts: [['Armação', 'Preta'], ['Formato', 'Quadrado, com cantos arredondados'], ['Lentes', 'Verdes']],
-      story: 'O desenho Original Wayfarer foi lançado em 1952. Sua frente inclinada virou uma das marcas da família Wayfarer.',
-      catalogUrl: 'https://www.ray-ban.com/brazil/oculos-de-sol/RB2140original%20wayfarer%20classic-preto/805289126577',
-      identificationPending: true
-    },
-    ...window.PUPILA_CATALOG_MODELS
-  ].map(({ category, brand = 'Ray-Ban', slug, name, description, facts, story, catalogUrl, collectionUrl, identificationPending, audience, angles = ['frente', 'lateral', 'detalhe'] }) => {
+  const catalogProducts = window.PUPILA_CATALOG_MODELS.map(({ category, brand, slug, description, facts, story, catalogUrl, identificationPending, audience, angles = ['frente', 'lateral', 'detalhe'] }) => {
     const brandKey = brand.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/-$/, '');
-    const productName = name.startsWith(brand) ? name : `${brand} ${name}`;
     const views = angles.map(angle => {
       const [label, detail] = catalogAngles[angle];
       return {
         image: `assets/catalogo/${brandKey}/${category}/${slug}-${angle}.webp`,
         label,
-        alt: `${productName}, ${detail}`
+        alt: `${brand}, ${detail}`
       };
     });
     return {
-      slug, route: `${category}/${slug}`, name, description, brand, productName,
+      slug, route: `${category}/${slug}`, description, brand,
       facts, story, identificationPending, catalogUrl,
-      source: catalogUrl ? { href: catalogUrl, label: `Ver referência de ${brand} ↗` }
-        : collectionUrl ? { href: collectionUrl, label: `Conhecer a coleção ${brand} ↗` } : null,
       categories: [category], audiences: audience ? [audience] : ['feminino', 'masculino'],
       label: category === 'oculos-de-grau' ? 'ARMAÇÃO DE GRAU' : 'ÓCULOS DE SOL',
-      image: views[0].image, imageAlt: views[0].alt, views, width: 960, height: 640,
-      whatsapp: `Olá! Gostaria de saber mais sobre o modelo ${productName} que vi no catálogo da Ótica Pupila.`
+      image: views[0].image, imageAlt: views[0].alt, views, width: 960, height: 640
     };
   });
   const products = [{
     slug: 'ray-ban-meta',
     route: 'ray-ban-meta',
-    name: productName,
     brand: 'Ray-Ban',
     categories: ['oculos-de-grau'],
     audiences: ['feminino', 'masculino'],
@@ -698,7 +682,6 @@ ${productBrands}
     views: metaViews,
     width: 720,
     height: 386,
-    branding: productBrands,
     eyebrow: 'O CLÁSSICO, EM UMA NOVA PERSPECTIVA',
     description: 'O design icônico do Wayfarer com tecnologia para acompanhar sua rotina. Capture fotos com a câmera de 12 MP e grave vídeos em 3K sem usar as mãos. Ouça músicas e podcasts, faça chamadas com áudio aberto e consulte os recursos de IA para seu país e idioma.',
     facts: [
@@ -709,8 +692,11 @@ ${productBrands}
       ['Autonomia', 'Até 9 horas de uso por carga']
     ],
     support: 'Recursos de IA variam conforme país, idioma e atualizações. A autonomia varia com o uso.',
-    source: { href: 'https://about.fb.com/news/2026/09/introducing-ray-ban-meta-audio-glasses-new-styles-plus-muse/', label: 'Conheça os recursos no site da Meta ↗' },
-    whatsapp: 'Olá! Gostaria de saber mais sobre o RAY-BAN META WAYFARER GEN 3 RW4011 601SSB.'
+    faq: [
+      ['Posso fazer lentes de grau para esta armação Ray-Ban?', 'Traga sua receita médica para a equipe conferir a compatibilidade e as opções de montagem.'],
+      ['Quais recursos posso usar na armação inteligente?', 'O modelo permite registrar fotos e vídeos e usar o áudio aberto para chamadas e músicas. Os recursos de IA variam conforme o país, o idioma e as atualizações.'],
+      ['Posso conhecer a armação de perto?', 'Consulte a disponibilidade com a Pupila antes de visitar a loja.']
+    ]
   }, ...catalogProducts];
   window.PUPILA_META_VIEWS = metaViews;
   window.PUPILA_DATA.products = products;
@@ -718,17 +704,20 @@ ${productBrands}
   function productCard(product) {
     return `<a class="catalog-card" data-catalog-card data-audience="${product.audiences.join(' ')}" data-brand="${product.brand}" href="#/${product.route}/index.html">
 <figure><img src="${product.image}" width="${product.width}" height="${product.height}" alt="${product.imageAlt}" loading="lazy" decoding="async"></figure>
-<div class="catalog-card-copy"><p class="eyebrow">${product.brand}</p><h2>${product.name}</h2><p>${product.label}</p><span class="text-link">Ver detalhes ${icon('diagonal')}</span></div>
+<div class="catalog-card-copy"><h3>${product.brand}</h3><span class="text-link">Ver detalhes ${icon('diagonal')}</span></div>
 </a>`;
   }
 
   function eyewearCatalog(category, availableProducts) {
     const [route, name, description] = category;
     const brands = [...new Set(availableProducts.map(product => product.brand))].sort((a, b) => a.localeCompare(b, 'pt-BR'));
-    return `${crumb(name)}<section class="page-intro wrap">
+    return `${crumb(name)}<section class="page-intro eyewear-intro wrap">
+<div>
 <p class="eyebrow">NOSSA SELEÇÃO</p>
 <h1>${name}, do seu jeito.</h1>
 <p class="lede">${description} Conheça os modelos em destaque e consulte a disponibilidade com a equipe.</p>
+</div>
+<div class="eyewear-photo-space" aria-hidden="true"></div>
 </section>
 <section class="wrap catalog-section catalog-listing" data-catalog data-category="${route}" aria-labelledby="catalog-title">
 <div class="catalog-heading"><div><p class="eyebrow">MODELOS EM DESTAQUE</p><h2 id="catalog-title">Escolha pelo seu olhar.</h2></div><p>Consulte modelos, cores e disponibilidade com a equipe da loja.</p></div>
@@ -744,7 +733,7 @@ ${brands.map(brand => `<button type="button" data-catalog-brand-option="${brand}
 <p class="catalog-result" data-catalog-result aria-live="polite">${availableProducts.length} modelos em destaque</p>
 <div class="catalog-grid" data-catalog-grid>${availableProducts.map(productCard).join('')}</div>
 <p class="catalog-empty" data-catalog-empty hidden>Nenhum modelo corresponde a estes filtros. Experimente outra combinação ou fale com a Pupila.</p>
-<div class="button-row catalog-contact">${chat('Consultar a seleção', `Olá! Gostaria de conhecer a seleção de ${name.toLowerCase()} da Ótica Pupila.`)}${link('contato', 'Planeje sua visita', 'text-link')}</div>
+<div class="button-row catalog-contact">${chat('Consultar a seleção')}${link('contato', 'Planeje sua visita', 'text-link')}</div>
 </section>`;
   }
 
@@ -771,20 +760,22 @@ ${brands.map(brand => `<button type="button" data-catalog-brand-option="${brand}
 </h2>
 <p>Modelos, cores e disponibilidade mudam. Nossa equipe apresenta as opções atuais e ajuda você a encontrar o que combina com o seu estilo.</p>
 <p class="catalog-note">Estamos preparando o catálogo online. Enquanto isso, conheça a seleção na loja ou peça mais informações pelo WhatsApp.</p>
-<div class="button-row">${chat('Consultar a seleção', `Olá! Gostaria de conhecer a seleção de ${name.toLowerCase()} da Ótica Pupila.`)}${link('contato', 'Planeje sua visita', 'text-link')}</div>
+<div class="button-row">${chat('Consultar a seleção')}${link('contato', 'Planeje sua visita', 'text-link')}</div>
 </div>
 </div>
 ${availableProducts.length ? `<div class="catalog-grid">${availableProducts.map(productCard).join('')}</div>` : ''}
 </section>`;
   }
   function productPage(product) {
-    const parentCategory = categories.find(([route]) => product.route.startsWith(`${route}/`));
-    const facts = product.facts ? `<dl class="product-facts">${product.facts.map(([term, detail]) => `<div><dt>${term}</dt><dd>${detail}</dd></div>`).join('')}</dl>` : '';
-    const source = product.source ? `<a class="source-link" href="${product.source.href}" target="_blank" rel="noopener noreferrer">${product.source.label}</a>` : '';
     const catalogCategory = categories.find(([route]) => route === product.categories[0]);
+    const facts = `<dl class="product-facts">${product.facts.map(([term, detail]) => `<div><dt>${term}</dt><dd>${detail}</dd></div>`).join('')}</dl>`;
+    const questions = product.faq || [
+      [`Posso experimentar a armação ${product.brand} das fotos?`, 'Consulte a disponibilidade da peça com a Pupila antes de visitar a loja.'],
+      ...catalogFaqs[catalogCategory[0]].slice(0, 2)
+    ];
     return `${crumb(product.brand, catalogCategory)}
     <section class="product-page wrap" aria-labelledby="product-title">
-<div class="product-gallery" role="group" data-product-gallery="${product.slug}" aria-label="Galeria de imagens — ${product.name}">
+<div class="product-gallery" role="group" data-product-gallery="${product.slug}" aria-label="Galeria de imagens — ${product.brand}">
 <div class="product-gallery-main">
 <span class="gallery-label">SELEÇÃO PUPILA</span>
 <img id="product-main-image" src="${product.image}" width="${product.width}" height="${product.height}" alt="${product.imageAlt}" fetchpriority="high" decoding="async">
@@ -798,57 +789,34 @@ ${availableProducts.length ? `<div class="catalog-grid">${availableProducts.map(
 </div>
     <div class="product-page-heading">
 <p class="eyebrow">${product.eyebrow || product.label}</p>
-${product.branding || `<p class="product-brand">${product.brand}</p>`}
-<h1 id="product-title">${product.name}</h1>
+<h1 id="product-title">${product.brand}</h1>
 <p>${product.description}</p>
-${parentCategory ? '' : `${facts}${product.support ? `<p class="product-support-note">${product.support}</p>` : ''}${source}`}
-${chat('Quero conhecer de perto', product.whatsapp)}<p class="availability-note">Tamanho, preço e disponibilidade sob consulta à loja.</p>${parentCategory ? link(parentCategory[0], `Voltar para ${parentCategory[1].toLowerCase()}`, 'text-link') : link('contato', 'Experimente na Pupila', 'text-link')}${parentCategory && facts ? `
+${chat('Quero conhecer de perto')}<p class="availability-note">Tamanho, preço e disponibilidade sob consulta à loja.</p>
+${link(catalogCategory[0], `Voltar para ${catalogCategory[1].toLowerCase()}`, 'text-link')}
 <section class="product-details" aria-labelledby="product-details-title">
 <h2 id="product-details-title">Ficha do modelo</h2>
 ${product.identificationPending ? `<p class="product-identification-note">${product.catalogUrl ? 'Referência sugerida por comparação visual. Confirme a peça com a loja.' : 'Confirme o nome comercial e a referência desta peça com a loja.'}</p>` : ''}
 ${facts}
+${product.support ? `<p class="product-support-note">${product.support}</p>` : ''}
 ${product.story ? `<h3>O desenho da linha</h3><p>${product.story}</p>` : ''}
-${source}
-</section>` : ''}</div>
-</section>`;
+</section></div>
+</section>${productHelp(questions)}`;
   }
-  const brands = `${crumb('Nossas marcas')}<section class="page-intro wrap">
-<p class="eyebrow">DESIGN, IDENTIDADE & ESCOLHA</p>
-<h1>Encontre sua assinatura.
-</h1>
-<p class="lede">Marcas e peças que você conhece de perto, com a orientação de quem cuida de cada escolha.</p>
-</section>
-<section class="wrap brands-editorial">
-<a class="brand-highlight" href="#/ray-ban-meta/index.html">
-<div>
-<p class="eyebrow">EM DESTAQUE NA PUPILA</p>
-${productBrands}
-<h2>${productName}</h2>
-<span class="text-link">Explore o modelo ${icon('diagonal')}</span>
-</div>
-<img src="assets/0RW4011__601SSB__P21__shad__qt.webp" width="720" height="386" alt="RAY-BAN META WAYFARER GEN 3 preto fosco" decoding="async">
-</a>
-<div class="care-note">
-<h2>Uma marca em mente?</h2>
-<p>Fale com a nossa equipe para consultar as marcas, os modelos e as opções disponíveis hoje na loja.</p>${chat('Consultar uma marca', 'Olá! Gostaria de consultar as marcas disponíveis na Ótica Pupila.')}</div>
-</section>`;
   const pages = {
     ...existing,
-    'index.html': { title: 'Ótica Pupila | Ótica em Joinville desde 1992', content: home },
-    'marcas/index.html': { title: 'Nossas marcas | Ótica Pupila', content: brands },
-    'marcas/modelo/index.html': { title: 'Nossas marcas | Ótica Pupila', content: brands }
+    'index.html': { title: 'Ótica Pupila | Ótica em Joinville desde 1992', content: home }
   };
   products.forEach(product => {
     pages[`${product.route}/index.html`] = {
-      title: `${product.productName || product.name} | Ótica Pupila`,
+      title: `${product.brand} | Ótica Pupila`,
       description: `${product.description} Ótica Pupila, Joinville.`,
       content: productPage(product)
     };
   });
   categories.filter(c => c[0] !== 'lentes').forEach(c => {
-    pages[`${c[0]}/index.html`] = { title: `${c[1]} | Ótica Pupila`, content: catalog(c) };
+    pages[`${c[0]}/index.html`] = { title: `${c[1]} | Ótica Pupila`, content: catalog(c) + productHelp(catalogFaqs[c[0]]) };
   });
-  window.PUPILA_CHROME = { header, footer };
+  window.PUPILA_CHROME = { header, footer, chat, productHelp };
   window.PUPILA_PAGES = Object.fromEntries(Object.entries(pages).map(([route, page]) => [route, {
     title: page.title,
     description: page.description,
