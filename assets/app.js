@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
     root.querySelector('.meta-gallery-count').textContent = `${String(index + 1).padStart(2, '0')} / ${String(buttons.length).padStart(2, '0')}`;
   }
   function updateCatalog(catalog, audience = catalog.dataset.audience || 'todos') {
-    const brand = catalog.querySelector('[data-catalog-brand]').value;
+    const brand = catalog.querySelector('[data-catalog-brand]')?.value ?? 'todas';
     let visible = 0;
     catalog.querySelectorAll('[data-catalog-card]').forEach(card => {
       const audienceMatch = audience === 'todos' || card.dataset.audience.split(' ').some(value => value === audience || value === 'todos');

@@ -11,6 +11,7 @@ const fixture = fs.mkdtempSync(path.join(results, 'publish-'));
 fs.mkdirSync(path.join(fixture, 'scripts'));
 fs.mkdirSync(path.join(fixture, 'assets'));
 for (const file of ['scripts/build-site.mjs', 'assets/pages.js', 'assets/lens-pages.js', 'assets/app.js', 'assets/site.css']) fs.copyFileSync(path.join(root, file), path.join(fixture, file));
+fs.cpSync(path.join(root, 'assets/catalogo'), path.join(fixture, 'assets/catalogo'), { recursive: true });
 const config = JSON.parse(fs.readFileSync(path.join(root, 'site-config.json'), 'utf8'));
 config.siteUrl = '';
 const save = () => fs.writeFileSync(path.join(fixture, 'site-config.json'), JSON.stringify(config));
@@ -34,7 +35,9 @@ const privacy = fs.readFileSync(path.join(dist, 'privacidade/index.html'), 'utf8
 assert(privacy.includes('Empresa de teste &amp; exemplo') && privacy.includes('privacidade@example.invalid'));
 assert(!privacy.includes('Esta prévia aguarda'));
 const sitemap = fs.readFileSync(path.join(dist, 'sitemap.xml'), 'utf8');
-assert.equal((sitemap.match(/<url>/g) || []).length, 16);
+assert.equal((sitemap.match(/<url>/g) || []).length, 20);
+const catalogPhotos = fs.readdirSync(path.join(dist, 'assets/catalogo/ray-ban'), { recursive: true }).filter(file => file.endsWith('.webp'));
+assert.equal(catalogPhotos.length, 12, 'fotos WebP do catálogo ausentes no pacote');
 assert(!sitemap.includes('404.html') && !sitemap.includes('marcas/modelo'));
 assert(fs.readFileSync(path.join(dist, 'robots.txt'), 'utf8').includes('Sitemap: https://example.invalid/pupila/sitemap.xml'));
 for (const file of ['site-config.json','package.json','docs','scripts','assets/pages.js','assets/lens-pages.js']) assert(!fs.existsSync(path.join(dist,file)), `${file} exposto na publicação`);

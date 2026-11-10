@@ -14,7 +14,7 @@ for (const file of ['assets/pages.js', 'assets/lens-pages.js', 'assets/routes.js
 new vm.Script(read('assets/app.js'));
 const pages = context.window.PUPILA_PAGES;
 const config = JSON.parse(read('site-config.json'));
-assert(Object.keys(pages).length === 18, 'páginas esperadas ausentes');
+assert(Object.keys(pages).length === 22, 'páginas esperadas ausentes');
 assert(context.window.PUPILA_META_VIEWS.length === 6, 'a galeria deve oferecer seis ângulos');
 let imageCount = 0;
 const titles = new Set();
@@ -65,9 +65,10 @@ for (const route of Object.keys(pages)) {
     }
   }
 }
-for (const category of ['oculos-de-grau', 'oculos-de-sol']) {
+for (const [category, cardCount] of [['oculos-de-grau', 2], ['oculos-de-sol', 3]]) {
   const source = read(`${category}/index.html`);
-  assert(!source.includes('data-catalog-filter') && !source.includes('data-catalog-empty') && !source.includes('data-catalog-result'), `${category}: filtros sem seleção suficiente`);
+  assert((source.match(/\bdata-catalog-card\b/g) || []).length === cardCount, `${category}: quantidade de cartões inesperada`);
+  assert(!source.includes('data-catalog-filter') && !source.includes('data-catalog-brand') && !source.includes('data-catalog-empty'), `${category}: filtros sem seleção suficiente`);
   assert(source.includes('wa.me/') && source.includes('Planeje sua visita'), `${category}: caminho de atendimento ausente`);
 }
 for (const [, file] of read('assets/site.css').matchAll(/url\('([^']+)'\)/g)) assert(fs.existsSync(path.join(root, 'assets', file)), `recurso CSS ausente: ${file}`);

@@ -47,7 +47,7 @@ const output = new Map();
 for (const [route, page] of Object.entries(pages)) {
   const canonicalRoute = aliases[route] || route;
   const prefix = route === '404.html' ? (siteUrl ? new URL(siteUrl).pathname.replace(/\/?$/, '/') : '/') : '../'.repeat(route.split('/').length - 1) || './';
-  const description = descriptions[canonicalRoute];
+  const description = descriptions[canonicalRoute] ?? page.description;
   if (!description || description.length > 160) throw new Error(`Descrição ausente ou longa: ${route}`);
   let content = page.html.replace(/pupila-asset:([^" ]+)/g, (_, key) => context.window.PUPILA_ASSETS[key] || '');
   if (route === 'privacidade/index.html') {
