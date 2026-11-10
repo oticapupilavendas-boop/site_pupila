@@ -1,59 +1,48 @@
-# Revisão de design e qualidade
+# Revisão após auditoria — 04/11/2026
 
-Revisão de 27 de outubro de 2026, acompanhada pela Issue #5 e pelo PR #4.
+Acompanhamento: Issue #12. A auditoria recebida foi `auditoria-site-pupila.md`, de 04/11/2026. O projeto local já continha refinamentos de lentes não commitados, que foram preservados e incorporados às páginas geradas. Nenhum deploy foi feito.
 
-## Resultado
+## Mudanças
 
-- Home com títulos maiores, contraste entre tipografia sem serifa e serifada, paleta azul-marinho/vermelho, fundo claro e fotos da loja.
-- Cabeçalho unificado, menu responsivo, categorias editoriais, destaque Ray-Ban Meta, história, lentes, depoimentos, perguntas frequentes e localização.
-- Páginas de categorias, marcas, produto, lentes, história e contato com os mesmos estilos e componentes.
-- Remoção de produtos fictícios, espaços reservados e filtros sem dados. Categorias direcionam para consulta da seleção real.
-- Galeria de seis ângulos com botões, setas, Home/End, descrições e anúncio do contador. Trocas rápidas não dependem de callbacks de animação.
-- Conteúdo separado de estilos e comportamento. Cabeçalho e rodapé definidos uma vez e compartilhados entre as páginas.
-- Fontes locais compactadas e remoção de GSAP/CDN. O site carrega sem chamadas a terceiros.
-- Contato por telefone disponível também quando JavaScript está desativado.
+- 18 páginas HTML completas, com URLs reais e metadados próprios; home pré-renderizada e imagem principal pré-carregada.
+- Endereços antigos por hash redirecionam para as páginas atuais. Chaves como `constructor` e `__proto__` chegam ao 404 sem acesso ao protótipo de objetos.
+- Categorias sem seleção suficiente usam apresentação editorial. Sem filtros/contadores vazios; o Ray-Ban Meta continua na categoria solar. Filtro universal corrigido para futuras seleções maiores.
+- WhatsApp por links nativos; navegação móvel acessível sem JS. Menu, galeria e comparador usam o mesmo arquivo de interações.
+- Cabeçalho/rodapé compartilhados diretamente entre os templates; removida a dependência da página legada de lentes e removido `lens-ui.js`.
+- Rodapé com “Desde 1992”; build idêntico em 2027 e 2028. CI usa Node 24, versão LTS conforme o [calendário oficial](https://nodejs.org/en/about/previous-releases).
+- Promessas de estoque, depoimentos sem comprovação e título de revenda autorizada retirados. O certificado Essilor Select 2026 e as marcas fornecidas pela loja foram preservados.
+- Certificado otimizado: 20.852 bytes (800 px), 53.886 bytes (1600 px); logo Meta: 6.072 bytes. Fachada móvel: 43.638 bytes. Originais guardados.
+- Foco claro em seções escuras, galeria com `role="group"`, textos informativos com mínimo de 11 px nos cenários testados. Correção de overflow da ilustração de lentes em tablets.
+- Imagens responsivas com `srcset` real e fotos do produto em WebP.
+- Gerador de canonical, Open Graph e sitemap preparado; imagem social local criada. URLs absolutas aguardam o domínio real.
+- Pacote de publicação separado em `dist/`, condicionado ao preenchimento do domínio e dos dados de privacidade.
 
-## Verificação
+## Validação reproduzível
 
-- `npm test`: passou; 14 rotas e 55 referências de imagens verificadas, além de links, âncoras, fontes, IDs e sintaxe.
-- `node --check assets/pages.js` e `node --check assets/app.js`: passaram.
-- `git diff --check`: passou.
-- Playwright/Chromium: 56 cenários, cobrindo 14 rotas em 320, 390, 768 e 1440 px; sem rolagem horizontal, falha estrutural ou erro de JavaScript detectado.
-- axe-core 4.10.3: 28 análises, cobrindo as 14 rotas em 390 e 1440 px, com WCAG A/AA, WCAG 2.1 AA e boas práticas; sem violações detectadas. A análise usa movimento reduzido para observar os estados finais dos elementos.
-- 26 verificações de interação: skip link e foco; menu móvel, Escape e navegação; âncoras, voltar/avançar e restauração de rolagem; seis ângulos, setas, Home/End; mensagem e número do WhatsApp; FAQ pelo teclado; página 404; links diretos, recarga e movimento reduzido.
-- Imagens da home carregadas e funcionamento com requisições externas bloqueadas.
-- Telefone visível e utilizável no conteúdo alternativo sem JavaScript.
-- Inspeção visual da home, destaque de produto, galeria e contato em desktop e celular.
+- `npm test`: 18 páginas HTML, 74 referências de imagens, recursos locais, títulos/descrições, links/âncoras, mensagens de WhatsApp, sintaxe, limites de tamanho, build em 2027/2028 e configuração de publicação em fixture isolada.
+- `npm run test:browser`, com Edge e Chrome reais: 108 cenários de layout por navegador, seis larguras de 320 a 1440 px; sem rolagem horizontal, imagens quebradas ou erros de JavaScript/rede.
+- Interações: menu/Escape e retorno do foco, links e histórico, galeria por clique/teclado, comparador, 13 URLs legadas incluindo cinco chaves de protótipo.
+- Contexto sem JavaScript: conteúdo, navegação visível e links de WhatsApp nas 18 páginas; link interno acionado para confirmar navegação.
+- axe-core 4.10.3: nove páginas em 375 px; zero violações WCAG A/AA e best practices, sem pendência `aria-prohibited-attr`.
+- Rede lenta em laboratório (Chrome, 375 × 900, latência 150 ms, download 1,6 Mbps, upload 750 Kbps, CPU 4×): na última execução local, LCP de aproximadamente 1,5 s na home e 1,6 s em contato, CLS 0 em ambas. É uma medição isolada, não uma garantia na hospedagem. Navegação progressiva ativada antes de renderizar o corpo para evitar deslocamento do menu; fontes e imagem principal responsiva pré-carregadas.
+- Inspeção visual de capturas da home em desktop/celular e da categoria de óculos de grau.
 
-Os testes automatizados e de teclado não substituem avaliação manual com leitores de tela ou testes em aparelhos físicos.
+Os cenários estão versionados em `scripts/check-browser.mjs`; o teste de navegador é separado do estático e depende de Playwright instalado. As 25 imagens em `docs/previews/` são um arquivo histórico, não evidência desta execução. Relatórios e capturas desta execução ficam em `test-results/` e podem ser regenerados.
 
-## Limitações mantidas explícitas
+## O que permanece pendente
 
-- Produtos individuais, preços e disponibilidade dependem de confirmação da loja.
-- O site é estático, com navegação no hash; as páginas internas não possuem URLs independentes para indexação ou prévias sociais específicas.
-- Os depoimentos e horários foram preservados da prévia, sem verificação comercial independente nesta revisão.
-- Antes de publicar, é necessário completar as informações da hospedagem na política de privacidade.
-- Nenhum deploy foi realizado nesta revisão.
+- Razão social, CNPJ, endereço legal, contato de privacidade e revisão do texto pela empresa.
+- Domínio, hospedagem, país/processamento e prazo/política de logs. A página de privacidade da prévia explicita a ausência desses dados; não foi apresentada como política final.
+- Confirmação comercial do WhatsApp, endereço, telefone e demais horários. O sábado foi confirmado pelo proprietário: 08h30 às 12h30.
+- Safari iOS, Firefox, leitores de tela, aparelhos físicos e abertura do WhatsApp em aplicativos como Instagram/Facebook.
+- Validação na hospedagem real: HTTP 404, cache, cabeçalhos, HTTPS, sitemap, compartilhamento social e PageSpeed/CrUX. Não se atribui nota de produção a testes locais.
 
-## Refinamentos de 28 de outubro de 2026
+Dados estruturados de negócio local e as melhorias opcionais de apresentação ficam para depois da confirmação dos dados comerciais. Catálogo com mais produtos exige identificação e informações fornecidas pela loja. O detalhamento está em `docs/PENDENCIAS.md`.
 
-Solicitados pelo proprietário e acompanhados pela Issue #6:
+## Ajustes solicitados pelo proprietário após a revisão — Issue #14
 
-- Itálicos reduzidos ao título de abertura da home; os demais títulos usam texto normal.
-- Os dois destaques antes rosados usam o vermelho da Pupila sobre uma base clara para preservar o contraste nas áreas escuras.
-- Selo circular removido do HTML e CSS. A fundação aparece em texto na legenda da fotografia, além das informações de história existentes.
-- Links do cabeçalho no desktop aumentados de 12 para 15 px, submenu para 14 px e faixa superior para 12 px. Cabeçalho verificado também em 901, 1024, 1151 e 1280 px, sem colisões.
-- Nome do produto padronizado como RAY-BAN META WAYFARER GEN 3, sem subtítulo no nome.
-- Logo Meta fornecido pelo proprietário adicionado sem alteração de cores ou proporções.
-- Descrição atualizada com câmera, vídeo, áudio, comandos por voz e autonomia, com base no [anúncio oficial da Meta](https://about.fb.com/news/2026/09/introducing-ray-ban-meta-audio-glasses-new-styles-plus-muse/). Características do produto removidas conforme a orientação editorial do proprietário.
-- Revalidação: `npm test`, sintaxe, diff, 56 cenários de layout, 28 análises axe e 26 verificações de interação passaram.
-
-## Prévia
-
-![Home no desktop](previews/home-desktop.png)
-
-![Home no celular](previews/home-mobile.png)
-
-![Página Ray-Ban Meta](previews/ray-ban-meta-desktop.png)
-
-![Destaque Meta atualizado](previews/meta-feature.png)
+- Sábado confirmado: 08h30 às 12h30; atualizado na home, no contato e nas perguntas frequentes.
+- Dois depoimentos anteriores reexibidos na home por solicitação do proprietário, sem inventar autores ou notas. O segundo usa um trecho que termina antes do superlativo de preço; o link para o Google foi mantido.
+- Arte de lentes para óculos encostada na borda direita, com parte da armação recortada pelo limite da seção. O recorte é local à abertura da página, preservando o texto e evitando rolagem horizontal.
+- Verificação de geometria da borda acrescentada aos cenários de navegador para impedir que a margem vazia retorne.
+- Validação destes ajustes: npm test; 108 cenários e nove análises axe no Edge; Chrome com 11 larguras entre 375 e 1920 px, conferindo borda direita, ausência de rolagem, duas avaliações e horário na home/contato/FAQ.

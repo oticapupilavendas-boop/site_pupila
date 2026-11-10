@@ -1,0 +1,21 @@
+/* Gerado por scripts/build-site.mjs. */
+window.PUPILA_ROUTES = {
+  "nossa-historia/index.html": "nossa-historia/",
+  "contato/index.html": "contato/",
+  "perguntas-frequentes/index.html": "perguntas-frequentes/",
+  "privacidade/index.html": "privacidade/",
+  "404.html": "404.html",
+  "index.html": "",
+  "marcas/index.html": "marcas/",
+  "marcas/modelo/index.html": "marcas/",
+  "ray-ban-meta/index.html": "ray-ban-meta/",
+  "oculos-de-grau/index.html": "oculos-de-grau/",
+  "oculos-de-sol/index.html": "oculos-de-sol/",
+  "relogios/index.html": "relogios/",
+  "semijoias/index.html": "semijoias/",
+  "lentes/index.html": "lentes/",
+  "lentes/hoya/index.html": "lentes/hoya/",
+  "lentes/zeiss/index.html": "lentes/zeiss/",
+  "lentes/essilor/index.html": "lentes/essilor/",
+  "lentes/contato/index.html": "lentes/contato/"
+};
