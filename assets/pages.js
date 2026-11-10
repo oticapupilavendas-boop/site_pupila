@@ -621,6 +621,56 @@ ${productBrands}
     { image: 'assets/0RW4011__601SSB__P21__shad__bk.webp', label: 'Traseira', alt: 'RAY-BAN META WAYFARER GEN 3: vista posterior da armação' },
     { image: 'assets/0RW4011__601SSB__P21__shad__cfr.webp', label: 'Interior', alt: 'RAY-BAN META WAYFARER GEN 3: vista frontal pelo interior da armação' }
   ];
+  const rayBanProducts = [
+    {
+      category: 'oculos-de-grau', slug: 'ray-ban-tartaruga', name: 'Thalia Optics',
+      description: 'Armação tartaruga com aros arredondados e um pequeno detalhe metálico em cada canto.',
+      facts: [['Armação', 'Tartaruga'], ['Formato', 'Arredondado, com linhas angulares no topo'], ['Detalhes', 'Rebites frontais e assinatura Ray-Ban na haste']],
+      story: 'O Thalia recupera um desenho do arquivo da Ray-Ban. As linhas finas remetem aos anos 1970, com uma frente que combina curvas e ângulos.',
+      catalogUrl: 'https://www.ray-ban.com/brazil/graduados/RX5395thalia%20optics-havana/8056597364270'
+    },
+    {
+      category: 'oculos-de-grau', slug: 'ray-ban-preta', name: 'RB7027 Optics',
+      description: 'Armação preta com aros retangulares, cantos suaves e assinatura Ray-Ban na haste.',
+      facts: [['Armação', 'Preta'], ['Formato', 'Retangular, com cantos arredondados'], ['Hastes', 'Largas junto à frente, com pontas curvas']],
+      catalogUrl: 'https://www.ray-ban.com/brazil/graduados/RX7027L%20MALE%20rb7027%20optics-preto/7895653130388',
+      identificationPending: true
+    },
+    {
+      category: 'oculos-de-sol', slug: 'ray-ban-marrom-translucido', name: 'State Street',
+      description: 'Óculos de sol com armação marrom-clara translúcida e lentes marrons em degradê.',
+      facts: [['Armação', 'Marrom-clara translúcida'], ['Lentes', 'Marrom em degradê'], ['Material da referência', 'Acetato']],
+      story: 'O State Street faz parte da família Wayfarer. A frente quadrada mais marcada dá à linha uma leitura contemporânea do desenho clássico.',
+      catalogUrl: 'https://www.ray-ban.com/brazil/oculos-de-sol/RB2186state%20street-marrom-claro%20transparente/8056262581278'
+    },
+    {
+      category: 'oculos-de-sol', slug: 'ray-ban-preto-lentes-verdes', name: 'Original Wayfarer Classic',
+      description: 'Óculos de sol com armação preta, lentes verdes e detalhes metálicos nas laterais da frente.',
+      facts: [['Armação', 'Preta'], ['Formato', 'Quadrado, com cantos arredondados'], ['Lentes', 'Verdes']],
+      story: 'O desenho Original Wayfarer foi lançado em 1952. Sua frente inclinada virou uma das marcas da família Wayfarer.',
+      catalogUrl: 'https://www.ray-ban.com/brazil/oculos-de-sol/RB2140original%20wayfarer%20classic-preto/805289126577',
+      identificationPending: true
+    }
+  ].map(({ category, slug, name, description, facts, story, catalogUrl, identificationPending }) => {
+    const views = [
+      ['frente', 'Frente', 'vista frontal'],
+      ['lateral', 'Lateral', 'vista lateral da haste'],
+      ['detalhe', 'Detalhe', 'detalhe da dobradiça e do logotipo Ray-Ban na haste']
+    ].map(([angle, label, detail]) => ({
+      image: `assets/catalogo/ray-ban/${category}/${slug}-${angle}.webp`,
+      label,
+      alt: `Ray-Ban ${name}, ${detail}`
+    }));
+    return {
+      slug, route: `${category}/${slug}`, name, description, brand: 'Ray-Ban',
+      facts, story, identificationPending,
+      source: { href: catalogUrl, label: 'Ver referência no catálogo Ray-Ban ↗' },
+      categories: [category], audiences: ['todos'],
+      label: category === 'oculos-de-grau' ? 'ARMAÇÃO DE GRAU' : 'ÓCULOS DE SOL',
+      image: views[0].image, imageAlt: views[0].alt, views, width: 960, height: 640,
+      whatsapp: `Olá! Gostaria de saber mais sobre o modelo Ray-Ban ${name} que vi no catálogo da Ótica Pupila.`
+    };
+  });
   const products = [{
     slug: 'ray-ban-meta',
     route: 'ray-ban-meta',
@@ -632,7 +682,10 @@ ${productBrands}
     image: metaViews[0].image,
     imageAlt: metaViews[0].alt,
     views: metaViews,
+    width: 720,
+    height: 386,
     branding: productBrands,
+    eyebrow: 'O CLÁSSICO, EM UMA NOVA PERSPECTIVA',
     description: 'O design icônico do Wayfarer com tecnologia para acompanhar sua rotina. Capture fotos com a câmera de 12 MP e grave vídeos em 3K sem usar as mãos. Ouça músicas e podcasts, faça chamadas com áudio aberto e consulte os recursos de IA para seu país e idioma.',
     facts: [
       ['Modelo', 'RW4011 601SSB'],
@@ -644,21 +697,23 @@ ${productBrands}
     support: 'Recursos de IA variam conforme país, idioma e atualizações. A autonomia varia com o uso.',
     source: { href: 'https://about.fb.com/news/2026/09/introducing-ray-ban-meta-audio-glasses-new-styles-plus-muse/', label: 'Conheça os recursos no site da Meta ↗' },
     whatsapp: 'Olá! Gostaria de saber mais sobre o RAY-BAN META WAYFARER GEN 3 RW4011 601SSB.'
-  }];
+  }, ...rayBanProducts];
   window.PUPILA_META_VIEWS = metaViews;
   window.PUPILA_DATA.products = products;
 
   function productCard(product) {
     return `<a class="catalog-card" data-catalog-card data-audience="${product.audiences.join(' ')}" data-brand="${product.brand}" href="#/${product.route}/index.html">
-<figure><img src="${product.image}" width="720" height="386" alt="${product.imageAlt}" loading="lazy" decoding="async"></figure>
+<figure><img src="${product.image}" width="${product.width}" height="${product.height}" alt="${product.imageAlt}" loading="lazy" decoding="async"></figure>
 <div class="catalog-card-copy"><p class="eyebrow">${product.brand}</p><h2>${product.name}</h2><p>${product.label}</p><span class="text-link">Ver detalhes ${icon('diagonal')}</span></div>
 </a>`;
   }
 
-  function eyewearCatalog(category) {
+  function eyewearCatalog(category, availableProducts) {
     const [route, name, description] = category;
-    const availableProducts = products.filter(product => product.categories.includes(route));
     const brands = [...new Set(availableProducts.map(product => product.brand))];
+    const filterByBrand = brands.length > 1;
+    const filterByAudience = availableProducts.some(product => product.audiences.some(audience => audience !== 'todos'));
+    const hasFilters = filterByBrand || filterByAudience;
     return `${crumb(name)}<section class="page-intro wrap">
 <p class="eyebrow">NOSSA SELEÇÃO</p>
 <h1>${name}, do seu jeito.</h1>
@@ -666,16 +721,21 @@ ${productBrands}
 </section>
 <section class="wrap catalog-section catalog-listing" data-catalog data-category="${route}" aria-labelledby="catalog-title">
 <div class="catalog-heading"><div><p class="eyebrow">MODELOS EM DESTAQUE</p><h2 id="catalog-title">Escolha pelo seu olhar.</h2></div><p>Consulte modelos, cores e disponibilidade com a equipe da loja.</p></div>
-<div class="catalog-toolbar"><div class="catalog-audience" role="group" aria-label="Filtrar por público"><button type="button" class="catalog-filter" data-catalog-filter="todos" aria-pressed="true">Todos</button><button type="button" class="catalog-filter" data-catalog-filter="feminino" aria-pressed="false">Feminino</button><button type="button" class="catalog-filter" data-catalog-filter="masculino" aria-pressed="false">Masculino</button></div><label class="catalog-brand-filter"><span>Marca</span><select data-catalog-brand aria-label="Filtrar por marca"><option value="todas">Todas as marcas</option>${brands.map(brand => `<option value="${brand}">${brand}</option>`).join('')}</select></label></div>
-<p class="catalog-result" data-catalog-result aria-live="polite">${availableProducts.length === 1 ? '1 modelo em destaque' : `${availableProducts.length} modelos em destaque`}</p>
+${hasFilters ? `<div class="catalog-toolbar">
+${filterByAudience ? `<div class="catalog-audience" role="group" aria-label="Filtrar por público"><button type="button" class="catalog-filter" data-catalog-filter="todos" aria-pressed="true">Todos</button><button type="button" class="catalog-filter" data-catalog-filter="feminino" aria-pressed="false">Feminino</button><button type="button" class="catalog-filter" data-catalog-filter="masculino" aria-pressed="false">Masculino</button></div>` : ''}
+${filterByBrand ? `<label class="catalog-brand-filter"><span>Marca</span><select data-catalog-brand aria-label="Filtrar por marca"><option value="todas">Todas as marcas</option>${brands.map(brand => `<option value="${brand}">${brand}</option>`).join('')}</select></label>` : ''}
+</div>
+<p class="catalog-result" data-catalog-result aria-live="polite">${availableProducts.length} modelos em destaque</p>` : ''}
 <div class="catalog-grid" data-catalog-grid>${availableProducts.map(productCard).join('')}</div>
-<p class="catalog-empty" data-catalog-empty${availableProducts.length ? ' hidden' : ''}>Nenhum modelo publicado corresponde a estes filtros no momento. Fale com a Pupila para conhecer outras opções.</p>
+${hasFilters ? '<p class="catalog-empty" data-catalog-empty hidden>Nenhum modelo publicado corresponde a estes filtros no momento. Fale com a Pupila para conhecer outras opções.</p>' : ''}
+<div class="button-row catalog-contact">${chat('Consultar a seleção', `Olá! Gostaria de conhecer a seleção de ${name.toLowerCase()} da Ótica Pupila.`)}${link('contato', 'Planeje sua visita', 'text-link')}</div>
 </section>`;
   }
 
   function catalog(category) {
     const [route, name, description, symbol] = category;
-    if ((route === 'oculos-de-grau' || route === 'oculos-de-sol') && products.filter(product => product.categories.includes(route)).length >= 2) return eyewearCatalog(category);
+    const availableProducts = products.filter(product => product.categories.includes(route));
+    if ((route === 'oculos-de-grau' || route === 'oculos-de-sol') && availableProducts.length >= 2) return eyewearCatalog(category, availableProducts);
     const accessories = route === 'relogios' || route === 'semijoias';
     return `${crumb(name)}<section class="page-intro wrap">
 <p class="eyebrow">NOSSA SELEÇÃO</p>
@@ -698,31 +758,41 @@ ${productBrands}
 <div class="button-row">${chat('Consultar a seleção', `Olá! Gostaria de conhecer a seleção de ${name.toLowerCase()} da Ótica Pupila.`)}${link('contato', 'Planeje sua visita', 'text-link')}</div>
 </div>
 </div>
-${products.filter(product => product.categories.includes(route)).length ? `<div class="catalog-grid">${products.filter(product => product.categories.includes(route)).map(productCard).join('')}</div>` : ''}
+${availableProducts.length ? `<div class="catalog-grid">${availableProducts.map(productCard).join('')}</div>` : ''}
 </section>`;
   }
   function productPage(product) {
+    const parentCategory = categories.find(([route]) => product.route.startsWith(`${route}/`));
+    const facts = product.facts ? `<dl class="product-facts">${product.facts.map(([term, detail]) => `<div><dt>${term}</dt><dd>${detail}</dd></div>`).join('')}</dl>` : '';
+    const source = product.source ? `<a class="source-link" href="${product.source.href}" target="_blank" rel="noopener noreferrer">${product.source.label}</a>` : '';
     return `${crumb(product.brand)}
     <section class="product-page wrap" aria-labelledby="product-title">
-<div class="product-gallery" role="group" data-product-gallery="${product.slug}" aria-label="Galeria de imagens do ${product.name}">
+<div class="product-gallery" role="group" data-product-gallery="${product.slug}" aria-label="Galeria de imagens — ${product.name}">
 <div class="product-gallery-main">
 <span class="gallery-label">SELEÇÃO PUPILA</span>
-<img id="product-main-image" src="${product.views[0].image}" width="720" height="386" alt="${product.views[0].alt}" fetchpriority="high" decoding="async">
+<img id="product-main-image" src="${product.image}" width="${product.width}" height="${product.height}" alt="${product.imageAlt}" fetchpriority="high" decoding="async">
 <span class="meta-gallery-count" aria-live="polite">01 / ${String(product.views.length).padStart(2, '0')}</span>
 </div>
 <div class="product-gallery-controls" role="group" aria-label="Escolha um ângulo">${product.views.map((view, i) => `<button type="button" class="product-view" data-product-view="${i}" data-view-alt="${view.alt}" aria-pressed="${i === 0}" aria-label="Ver ângulo ${i + 1}: ${view.label}">
-<img src="${view.image}" width="720" height="386" alt="" loading="lazy" decoding="async">
+<img src="${view.image}" width="${product.width}" height="${product.height}" alt="" loading="lazy" decoding="async">
 <span>${view.label}</span>
 </button>`).join('')}</div>
 <p class="product-gallery-help">Explore os ângulos. Você também pode usar ← e → nos botões.</p>
 </div>
     <div class="product-page-heading">
-<p class="eyebrow">O CLÁSSICO, EM UMA NOVA PERSPECTIVA</p>
+<p class="eyebrow">${product.eyebrow || product.label}</p>
 ${product.branding || `<p class="product-brand">${product.brand}</p>`}
 <h1 id="product-title">${product.name}</h1>
 <p>${product.description}</p>
-<dl class="product-facts">${product.facts.map(([term, detail]) => `<div><dt>${term}</dt><dd>${detail}</dd></div>`).join('')}</dl>${product.support ? `<p class="product-support-note">${product.support}</p>` : ''}${product.source ? `<a class="source-link" href="${product.source.href}" target="_blank" rel="noopener noreferrer">${product.source.label}</a>` : ''}
-${chat('Quero conhecer de perto', product.whatsapp)}<p class="availability-note">Tamanho, preço e disponibilidade sob consulta à loja.</p>${link('contato', 'Experimente na Pupila', 'text-link')}</div>
+${parentCategory ? '' : `${facts}${product.support ? `<p class="product-support-note">${product.support}</p>` : ''}${source}`}
+${chat('Quero conhecer de perto', product.whatsapp)}<p class="availability-note">Tamanho, preço e disponibilidade sob consulta à loja.</p>${parentCategory ? link(parentCategory[0], `Voltar para ${parentCategory[1].toLowerCase()}`, 'text-link') : link('contato', 'Experimente na Pupila', 'text-link')}${parentCategory && facts ? `
+<section class="product-details" aria-labelledby="product-details-title">
+<h2 id="product-details-title">Ficha do modelo</h2>
+${product.identificationPending ? '<p class="product-identification-note">Nome identificado por comparação visual. Confirme a referência da peça com a loja.</p>' : ''}
+${facts}
+${product.story ? `<h3>O desenho da linha</h3><p>${product.story}</p>` : ''}
+${source}
+</section>` : ''}</div>
 </section>`;
   }
   const brands = `${crumb('Nossas marcas')}<section class="page-intro wrap">
@@ -752,7 +822,11 @@ ${productBrands}
     'marcas/modelo/index.html': { title: 'Nossas marcas | Ótica Pupila', content: brands }
   };
   products.forEach(product => {
-    pages[`${product.route}/index.html`] = { title: `${product.name} | Ótica Pupila`, content: productPage(product) };
+    pages[`${product.route}/index.html`] = {
+      title: `${product.name} | Ótica Pupila`,
+      description: `Ray-Ban ${product.name}. ${product.description} Ótica Pupila, Joinville.`,
+      content: productPage(product)
+    };
   });
   categories.filter(c => c[0] !== 'lentes').forEach(c => {
     pages[`${c[0]}/index.html`] = { title: `${c[1]} | Ótica Pupila`, content: catalog(c) };
@@ -760,6 +834,7 @@ ${productBrands}
   window.PUPILA_CHROME = { header, footer };
   window.PUPILA_PAGES = Object.fromEntries(Object.entries(pages).map(([route, page]) => [route, {
     title: page.title,
+    description: page.description,
     html: `${header}<main id="conteudo" tabindex="-1">${page.content}</main>${footer}`
   }]));
 })();

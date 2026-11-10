@@ -5,7 +5,8 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 import { createServer } from 'node:http';
 
 const root = path.resolve(fileURLToPath(new URL('../', import.meta.url)));
-const routes = ['','oculos-de-grau/','oculos-de-sol/','relogios/','semijoias/','marcas/','marcas/modelo/','ray-ban-meta/','nossa-historia/','perguntas-frequentes/','contato/','privacidade/','lentes/','lentes/hoya/','lentes/zeiss/','lentes/essilor/','lentes/contato/','404.html'];
+const rayBanRoutes = ['oculos-de-grau/ray-ban-tartaruga/','oculos-de-grau/ray-ban-preta/','oculos-de-sol/ray-ban-marrom-translucido/','oculos-de-sol/ray-ban-preto-lentes-verdes/'];
+const routes = ['','oculos-de-grau/','oculos-de-sol/','relogios/','semijoias/','marcas/','marcas/modelo/','ray-ban-meta/','nossa-historia/','perguntas-frequentes/','contato/','privacidade/','lentes/','lentes/hoya/','lentes/zeiss/','lentes/essilor/','lentes/contato/','404.html',...rayBanRoutes];
 const mime = { '.html':'text/html; charset=utf-8','.js':'text/javascript; charset=utf-8','.css':'text/css; charset=utf-8','.svg':'image/svg+xml','.webp':'image/webp','.jpg':'image/jpeg','.png':'image/png','.woff2':'font/woff2' };
 const server = createServer((request,response) => {
   const pathname = decodeURIComponent(new URL(request.url, 'http://localhost').pathname);
@@ -90,6 +91,31 @@ try {
   assert.match(await page.locator('.meta-gallery-count').innerText(),/01 \/ 06/);
   const productCTA=new URL(await page.getByRole('link',{name:'Quero conhecer de perto'}).getAttribute('href'));
   assert.match(productCTA.searchParams.get('text'),/RW4011 601SSB/);
+  for (const route of rayBanRoutes) {
+    const [category, slug] = route.split('/');
+    await page.goto(base+category+'/');
+    await page.locator(`[data-catalog-card][href$="/${slug}/"]`).click();
+    await page.waitForURL(base+route);
+    const main = page.locator('#product-main-image');
+    const angles = page.locator('[data-product-view]');
+    assert.equal(await angles.count(),3,route);
+    assert.match(await main.getAttribute('src'), new RegExp(`${slug}-frente\\.webp$`), route);
+    await angles.nth(1).click();
+    assert.match(await main.getAttribute('src'), new RegExp(`${slug}-lateral\\.webp$`), route);
+    await page.keyboard.press('End');
+    assert.match(await main.getAttribute('src'), new RegExp(`${slug}-detalhe\\.webp$`), route);
+    assert.match(await main.getAttribute('alt'),/detalhe da dobradiça/,route);
+    assert.equal(await main.evaluate(async image => { await image.decode(); return image.naturalWidth; }),960,route);
+    assert.equal(await angles.last().getAttribute('aria-pressed'),'true',route);
+    assert.equal(await page.locator('.meta-gallery-count').innerText(),'03 / 03',route);
+    const cta = new URL(await page.getByRole('link',{name:'Quero conhecer de perto'}).getAttribute('href'));
+    assert(cta.searchParams.get('text').includes(await page.locator('h1').innerText()),route);
+    const details = page.getByRole('region',{name:'Ficha do modelo'});
+    assert.equal(await details.locator('dt').count(),3,route);
+    assert.equal(new URL(await details.getByRole('link',{name:/Ver referência/}).getAttribute('href')).hostname,'www.ray-ban.com',route);
+    await page.getByRole('link',{name:/Voltar para óculos/}).click();
+    await page.waitForURL(base+category+'/');
+  }
   for (const route of ['ray-ban-meta','ray-ban-meta/','ray-ban-meta/index.html','lentes','lentes/index.html','lentes/contato','oculos-de-grau?publico=feminino','index.html#avaliacoes','constructor','__proto__','toString','hasOwnProperty','valueOf']) {
     await page.goto(base+'#/'+route);
     await page.waitForURL(url=>!url.hash.startsWith('#/'));
@@ -128,7 +154,7 @@ try {
   await page.goto(base+'ray-ban-meta/');
   if(process.env.AXE_SCRIPT) {
     const violations=[];
-    for (const route of ['','oculos-de-grau/','oculos-de-sol/','ray-ban-meta/','contato/','lentes/','lentes/essilor/','privacidade/','404.html']) {
+    for (const route of ['','oculos-de-grau/','oculos-de-sol/','ray-ban-meta/','contato/','lentes/','lentes/essilor/','privacidade/','404.html',...rayBanRoutes]) {
       await page.goto(base+route);
       await page.addScriptTag({path:process.env.AXE_SCRIPT});
       const result=await page.evaluate(()=>axe.run(document,{runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21aa','wcag22aa','best-practice']}}));
