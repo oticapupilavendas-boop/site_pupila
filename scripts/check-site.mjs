@@ -10,11 +10,11 @@ const assert = (condition, message) => { if (!condition) failures.push(message);
 const attributes = tag => Object.fromEntries([...tag.matchAll(/([\w-]+)="([^"]*)"/g)].map(([, key, value]) => [key, value]));
 const context = { window: {} };
 vm.createContext(context);
-for (const file of ['assets/pages.js', 'assets/lens-pages.js', 'assets/routes.js']) vm.runInContext(read(file), context, { filename: file, timeout: 1000 });
+for (const file of ['assets/catalog-products.js', 'assets/pages.js', 'assets/lens-pages.js', 'assets/routes.js']) vm.runInContext(read(file), context, { filename: file, timeout: 1000 });
 new vm.Script(read('assets/app.js'));
 const pages = context.window.PUPILA_PAGES;
 const config = JSON.parse(read('site-config.json'));
-assert(Object.keys(pages).length === 22, 'páginas esperadas ausentes');
+assert(Object.keys(pages).length === 76, 'páginas esperadas ausentes');
 assert(context.window.PUPILA_META_VIEWS.length === 6, 'a galeria deve oferecer seis ângulos');
 let imageCount = 0;
 const titles = new Set();
@@ -65,11 +65,20 @@ for (const route of Object.keys(pages)) {
     }
   }
 }
-for (const [category, cardCount] of [['oculos-de-grau', 2], ['oculos-de-sol', 3]]) {
+for (const [category, cardCount, brandCount] of [['oculos-de-grau', 44, 18], ['oculos-de-sol', 15, 10]]) {
   const source = read(`${category}/index.html`);
   assert((source.match(/\bdata-catalog-card\b/g) || []).length === cardCount, `${category}: quantidade de cartões inesperada`);
-  assert(!source.includes('data-catalog-filter') && !source.includes('data-catalog-brand') && !source.includes('data-catalog-empty'), `${category}: filtros sem seleção suficiente`);
+  assert((source.match(/<option value=/g) || []).length === brandCount + 1, `${category}: quantidade de marcas inesperada`);
+  assert(['todos', 'feminino', 'masculino'].every(audience => source.includes(`data-catalog-filter="${audience}"`)) && source.includes('data-catalog-brand'), `${category}: filtros ausentes`);
   assert(source.includes('wa.me/') && source.includes('Planeje sua visita'), `${category}: caminho de atendimento ausente`);
+}
+for (const product of context.window.PUPILA_DATA.products.filter(item => item.route.includes('/'))) {
+  const route = `${product.route}/index.html`;
+  assert(read(route).includes('Ficha do modelo') && product.views.length >= 3, `${route}: ficha ou ângulos ausentes`);
+  for (const { image, alt } of product.views) {
+    const bytes = fs.readFileSync(path.join(root, image));
+    assert(image.endsWith('.webp') && bytes.subarray(8, 12).toString() === 'WEBP' && bytes.length < 100000 && alt, `${route}: foto inválida ou pesada`);
+  }
 }
 for (const [, file] of read('assets/site.css').matchAll(/url\('([^']+)'\)/g)) assert(fs.existsSync(path.join(root, 'assets', file)), `recurso CSS ausente: ${file}`);
 assert(read('assets/site.css').includes('prefers-reduced-motion: reduce'), 'movimento reduzido ausente');

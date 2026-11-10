@@ -224,6 +224,7 @@ summary::-webkit-details-marker { display: none; }
 .catalog-heading h2 { margin: 0; }
 .catalog-heading > p { max-width: 38ch; margin: 0; font-size: 13px; color: var(--muted); }
 .catalog-toolbar { display: flex; align-items: end; justify-content: space-between; gap: 24px; border-block: 1px solid var(--line); padding-block: 17px; }
+html:not(.js) .catalog-toolbar { display: none; }
 .catalog-audience { display: flex; flex-wrap: wrap; gap: 8px; }
 .catalog-filter { min-height: 44px; min-width: 96px; padding: 10px 16px; border: 1px solid var(--line); background: transparent; color: var(--navy); font-size: 12px; transition: background .2s, color .2s, border-color .2s; }
 .catalog-filter[aria-pressed='true'] { background: var(--navy); border-color: var(--navy); color: white; }

@@ -17,7 +17,7 @@ if (config.siteUrl) {
 if (publish && (!siteUrl || !privacyReady)) throw new Error('Publicação pendente: preencha domínio e todos os dados de privacidade em site-config.json após confirmação da loja.');
 const context = { window: {} };
 vm.createContext(context);
-for (const file of ['assets/pages.js', 'assets/lens-pages.js']) {
+for (const file of ['assets/catalog-products.js', 'assets/pages.js', 'assets/lens-pages.js']) {
   vm.runInContext(fs.readFileSync(path.join(root, file), 'utf8'), context, { filename: file, timeout: 1000 });
 }
 const pages = context.window.PUPILA_PAGES;
@@ -134,6 +134,6 @@ if (publish) {
     fs.mkdirSync(path.dirname(path.join(dist, file)), { recursive: true });
     fs.copyFileSync(path.join(root, file), path.join(dist, file));
   }
-  fs.cpSync(path.join(root, 'assets'), path.join(dist, 'assets'), { recursive: true, filter: file => !['pages.js', 'lens-pages.js', 'logo-meta.png', 'essilor-select-2026.jpeg'].includes(path.basename(file)) && !file.endsWith('.avif') });
+  fs.cpSync(path.join(root, 'assets'), path.join(dist, 'assets'), { recursive: true, filter: file => !['catalog-products.js', 'pages.js', 'lens-pages.js', 'logo-meta.png', 'essilor-select-2026.jpeg'].includes(path.basename(file)) && !file.endsWith('.avif') });
 }
 console.log(`✓ ${Object.keys(pages).length} páginas estáticas ${check ? 'verificadas' : 'geradas'}${siteUrl ? ', SEO com domínio configurado' : '; domínio e política final pendentes'}`);
