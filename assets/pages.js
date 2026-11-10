@@ -417,9 +417,10 @@ const existing = {
   };
   const link = (route, label, classes = '') => `<a class="${classes}" href="${lensPaths[route] || `#/${route}/index.html`}">${label}</a>`;
   const chat = (label = 'Fale com a Pupila', message = 'Olá! Conheci a Ótica Pupila pelo site e gostaria de atendimento.', classes = 'button primary') => `<a class="${classes}" href="https://wa.me/${window.PUPILA_DATA.company.whatsapp}?text=${encodeURIComponent(message)}" target="_blank" rel="noopener noreferrer">${label}${icon('diagonal')}</a>`;
-  const crumb = label => `<nav class="breadcrumb wrap" aria-label="Caminho da página">
+  const crumb = (label, parent) => `<nav class="breadcrumb wrap" aria-label="Caminho da página">
 <a href="#/index.html">Início</a>
-<span aria-hidden="true">/</span>
+<span aria-hidden="true">/</span>${parent ? `
+${link(parent[0], parent[1])}<span aria-hidden="true">/</span>` : ''}
 <span aria-current="page">${label}</span>
 </nav>`;
   const categories = [
@@ -689,7 +690,7 @@ ${productBrands}
     route: 'ray-ban-meta',
     name: productName,
     brand: 'Ray-Ban',
-    categories: ['oculos-de-sol'],
+    categories: ['oculos-de-grau'],
     audiences: ['feminino', 'masculino'],
     label: 'ÓCULOS INTELIGENTES',
     image: metaViews[0].image,
@@ -733,7 +734,12 @@ ${productBrands}
 <div class="catalog-heading"><div><p class="eyebrow">MODELOS EM DESTAQUE</p><h2 id="catalog-title">Escolha pelo seu olhar.</h2></div><p>Consulte modelos, cores e disponibilidade com a equipe da loja.</p></div>
 <div class="catalog-toolbar">
 <div class="catalog-audience" role="group" aria-label="Filtrar por público"><button type="button" class="catalog-filter" data-catalog-filter="todos" aria-pressed="true">Todos</button><button type="button" class="catalog-filter" data-catalog-filter="feminino" aria-pressed="false">Feminino</button><button type="button" class="catalog-filter" data-catalog-filter="masculino" aria-pressed="false">Masculino</button></div>
-<label class="catalog-brand-filter"><span>Marca</span><select data-catalog-brand aria-label="Filtrar por marca"><option value="todas">Todas as marcas</option>${brands.map(brand => `<option value="${brand}">${brand}</option>`).join('')}</select></label>
+<div class="catalog-brand-filter"><span id="catalog-brand-label">Marca</span><details data-catalog-brand>
+<summary aria-labelledby="catalog-brand-label catalog-brand-value"><span id="catalog-brand-value">Todas as marcas</span></summary>
+<div class="catalog-brand-options" role="group" aria-label="Filtrar por marca">
+<button type="button" data-catalog-brand-option="todas" aria-pressed="true">Todas as marcas</button>
+${brands.map(brand => `<button type="button" data-catalog-brand-option="${brand}" aria-pressed="false">${brand}</button>`).join('')}
+</div></details></div>
 </div>
 <p class="catalog-result" data-catalog-result aria-live="polite">${availableProducts.length} modelos em destaque</p>
 <div class="catalog-grid" data-catalog-grid>${availableProducts.map(productCard).join('')}</div>
@@ -775,7 +781,8 @@ ${availableProducts.length ? `<div class="catalog-grid">${availableProducts.map(
     const parentCategory = categories.find(([route]) => product.route.startsWith(`${route}/`));
     const facts = product.facts ? `<dl class="product-facts">${product.facts.map(([term, detail]) => `<div><dt>${term}</dt><dd>${detail}</dd></div>`).join('')}</dl>` : '';
     const source = product.source ? `<a class="source-link" href="${product.source.href}" target="_blank" rel="noopener noreferrer">${product.source.label}</a>` : '';
-    return `${crumb(product.brand)}
+    const catalogCategory = categories.find(([route]) => route === product.categories[0]);
+    return `${crumb(product.brand, catalogCategory)}
     <section class="product-page wrap" aria-labelledby="product-title">
 <div class="product-gallery" role="group" data-product-gallery="${product.slug}" aria-label="Galeria de imagens — ${product.name}">
 <div class="product-gallery-main">

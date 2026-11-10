@@ -21,6 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
   root.classList.add('js');
   const nav = root.querySelector('#main-nav');
   const toggle = root.querySelector('.menu-toggle');
+  const brandMenu = root.querySelector('[data-catalog-brand]');
   const closeGroups = () => root.querySelectorAll('.nav-group[open]').forEach(group => { group.open = false; });
   const closeMenu = (returnFocus = false) => {
     const wasOpen = toggle?.getAttribute('aria-expanded') === 'true';
@@ -40,7 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
     root.querySelector('.meta-gallery-count').textContent = `${String(index + 1).padStart(2, '0')} / ${String(buttons.length).padStart(2, '0')}`;
   }
   function updateCatalog(catalog, audience = catalog.dataset.audience || 'todos') {
-    const brand = catalog.querySelector('[data-catalog-brand]')?.value ?? 'todas';
+    const brand = catalog.querySelector('[data-catalog-brand-option][aria-pressed="true"]').dataset.catalogBrandOption;
     let visible = 0;
     catalog.querySelectorAll('[data-catalog-card]').forEach(card => {
       const audienceMatch = audience === 'todos' || card.dataset.audience.split(' ').some(value => value === audience || value === 'todos');
@@ -63,6 +64,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     if (target.matches('[data-product-view]')) showProductView(Number(target.dataset.productView));
     if (target.matches('[data-catalog-filter]')) updateCatalog(target.closest('[data-catalog]'), target.dataset.catalogFilter);
+    if (target.matches('[data-catalog-brand-option]')) {
+      brandMenu.querySelectorAll('[data-catalog-brand-option]').forEach(option => option.setAttribute('aria-pressed', String(option === target)));
+      brandMenu.querySelector('#catalog-brand-value').textContent = target.textContent;
+      brandMenu.open = false;
+      brandMenu.querySelector('summary').focus();
+      updateCatalog(brandMenu.closest('[data-catalog]'));
+    }
     if (target.getAttribute('href') === '#conteudo') {
       event.preventDefault();
       root.querySelector('main')?.focus();
@@ -70,6 +78,18 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
   root.addEventListener('keydown', event => {
+    if (brandMenu?.contains(event.target) && ['ArrowUp', 'ArrowDown', 'Home', 'End'].includes(event.key)) {
+      const options = [...brandMenu.querySelectorAll('[data-catalog-brand-option]')];
+      const current = options.indexOf(event.target);
+      const offset = event.key === 'ArrowDown' ? 1 : -1;
+      const next = event.key === 'Home' ? 0 : event.key === 'End' ? options.length - 1
+        : current < 0 ? options.findIndex(option => option.getAttribute('aria-pressed') === 'true')
+        : (current + offset + options.length) % options.length;
+      event.preventDefault();
+      brandMenu.open = true;
+      options[next].focus();
+      return;
+    }
     const button = event.target.closest('[data-product-view]');
     if (!button || !['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
     event.preventDefault();
@@ -82,24 +102,28 @@ document.addEventListener('DOMContentLoaded', () => {
   root.addEventListener('input', event => {
     if (event.target.matches('.lens-comparison-range')) event.target.closest('.lens-comparison').style.setProperty('--comparison-position', `${event.target.value}%`);
   });
-  root.addEventListener('change', event => {
-    if (event.target.matches('[data-catalog-brand]')) updateCatalog(event.target.closest('[data-catalog]'));
-  });
   root.addEventListener('toggle', event => {
     if (event.target.matches('.nav-group[open]')) root.querySelectorAll('.nav-group[open]').forEach(group => { if (group !== event.target) group.open = false; });
   }, true);
   document.addEventListener('click', event => {
+    if (brandMenu?.open && !brandMenu.contains(event.target)) brandMenu.open = false;
     if (!event.target.closest('.nav-group')) closeGroups();
     if (!event.target.closest('.site-header')) closeMenu();
   });
   document.addEventListener('keydown', event => {
     if (event.key !== 'Escape') return;
+    if (brandMenu?.open && brandMenu.contains(event.target)) {
+      brandMenu.open = false;
+      brandMenu.querySelector('summary').focus();
+      return;
+    }
     const summary = root.querySelector('.nav-group[open] > summary');
     closeGroups();
     summary?.focus();
     closeMenu(true);
   });
   root.addEventListener('focusout', event => {
+    if (brandMenu?.open && brandMenu.contains(event.target) && event.relatedTarget && !brandMenu.contains(event.relatedTarget)) brandMenu.open = false;
     if (event.relatedTarget && !root.querySelector('.site-header')?.contains(event.relatedTarget)) {
       closeMenu();
       closeGroups();

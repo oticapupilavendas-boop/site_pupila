@@ -65,10 +65,11 @@ for (const route of Object.keys(pages)) {
     }
   }
 }
-for (const [category, cardCount, brandCount] of [['oculos-de-grau', 44, 18], ['oculos-de-sol', 15, 10]]) {
+for (const [category, cardCount, brandCount] of [['oculos-de-grau', 45, 18], ['oculos-de-sol', 14, 10]]) {
   const source = read(`${category}/index.html`);
   assert((source.match(/\bdata-catalog-card\b/g) || []).length === cardCount, `${category}: quantidade de cartões inesperada`);
-  assert((source.match(/<option value=/g) || []).length === brandCount + 1, `${category}: quantidade de marcas inesperada`);
+  assert((source.match(/\bdata-catalog-brand-option=/g) || []).length === brandCount + 1, `${category}: quantidade de marcas inesperada`);
+  assert(source.includes('RAY-BAN META WAYFARER GEN 3</h2>') === (category === 'oculos-de-grau'), `${category}: Ray-Ban Meta na categoria incorreta`);
   assert(['todos', 'feminino', 'masculino'].every(audience => source.includes(`data-catalog-filter="${audience}"`)) && source.includes('data-catalog-brand'), `${category}: filtros ausentes`);
   assert(source.includes('wa.me/') && source.includes('Planeje sua visita'), `${category}: caminho de atendimento ausente`);
 }

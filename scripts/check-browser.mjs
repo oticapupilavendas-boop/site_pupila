@@ -59,6 +59,18 @@ try {
       assert.deepEqual(result.broken,[],`${route}: imagens quebradas`);
       assert.equal(result.h1,1,route);
       assert.deepEqual(result.small,[],`${route} em ${width}px: texto informativo pequeno`);
+      if (route === 'oculos-de-grau/' || route === 'oculos-de-sol/') {
+        const aligned = await page.locator('[data-catalog-card]').evaluateAll(cards => {
+          const rows = new Map();
+          return cards.every(card => {
+            const row = Math.round(card.getBoundingClientRect().top);
+            const details = card.querySelector('.text-link').getBoundingClientRect().top;
+            if (!rows.has(row)) rows.set(row, details);
+            return Math.abs(rows.get(row) - details) < 1;
+          });
+        });
+        assert(aligned,`${route} em ${width}px: ações desalinhadas`);
+      }
       if (route === 'lentes/') {
         const edge = await page.locator('.lens-hero-art--glasses').evaluate(el => ({right:el.getBoundingClientRect().right,viewport:document.documentElement.clientWidth}));
         assert(Math.abs(edge.right-edge.viewport) <= 1, `lentes em ${width}px: vazio na borda direita`);
@@ -116,28 +128,37 @@ try {
     const details = page.getByRole('region',{name:'Ficha do modelo'});
     assert.equal(await details.locator('dt').count(),3,route);
     assert.equal(new URL(await details.getByRole('link',{name:/Ver referência/}).getAttribute('href')).hostname,'www.ray-ban.com',route);
-    await page.getByRole('link',{name:/Voltar para óculos/}).click();
+    await page.getByRole('navigation',{name:'Caminho da página'}).getByRole('link',{name:/Óculos de/}).click();
     await page.waitForURL(base+category+'/');
   }
   for (const category of ['oculos-de-grau/','oculos-de-sol/']) {
     await page.goto(base+category);
-    const brandFilter = page.getByLabel('Filtrar por marca');
+    const brandMenu = page.locator('[data-catalog-brand]');
+    const brandFilter = brandMenu.locator('summary');
+    const selectBrand = async name => {
+      await brandFilter.click();
+      await brandMenu.getByRole('button',{name,exact:true}).click();
+    };
     const cards = page.locator('[data-catalog-card]:visible');
     const initialCount = await cards.count();
     const selectAudience = label => page.getByRole('button',{name:label,exact:true}).click();
-    await brandFilter.selectOption('Oakley');
+    await brandFilter.press('ArrowDown');
+    assert.equal(await brandMenu.getByRole('button',{name:'Todas as marcas',exact:true}).evaluate(el=>el===document.activeElement),true);
+    await page.keyboard.press('Escape');
+    assert.equal(await brandFilter.evaluate(el=>el===document.activeElement),true);
+    await selectBrand('Oakley');
     await selectAudience('Feminino');
     const feminineOakley = await cards.evaluateAll(items => items.map(item => [item.dataset.brand,item.getAttribute('href')]));
     assert(feminineOakley.length > 0 && feminineOakley.every(([brand]) => brand === 'Oakley'),category);
     await selectAudience('Masculino');
     assert.deepEqual(await cards.evaluateAll(items => items.map(item => [item.dataset.brand,item.getAttribute('href')])),feminineOakley,category);
-    await brandFilter.selectOption('Carmim');
+    await selectBrand('Carmim');
     assert.equal(await cards.count(),0,category);
     assert.equal(await page.locator('[data-catalog-empty]').isVisible(),true,category);
     await selectAudience('Feminino');
     assert(await cards.count() > 0,category);
     assert.equal(await page.locator('[data-catalog-empty]').isVisible(),false,category);
-    await brandFilter.selectOption('todas');
+    await selectBrand('Todas as marcas');
     await selectAudience('Todos');
     assert.equal(await cards.count(),initialCount,category);
   }
