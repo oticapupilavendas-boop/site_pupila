@@ -623,22 +623,35 @@ ${productBrands}
   ];
   const rayBanProducts = [
     {
-      category: 'oculos-de-grau', slug: 'ray-ban-tartaruga', name: 'Armação Ray-Ban tartaruga',
-      description: 'Armação tartaruga com aros arredondados e logotipo Ray-Ban na haste.'
+      category: 'oculos-de-grau', slug: 'ray-ban-tartaruga', name: 'Thalia Optics',
+      description: 'Armação tartaruga com aros arredondados e um pequeno detalhe metálico em cada canto.',
+      facts: [['Armação', 'Tartaruga'], ['Formato', 'Arredondado, com linhas angulares no topo'], ['Detalhes', 'Rebites frontais e assinatura Ray-Ban na haste']],
+      story: 'O Thalia recupera um desenho do arquivo da Ray-Ban. As linhas finas remetem aos anos 1970, com uma frente que combina curvas e ângulos.',
+      catalogUrl: 'https://www.ray-ban.com/brazil/graduados/RX5395thalia%20optics-havana/8056597364270'
     },
     {
-      category: 'oculos-de-grau', slug: 'ray-ban-preta', name: 'Armação Ray-Ban preta',
-      description: 'Armação preta com aros retangulares e logotipo Ray-Ban na haste.'
+      category: 'oculos-de-grau', slug: 'ray-ban-preta', name: 'RB7027 Optics',
+      description: 'Armação preta com aros retangulares, cantos suaves e assinatura Ray-Ban na haste.',
+      facts: [['Armação', 'Preta'], ['Formato', 'Retangular, com cantos arredondados'], ['Hastes', 'Largas junto à frente, com pontas curvas']],
+      catalogUrl: 'https://www.ray-ban.com/brazil/graduados/RX7027L%20MALE%20rb7027%20optics-preto/7895653130388',
+      identificationPending: true
     },
     {
-      category: 'oculos-de-sol', slug: 'ray-ban-marrom-translucido', name: 'Solar Ray-Ban marrom translúcido',
-      description: 'Óculos de sol com armação marrom translúcida e lentes em degradê.'
+      category: 'oculos-de-sol', slug: 'ray-ban-marrom-translucido', name: 'State Street',
+      description: 'Óculos de sol com armação marrom-clara translúcida e lentes marrons em degradê.',
+      facts: [['Armação', 'Marrom-clara translúcida'], ['Lentes', 'Marrom em degradê'], ['Material da referência', 'Acetato']],
+      story: 'O State Street faz parte da família Wayfarer. A frente quadrada mais marcada dá à linha uma leitura contemporânea do desenho clássico.',
+      catalogUrl: 'https://www.ray-ban.com/brazil/oculos-de-sol/RB2186state%20street-marrom-claro%20transparente/8056262581278'
     },
     {
-      category: 'oculos-de-sol', slug: 'ray-ban-preto-lentes-verdes', name: 'Solar Ray-Ban preto com lentes verdes',
-      description: 'Óculos de sol com armação preta, lentes verdes e detalhes metálicos nas laterais da frente.'
+      category: 'oculos-de-sol', slug: 'ray-ban-preto-lentes-verdes', name: 'Original Wayfarer Classic',
+      description: 'Óculos de sol com armação preta, lentes verdes e detalhes metálicos nas laterais da frente.',
+      facts: [['Armação', 'Preta'], ['Formato', 'Quadrado, com cantos arredondados'], ['Lentes', 'Verdes']],
+      story: 'O desenho Original Wayfarer foi lançado em 1952. Sua frente inclinada virou uma das marcas da família Wayfarer.',
+      catalogUrl: 'https://www.ray-ban.com/brazil/oculos-de-sol/RB2140original%20wayfarer%20classic-preto/805289126577',
+      identificationPending: true
     }
-  ].map(({ category, slug, name, description }) => {
+  ].map(({ category, slug, name, description, facts, story, catalogUrl, identificationPending }) => {
     const views = [
       ['frente', 'Frente', 'vista frontal'],
       ['lateral', 'Lateral', 'vista lateral da haste'],
@@ -646,14 +659,16 @@ ${productBrands}
     ].map(([angle, label, detail]) => ({
       image: `assets/catalogo/ray-ban/${category}/${slug}-${angle}.webp`,
       label,
-      alt: `${name}, ${detail}`
+      alt: `Ray-Ban ${name}, ${detail}`
     }));
     return {
       slug, route: `${category}/${slug}`, name, description, brand: 'Ray-Ban',
+      facts, story, identificationPending,
+      source: { href: catalogUrl, label: 'Ver referência no catálogo Ray-Ban ↗' },
       categories: [category], audiences: ['todos'],
       label: category === 'oculos-de-grau' ? 'ARMAÇÃO DE GRAU' : 'ÓCULOS DE SOL',
       image: views[0].image, imageAlt: views[0].alt, views, width: 960, height: 640,
-      whatsapp: `Olá! Gostaria de saber mais sobre ${name} que vi no catálogo da Ótica Pupila.`
+      whatsapp: `Olá! Gostaria de saber mais sobre o modelo Ray-Ban ${name} que vi no catálogo da Ótica Pupila.`
     };
   });
   const products = [{
@@ -748,6 +763,8 @@ ${availableProducts.length ? `<div class="catalog-grid">${availableProducts.map(
   }
   function productPage(product) {
     const parentCategory = categories.find(([route]) => product.route.startsWith(`${route}/`));
+    const facts = product.facts ? `<dl class="product-facts">${product.facts.map(([term, detail]) => `<div><dt>${term}</dt><dd>${detail}</dd></div>`).join('')}</dl>` : '';
+    const source = product.source ? `<a class="source-link" href="${product.source.href}" target="_blank" rel="noopener noreferrer">${product.source.label}</a>` : '';
     return `${crumb(product.brand)}
     <section class="product-page wrap" aria-labelledby="product-title">
 <div class="product-gallery" role="group" data-product-gallery="${product.slug}" aria-label="Galeria de imagens — ${product.name}">
@@ -767,8 +784,15 @@ ${availableProducts.length ? `<div class="catalog-grid">${availableProducts.map(
 ${product.branding || `<p class="product-brand">${product.brand}</p>`}
 <h1 id="product-title">${product.name}</h1>
 <p>${product.description}</p>
-${product.facts ? `<dl class="product-facts">${product.facts.map(([term, detail]) => `<div><dt>${term}</dt><dd>${detail}</dd></div>`).join('')}</dl>` : ''}${product.support ? `<p class="product-support-note">${product.support}</p>` : ''}${product.source ? `<a class="source-link" href="${product.source.href}" target="_blank" rel="noopener noreferrer">${product.source.label}</a>` : ''}
-${chat('Quero conhecer de perto', product.whatsapp)}<p class="availability-note">Tamanho, preço e disponibilidade sob consulta à loja.</p>${parentCategory ? link(parentCategory[0], `Voltar para ${parentCategory[1].toLowerCase()}`, 'text-link') : link('contato', 'Experimente na Pupila', 'text-link')}</div>
+${parentCategory ? '' : `${facts}${product.support ? `<p class="product-support-note">${product.support}</p>` : ''}${source}`}
+${chat('Quero conhecer de perto', product.whatsapp)}<p class="availability-note">Tamanho, preço e disponibilidade sob consulta à loja.</p>${parentCategory ? link(parentCategory[0], `Voltar para ${parentCategory[1].toLowerCase()}`, 'text-link') : link('contato', 'Experimente na Pupila', 'text-link')}${parentCategory && facts ? `
+<section class="product-details" aria-labelledby="product-details-title">
+<h2 id="product-details-title">Ficha do modelo</h2>
+${product.identificationPending ? '<p class="product-identification-note">Nome identificado por comparação visual. Confirme a referência da peça com a loja.</p>' : ''}
+${facts}
+${product.story ? `<h3>O desenho da linha</h3><p>${product.story}</p>` : ''}
+${source}
+</section>` : ''}</div>
 </section>`;
   }
   const brands = `${crumb('Nossas marcas')}<section class="page-intro wrap">
@@ -800,7 +824,7 @@ ${productBrands}
   products.forEach(product => {
     pages[`${product.route}/index.html`] = {
       title: `${product.name} | Ótica Pupila`,
-      description: `${product.description} Veja três ângulos na Ótica Pupila, em Joinville.`,
+      description: `Ray-Ban ${product.name}. ${product.description} Ótica Pupila, Joinville.`,
       content: productPage(product)
     };
   });

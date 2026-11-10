@@ -110,6 +110,9 @@ try {
     assert.equal(await page.locator('.meta-gallery-count').innerText(),'03 / 03',route);
     const cta = new URL(await page.getByRole('link',{name:'Quero conhecer de perto'}).getAttribute('href'));
     assert(cta.searchParams.get('text').includes(await page.locator('h1').innerText()),route);
+    const details = page.getByRole('region',{name:'Ficha do modelo'});
+    assert.equal(await details.locator('dt').count(),3,route);
+    assert.equal(new URL(await details.getByRole('link',{name:/Ver referência/}).getAttribute('href')).hostname,'www.ray-ban.com',route);
     await page.getByRole('link',{name:/Voltar para óculos/}).click();
     await page.waitForURL(base+category+'/');
   }

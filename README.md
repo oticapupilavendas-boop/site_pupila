@@ -32,7 +32,7 @@ Cada página funciona sem JavaScript, inclusive o acesso à navegação no celul
 
 Categorias com menos de dois produtos usam apresentação editorial, contato e visita; os destaques reais existentes são mantidos. Produtos, cores, configurações e disponibilidade devem ser consultados com a loja. Não há checkout ou preços. A afirmação de revenda autorizada foi retirada. Por solicitação do proprietário, as avaliações existentes aparecem em trechos, sem autores/notas inventados nem superlativo de preço; o link para as avaliações no Google permanece.
 
-O piloto Ray-Ban apresenta dois conjuntos de grau e dois solares, com três ângulos WebP em cada galeria. Os nomes descrevem as características visíveis enquanto os códigos comerciais aguardam confirmação.
+O piloto Ray-Ban apresenta dois conjuntos de grau e dois solares, com três ângulos WebP e uma ficha em cada galeria. Para identificar novos modelos, confira primeiro o código da haste ou etiqueta no catálogo oficial. A busca visual ajuda a encontrar candidatos. Compare frente, perfil e detalhes com as fotos do fabricante. Registre a fonte e sinalize identificações que ainda dependam de confirmação da loja. Inclua tamanho, material ou tratamento das lentes somente quando houver evidência para a variante.
 
 As lentes exigem receita médica. Não se oferece consulta ou adaptação médica na loja. As fontes de linhas e tecnologias, a origem das marcas e o certificado Select 2026 estão em `docs/LENTES.md`. O ano da certificação é histórico e não é atualizado automaticamente. O rodapé usa “Desde 1992”, sem depender do relógio do build.
 
