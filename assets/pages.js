@@ -417,9 +417,10 @@ const existing = {
   };
   const link = (route, label, classes = '') => `<a class="${classes}" href="${lensPaths[route] || `#/${route}/index.html`}">${label}</a>`;
   const chat = (label = 'Fale com a Pupila', message = 'Olá! Conheci a Ótica Pupila pelo site e gostaria de atendimento.', classes = 'button primary') => `<a class="${classes}" href="https://wa.me/${window.PUPILA_DATA.company.whatsapp}?text=${encodeURIComponent(message)}" target="_blank" rel="noopener noreferrer">${label}${icon('diagonal')}</a>`;
-  const crumb = label => `<nav class="breadcrumb wrap" aria-label="Caminho da página">
+  const crumb = (label, parent) => `<nav class="breadcrumb wrap" aria-label="Caminho da página">
 <a href="#/index.html">Início</a>
-<span aria-hidden="true">/</span>
+<span aria-hidden="true">/</span>${parent ? `
+${link(parent[0], parent[1])}<span aria-hidden="true">/</span>` : ''}
 <span aria-current="page">${label}</span>
 </nav>`;
   const categories = [
@@ -621,7 +622,16 @@ ${productBrands}
     { image: 'assets/0RW4011__601SSB__P21__shad__bk.webp', label: 'Traseira', alt: 'RAY-BAN META WAYFARER GEN 3: vista posterior da armação' },
     { image: 'assets/0RW4011__601SSB__P21__shad__cfr.webp', label: 'Interior', alt: 'RAY-BAN META WAYFARER GEN 3: vista frontal pelo interior da armação' }
   ];
-  const rayBanProducts = [
+  const catalogAngles = {
+    frente: ['Frente', 'vista frontal'],
+    lateral: ['Lateral', 'vista lateral'],
+    detalhe: ['Detalhe', 'detalhe da armação'],
+    perspectiva: ['Perspectiva', 'vista em perspectiva'],
+    'com-clip': ['Com clip', 'com clip solar'],
+    'clip-levantado': ['Clip levantado', 'com clip solar levantado'],
+    'clip-oliva': ['Clip oliva', 'com clip solar oliva']
+  };
+  const catalogProducts = [
     {
       category: 'oculos-de-grau', slug: 'ray-ban-tartaruga', name: 'Thalia Optics',
       description: 'Armação tartaruga com aros arredondados e um pequeno detalhe metálico em cada canto.',
@@ -634,6 +644,7 @@ ${productBrands}
       description: 'Armação preta com aros retangulares, cantos suaves e assinatura Ray-Ban na haste.',
       facts: [['Armação', 'Preta'], ['Formato', 'Retangular, com cantos arredondados'], ['Hastes', 'Largas junto à frente, com pontas curvas']],
       catalogUrl: 'https://www.ray-ban.com/brazil/graduados/RX7027L%20MALE%20rb7027%20optics-preto/7895653130388',
+      audience: 'masculino',
       identificationPending: true
     },
     {
@@ -650,25 +661,28 @@ ${productBrands}
       story: 'O desenho Original Wayfarer foi lançado em 1952. Sua frente inclinada virou uma das marcas da família Wayfarer.',
       catalogUrl: 'https://www.ray-ban.com/brazil/oculos-de-sol/RB2140original%20wayfarer%20classic-preto/805289126577',
       identificationPending: true
-    }
-  ].map(({ category, slug, name, description, facts, story, catalogUrl, identificationPending }) => {
-    const views = [
-      ['frente', 'Frente', 'vista frontal'],
-      ['lateral', 'Lateral', 'vista lateral da haste'],
-      ['detalhe', 'Detalhe', 'detalhe da dobradiça e do logotipo Ray-Ban na haste']
-    ].map(([angle, label, detail]) => ({
-      image: `assets/catalogo/ray-ban/${category}/${slug}-${angle}.webp`,
-      label,
-      alt: `Ray-Ban ${name}, ${detail}`
-    }));
+    },
+    ...window.PUPILA_CATALOG_MODELS
+  ].map(({ category, brand = 'Ray-Ban', slug, name, description, facts, story, catalogUrl, collectionUrl, identificationPending, audience, angles = ['frente', 'lateral', 'detalhe'] }) => {
+    const brandKey = brand.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/-$/, '');
+    const productName = name.startsWith(brand) ? name : `${brand} ${name}`;
+    const views = angles.map(angle => {
+      const [label, detail] = catalogAngles[angle];
+      return {
+        image: `assets/catalogo/${brandKey}/${category}/${slug}-${angle}.webp`,
+        label,
+        alt: `${productName}, ${detail}`
+      };
+    });
     return {
-      slug, route: `${category}/${slug}`, name, description, brand: 'Ray-Ban',
-      facts, story, identificationPending,
-      source: { href: catalogUrl, label: 'Ver referência no catálogo Ray-Ban ↗' },
-      categories: [category], audiences: ['todos'],
+      slug, route: `${category}/${slug}`, name, description, brand, productName,
+      facts, story, identificationPending, catalogUrl,
+      source: catalogUrl ? { href: catalogUrl, label: `Ver referência de ${brand} ↗` }
+        : collectionUrl ? { href: collectionUrl, label: `Conhecer a coleção ${brand} ↗` } : null,
+      categories: [category], audiences: audience ? [audience] : ['feminino', 'masculino'],
       label: category === 'oculos-de-grau' ? 'ARMAÇÃO DE GRAU' : 'ÓCULOS DE SOL',
       image: views[0].image, imageAlt: views[0].alt, views, width: 960, height: 640,
-      whatsapp: `Olá! Gostaria de saber mais sobre o modelo Ray-Ban ${name} que vi no catálogo da Ótica Pupila.`
+      whatsapp: `Olá! Gostaria de saber mais sobre o modelo ${productName} que vi no catálogo da Ótica Pupila.`
     };
   });
   const products = [{
@@ -676,8 +690,8 @@ ${productBrands}
     route: 'ray-ban-meta',
     name: productName,
     brand: 'Ray-Ban',
-    categories: ['oculos-de-sol'],
-    audiences: ['todos'],
+    categories: ['oculos-de-grau'],
+    audiences: ['feminino', 'masculino'],
     label: 'ÓCULOS INTELIGENTES',
     image: metaViews[0].image,
     imageAlt: metaViews[0].alt,
@@ -697,7 +711,7 @@ ${productBrands}
     support: 'Recursos de IA variam conforme país, idioma e atualizações. A autonomia varia com o uso.',
     source: { href: 'https://about.fb.com/news/2026/09/introducing-ray-ban-meta-audio-glasses-new-styles-plus-muse/', label: 'Conheça os recursos no site da Meta ↗' },
     whatsapp: 'Olá! Gostaria de saber mais sobre o RAY-BAN META WAYFARER GEN 3 RW4011 601SSB.'
-  }, ...rayBanProducts];
+  }, ...catalogProducts];
   window.PUPILA_META_VIEWS = metaViews;
   window.PUPILA_DATA.products = products;
 
@@ -710,10 +724,7 @@ ${productBrands}
 
   function eyewearCatalog(category, availableProducts) {
     const [route, name, description] = category;
-    const brands = [...new Set(availableProducts.map(product => product.brand))];
-    const filterByBrand = brands.length > 1;
-    const filterByAudience = availableProducts.some(product => product.audiences.some(audience => audience !== 'todos'));
-    const hasFilters = filterByBrand || filterByAudience;
+    const brands = [...new Set(availableProducts.map(product => product.brand))].sort((a, b) => a.localeCompare(b, 'pt-BR'));
     return `${crumb(name)}<section class="page-intro wrap">
 <p class="eyebrow">NOSSA SELEÇÃO</p>
 <h1>${name}, do seu jeito.</h1>
@@ -721,13 +732,18 @@ ${productBrands}
 </section>
 <section class="wrap catalog-section catalog-listing" data-catalog data-category="${route}" aria-labelledby="catalog-title">
 <div class="catalog-heading"><div><p class="eyebrow">MODELOS EM DESTAQUE</p><h2 id="catalog-title">Escolha pelo seu olhar.</h2></div><p>Consulte modelos, cores e disponibilidade com a equipe da loja.</p></div>
-${hasFilters ? `<div class="catalog-toolbar">
-${filterByAudience ? `<div class="catalog-audience" role="group" aria-label="Filtrar por público"><button type="button" class="catalog-filter" data-catalog-filter="todos" aria-pressed="true">Todos</button><button type="button" class="catalog-filter" data-catalog-filter="feminino" aria-pressed="false">Feminino</button><button type="button" class="catalog-filter" data-catalog-filter="masculino" aria-pressed="false">Masculino</button></div>` : ''}
-${filterByBrand ? `<label class="catalog-brand-filter"><span>Marca</span><select data-catalog-brand aria-label="Filtrar por marca"><option value="todas">Todas as marcas</option>${brands.map(brand => `<option value="${brand}">${brand}</option>`).join('')}</select></label>` : ''}
+<div class="catalog-toolbar">
+<div class="catalog-audience" role="group" aria-label="Filtrar por público"><button type="button" class="catalog-filter" data-catalog-filter="todos" aria-pressed="true">Todos</button><button type="button" class="catalog-filter" data-catalog-filter="feminino" aria-pressed="false">Feminino</button><button type="button" class="catalog-filter" data-catalog-filter="masculino" aria-pressed="false">Masculino</button></div>
+<div class="catalog-brand-filter"><span id="catalog-brand-label">Marca</span><details data-catalog-brand>
+<summary aria-labelledby="catalog-brand-label catalog-brand-value"><span id="catalog-brand-value">Todas as marcas</span></summary>
+<div class="catalog-brand-options" role="group" aria-label="Filtrar por marca">
+<button type="button" data-catalog-brand-option="todas" aria-pressed="true">Todas as marcas</button>
+${brands.map(brand => `<button type="button" data-catalog-brand-option="${brand}" aria-pressed="false">${brand}</button>`).join('')}
+</div></details></div>
 </div>
-<p class="catalog-result" data-catalog-result aria-live="polite">${availableProducts.length} modelos em destaque</p>` : ''}
+<p class="catalog-result" data-catalog-result aria-live="polite">${availableProducts.length} modelos em destaque</p>
 <div class="catalog-grid" data-catalog-grid>${availableProducts.map(productCard).join('')}</div>
-${hasFilters ? '<p class="catalog-empty" data-catalog-empty hidden>Nenhum modelo publicado corresponde a estes filtros no momento. Fale com a Pupila para conhecer outras opções.</p>' : ''}
+<p class="catalog-empty" data-catalog-empty hidden>Nenhum modelo corresponde a estes filtros. Experimente outra combinação ou fale com a Pupila.</p>
 <div class="button-row catalog-contact">${chat('Consultar a seleção', `Olá! Gostaria de conhecer a seleção de ${name.toLowerCase()} da Ótica Pupila.`)}${link('contato', 'Planeje sua visita', 'text-link')}</div>
 </section>`;
   }
@@ -765,7 +781,8 @@ ${availableProducts.length ? `<div class="catalog-grid">${availableProducts.map(
     const parentCategory = categories.find(([route]) => product.route.startsWith(`${route}/`));
     const facts = product.facts ? `<dl class="product-facts">${product.facts.map(([term, detail]) => `<div><dt>${term}</dt><dd>${detail}</dd></div>`).join('')}</dl>` : '';
     const source = product.source ? `<a class="source-link" href="${product.source.href}" target="_blank" rel="noopener noreferrer">${product.source.label}</a>` : '';
-    return `${crumb(product.brand)}
+    const catalogCategory = categories.find(([route]) => route === product.categories[0]);
+    return `${crumb(product.brand, catalogCategory)}
     <section class="product-page wrap" aria-labelledby="product-title">
 <div class="product-gallery" role="group" data-product-gallery="${product.slug}" aria-label="Galeria de imagens — ${product.name}">
 <div class="product-gallery-main">
@@ -788,7 +805,7 @@ ${parentCategory ? '' : `${facts}${product.support ? `<p class="product-support-
 ${chat('Quero conhecer de perto', product.whatsapp)}<p class="availability-note">Tamanho, preço e disponibilidade sob consulta à loja.</p>${parentCategory ? link(parentCategory[0], `Voltar para ${parentCategory[1].toLowerCase()}`, 'text-link') : link('contato', 'Experimente na Pupila', 'text-link')}${parentCategory && facts ? `
 <section class="product-details" aria-labelledby="product-details-title">
 <h2 id="product-details-title">Ficha do modelo</h2>
-${product.identificationPending ? '<p class="product-identification-note">Nome identificado por comparação visual. Confirme a referência da peça com a loja.</p>' : ''}
+${product.identificationPending ? `<p class="product-identification-note">${product.catalogUrl ? 'Referência sugerida por comparação visual. Confirme a peça com a loja.' : 'Confirme o nome comercial e a referência desta peça com a loja.'}</p>` : ''}
 ${facts}
 ${product.story ? `<h3>O desenho da linha</h3><p>${product.story}</p>` : ''}
 ${source}
@@ -823,8 +840,8 @@ ${productBrands}
   };
   products.forEach(product => {
     pages[`${product.route}/index.html`] = {
-      title: `${product.name} | Ótica Pupila`,
-      description: `Ray-Ban ${product.name}. ${product.description} Ótica Pupila, Joinville.`,
+      title: `${product.productName || product.name} | Ótica Pupila`,
+      description: `${product.description} Ótica Pupila, Joinville.`,
       content: productPage(product)
     };
   });

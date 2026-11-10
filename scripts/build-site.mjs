@@ -17,7 +17,7 @@ if (config.siteUrl) {
 if (publish && (!siteUrl || !privacyReady)) throw new Error('Publicação pendente: preencha domínio e todos os dados de privacidade em site-config.json após confirmação da loja.');
 const context = { window: {} };
 vm.createContext(context);
-for (const file of ['assets/pages.js', 'assets/lens-pages.js']) {
+for (const file of ['assets/catalog-products.js', 'assets/pages.js', 'assets/lens-pages.js']) {
   vm.runInContext(fs.readFileSync(path.join(root, file), 'utf8'), context, { filename: file, timeout: 1000 });
 }
 const pages = context.window.PUPILA_PAGES;
@@ -31,7 +31,7 @@ const descriptions = {
   'perguntas-frequentes/index.html': 'Tire dúvidas sobre limpeza, conservação, proteção UV e escolha de óculos e lentes com as orientações da Ótica Pupila.',
   'privacidade/index.html': 'Saiba como funciona o site da Ótica Pupila, quais serviços externos podem ser acessados e como entrar em contato sobre privacidade.',
   'oculos-de-grau/index.html': 'Conheça a seleção de óculos de grau da Ótica Pupila em Joinville. Consulte armações, lentes e disponibilidade com nossa equipe.',
-  'oculos-de-sol/index.html': 'Explore a seleção de óculos de sol da Ótica Pupila em Joinville e conheça o Ray-Ban Meta. Modelos e disponibilidade sob consulta.',
+  'oculos-de-sol/index.html': 'Explore a seleção de óculos de sol da Ótica Pupila em Joinville. Filtre por marca e público e consulte a disponibilidade.',
   'relogios/index.html': 'Conheça a seleção de relógios da Ótica Pupila em Joinville. Consulte modelos e opções com a equipe ou planeje sua visita.',
   'semijoias/index.html': 'Encontre semijoias para acompanhar seu estilo na Ótica Pupila em Joinville. Consulte a seleção com a equipe da loja.',
   'marcas/index.html': 'Conheça as marcas em destaque na Ótica Pupila em Joinville e consulte modelos, cores e opções com nossa equipe.',
@@ -134,6 +134,6 @@ if (publish) {
     fs.mkdirSync(path.dirname(path.join(dist, file)), { recursive: true });
     fs.copyFileSync(path.join(root, file), path.join(dist, file));
   }
-  fs.cpSync(path.join(root, 'assets'), path.join(dist, 'assets'), { recursive: true, filter: file => !['pages.js', 'lens-pages.js', 'logo-meta.png', 'essilor-select-2026.jpeg'].includes(path.basename(file)) && !file.endsWith('.avif') });
+  fs.cpSync(path.join(root, 'assets'), path.join(dist, 'assets'), { recursive: true, filter: file => !['catalog-products.js', 'pages.js', 'lens-pages.js', 'logo-meta.png', 'essilor-select-2026.jpeg'].includes(path.basename(file)) && !file.endsWith('.avif') });
 }
 console.log(`✓ ${Object.keys(pages).length} páginas estáticas ${check ? 'verificadas' : 'geradas'}${siteUrl ? ', SEO com domínio configurado' : '; domínio e política final pendentes'}`);
