@@ -38,6 +38,10 @@ try {
   const engine = {chromium,firefox,webkit}[process.env.BROWSER || 'chromium'];
   browser=await engine.launch({headless:true,...(process.env.BROWSER_CHANNEL ? {channel:process.env.BROWSER_CHANNEL} : {})});
   const context=await browser.newContext({reducedMotion:'reduce'});
+  const mapFixture = { contentType: 'text/html', body: '<!doctype html><html lang="pt-BR"><title>Google Maps</title><main>Mapa da Ótica Pupila</main></html>' };
+  await context.route('https://www.google.com/maps/embed?**', route => route.fulfill(mapFixture));
+  await context.route('https://www.google.com/maps/dir/**', route => route.fulfill(mapFixture));
+  await context.route('https://wa.me/**', route => route.fulfill({ contentType: 'text/html', body: '<!doctype html><title>WhatsApp de teste</title>' }));
   const page=await context.newPage();
   const errors=[];
   let navigationCancellations=0;
@@ -93,7 +97,8 @@ try {
   assert.equal(await page.locator('.menu-toggle').getAttribute('aria-expanded'),'false');
   assert.equal(await page.locator('.menu-toggle').evaluate(el=>el===document.activeElement),true);
   await page.locator('.menu-toggle').click();
-  await page.getByRole('link',{name:'Relógios',exact:true}).first().click();
+  await page.locator('.nav-products > summary').click();
+  await page.locator('#main-nav').getByRole('link',{name:'Relógios',exact:true}).click();
   await page.waitForURL('**/relogios/');
   await page.goBack();
   assert.equal(new URL(page.url()).pathname,'/');
@@ -109,6 +114,12 @@ try {
   const homeWhatsapp = new URL(await contactLink.getAttribute('href'));
   assert.equal(homeWhatsapp.origin, 'https://wa.me');
   assert.match(homeWhatsapp.searchParams.get('text'), /escolher um produto/);
+  const directions = page.locator('.location-layout').getByRole('link', { name: 'Como chegar' });
+  const directionsHref = await directions.getAttribute('href');
+  assert.equal(await page.getByRole('link', { name: 'Centro de Joinville, SC' }).getAttribute('href'), directionsHref);
+  assert.equal(new URL(directionsHref).searchParams.get('dir_action'), 'navigate');
+  await directions.click();
+  await page.waitForURL(directionsHref);
   await page.goto(base+'contato/#atendimento');
   assert.equal(await page.locator('#atendimento .contact-phone').innerText(), '(47) 3422-3223');
   await page.goto(base+'ray-ban-meta/');
@@ -143,7 +154,7 @@ try {
     assert.equal(await page.locator('.meta-gallery-count').innerText(),'03 / 03',route);
     const cta = new URL(await page.getByRole('link',{name:'Quero conhecer de perto'}).getAttribute('href'), page.url());
     const brand = await page.locator('h1').innerText();
-    assert(cta.searchParams.get('text').includes(brand) && cta.searchParams.get('text').includes(category === 'oculos-de-sol' ? 'óculos de sol' : 'óculos de grau'), route);
+    assert(cta.searchParams.get('text').includes(brand) && cta.searchParams.get('text').includes(category === 'oculos-de-sol' ? 'óculos de sol' : 'armação de grau'), route);
     assert.equal(await page.locator('.floating-contact').getAttribute('href'), cta.href, route);
     const details = page.getByRole('region',{name:'Ficha do modelo'});
     assert.equal(await details.locator('dt').count(),3,route);
@@ -186,6 +197,17 @@ try {
   await page.getByRole('button',{name:'Ver ângulo 5: Clip oliva'}).click();
   assert.match(await page.locator('#product-main-image').getAttribute('src'),/emporio-armani-preto-clip-on-clip-oliva\.webp$/);
   assert.equal(await page.locator('.meta-gallery-count').innerText(),'05 / 05');
+  const clipContact = page.getByRole('link', { name: 'Quero conhecer de perto' });
+  const clipHref = await clipContact.getAttribute('href');
+  assert.match(new URL(clipHref).searchParams.get('text'), /Emporio Armani com clip solar.*preço.*disponibilidade/);
+  await clipContact.click();
+  await page.waitForURL(clipHref);
+  await page.goto(base+'oculos-de-grau/');
+  const catalogContact = page.getByRole('link', { name: 'Consultar a seleção' });
+  const catalogHref = await catalogContact.getAttribute('href');
+  assert.match(new URL(catalogHref).searchParams.get('text'), /seleção de óculos de grau/);
+  await catalogContact.click();
+  await page.waitForURL(catalogHref);
   for (const route of legacyRoutes) {
     await page.goto(base+'#/'+route);
     await page.waitForURL(url=>!url.hash.startsWith('#/'));
@@ -232,6 +254,7 @@ try {
   assert.equal(await lensCard.evaluate(el => getComputedStyle(el).transform), 'none');
   // A clean no-JS context verifies actual links and the mobile navigation fallback.
   const nojs=await browser.newContext({javaScriptEnabled:false,viewport:{width:375,height:900}});
+  await nojs.route('https://www.google.com/maps/embed?**', route => route.fulfill(mapFixture));
   const plain=await nojs.newPage();
   for(const route of routes) {
     await plain.goto(base+route);
@@ -244,7 +267,8 @@ try {
     assert(whatsapp.searchParams.get('text').length >= 50, route);
   }
   await plain.goto(base+'lentes/');
-  await plain.getByRole('link',{name:'Relógios',exact:true}).first().click();
+  await plain.locator('.nav-products > summary').click();
+  await plain.locator('#main-nav').getByRole('link',{name:'Relógios',exact:true}).click();
   assert.equal(new URL(plain.url()).pathname,'/relogios/');
   assert.equal(await plain.locator('#produto-avaliacoes .carousel-slide:visible').count(), 5);
   assert.equal(await plain.locator('#produto-perguntas .carousel-slide:visible').count(), 5);

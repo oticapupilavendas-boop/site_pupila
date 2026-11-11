@@ -4,7 +4,6 @@
 
 window.PUPILA_ASSETS = {
   "assets/images/logo-pupila.webp": "assets/image-01.webp",
-  "assets/images/fachada-frontal.webp": "assets/image-02.webp",
   "assets/images/fachada.webp": "assets/image-03.webp",
   "assets/images/ambiente.webp": "assets/image-04.webp",
   "assets/images/atendimento.webp": "assets/image-05.webp",
@@ -19,7 +18,7 @@ window.PUPILA_DATA = {
     "phone": "+554734223223",
     "phoneDisplay": "(47) 3422-3223",
     "whatsapp": "554734223223",
-    "address": "Rua Abdon Batista, 59 — Centro, Joinville/SC",
+    "address": "Rua Abdon Batista, 59, Centro, Joinville - SC, 89201-010",
     "siteUrl": "",
     "instagram": ""
   },
@@ -31,7 +30,10 @@ const whatsappIcon = '<img class="whatsapp-icon" src="assets/whatsapp.svg" width
 const whatsappSolidIcon = '<img class="whatsapp-icon" src="assets/whatsapp-solid.svg" width="26" height="26" alt="">';
 const defaultMessage = 'Olá! Vim pelo site da Ótica Pupila e gostaria de falar com a equipe.';
 const homeMessage = 'Olá! Vi a seleção da Ótica Pupila no site e gostaria de ajuda para escolher um produto.';
-const whatsappLink = message => `href="https://wa.me/${company.whatsapp}?text=${encodeURIComponent(message)}" target="_blank" rel="noopener noreferrer"`;
+const whatsappLink = message => `href="https://wa.me/${company.whatsapp}?text=${encodeURIComponent(message)}" rel="noreferrer"`;
+const mapsDestination = encodeURIComponent(`${company.name}, ${company.address}`);
+const mapsDirections = `https://www.google.com/maps/dir/?api=1&amp;destination=${mapsDestination}&amp;dir_action=navigate`;
+const mapsEmbed = 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3576.6436999401462!2d-48.8445055!3d-26.3056482!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94deb04c3e6785c3%3A0xd08598bb97196043!2s%C3%93tica%20Pupila!5e0!3m2!1spt-BR!2sbr!4v1794361869100!5m2!1spt-BR!2sbr';
 
 const story = `<section class="story-block wrap">
 <figure class="story-photo reveal">
@@ -76,6 +78,7 @@ const reviews = `<section class="section wrap reviews-section" id="avaliacoes" a
 <p class="eyebrow">EXPERIÊNCIAS DE CLIENTES</p>
 <h2 id="reviews-title">Conheça as avaliações<br>da nossa loja.</h2>
 </div>
+<p class="review-source"><span class="review-source-mark" aria-hidden="true"></span>Avaliações no Google</p>
 </div>
 <div class="testimonials-grid">${reviewQuotes.map(testimonial).join('')}</div>
 </section>`;
@@ -181,7 +184,7 @@ const location = `<section class="section wrap location-layout">
 </div>
 </dl>
 <div class="button-row">
-<a href="#/contato/index.html#localizacao" class="button primary">Como chegar <svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<a href="${mapsDirections}" class="button primary">Como chegar <svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
 <path d="M4 12h16M13 5l7 7-7 7"/>
 </svg>
 </a>
@@ -191,9 +194,9 @@ const location = `<section class="section wrap location-layout">
 </svg>(47) 3422-3223</a>
 </div>
 </div>
-<figure class="location-photo">
-<img class="" src="pupila-asset:assets/images/fachada-frontal.webp" width="1536" height="1152" alt="Vista frontal da vitrine e da entrada da Ótica Pupila" loading="lazy" decoding="async">
-</figure>
+<div class="location-map">
+<iframe src="${mapsEmbed}" title="Mapa da Ótica Pupila em Joinville" width="600" height="450" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+</div>
 </section>`;
 
 const existing = {
@@ -417,7 +420,7 @@ ${link(parent[0], parent[1])}<span aria-hidden="true">/</span>` : ''}
     <aside class="topline" aria-label="Informações da loja">
 <div class="wrap">
 <span>Há mais de 30 anos, olhando por você.</span>
-<a href="#/contato/index.html">Centro de Joinville, SC ${icon('diagonal')}</a>
+<a href="${mapsDirections}">Centro de Joinville, SC ${icon('diagonal')}</a>
 </div>
 </aside>
     <header class="site-header">
@@ -427,14 +430,9 @@ ${link(parent[0], parent[1])}<span aria-hidden="true">/</span>` : ''}
 </a>
       <nav id="main-nav" class="main-nav" aria-label="Navegação principal">
         <a href="#/index.html" class="nav-link">Início</a>
-        <details class="nav-group">
-<summary>Óculos ${icon('chevron')}</summary>
-<div class="submenu">${link('oculos-de-grau', 'Óculos de grau')}${link('oculos-de-sol', 'Óculos de sol')}</div>
-</details>
-        ${link('relogios', 'Relógios', 'nav-link')}${link('semijoias', 'Semijoias', 'nav-link')}
-        <details class="nav-group nav-lenses">
-<summary>Lentes ${icon('chevron')}</summary>
-<div class="submenu">${link('lentes', 'Lentes para óculos')}${link('lentes/contato', 'Lentes de contato')}</div>
+        <details class="nav-group nav-products">
+<summary>Produtos ${icon('chevron')}</summary>
+<div class="submenu">${categories.map(([route, name]) => link(route, name)).join('')}${link('lentes/contato', 'Lentes de contato')}</div>
 </details>
         <details class="nav-group nav-about">
 <summary>A Pupila ${icon('chevron')}</summary>
@@ -448,14 +446,13 @@ ${link(parent[0], parent[1])}<span aria-hidden="true">/</span>` : ''}
     </div>
 </header>`;
   const footer = (message = defaultMessage) => `
-    <section class="visit-cta" aria-label="Planeje sua visita">
+    <section class="visit-cta" aria-labelledby="visit-banner-title">
 <div class="wrap">
-<div>
 <p class="eyebrow">VAMOS ENCONTRAR O SEU PRÓXIMO OLHAR?</p>
-<h2>Experimente. Sinta. <span class="brand-accent">Escolha.</span>
+<h2 id="visit-banner-title">Experimente. Sinta. <span class="brand-accent">Escolha.</span>
 </h2>
 <p>De perto, cada detalhe faz a diferença. Venha para a Pupila.</p>
-</div>${link('contato', `Esperamos você ${icon('diagonal')}`, 'button white')}</div>
+</div>
 </section>
     <footer class="site-footer">
 <div class="wrap footer-grid">
@@ -474,7 +471,7 @@ ${link(parent[0], parent[1])}<span aria-hidden="true">/</span>` : ''}
 <h2>Vamos nos encontrar</h2>
 <p>Rua Abdon Batista, 59<br>Centro · Joinville/SC</p>
 <a href="tel:+554734223223">(47) 3422-3223</a>
-<a class="text-link" href="#/contato/index.html#localizacao">Como chegar ${icon('arrow')}</a>
+<a class="text-link" href="${mapsDirections}">Como chegar ${icon('arrow')}</a>
 </div>
     </div>
 <div class="wrap footer-bottom">
@@ -567,33 +564,33 @@ ${productBrands}
 </div>
 </section>
     ${story}
-    <section class="care-section">
+    <section class="care-section" aria-labelledby="lens-steps-title">
 <div class="wrap care-layout">
 <div>
 <p class="eyebrow">LENTES & CUIDADO</p>
-<h2>Seu olhar é único.<br>O cuidado também.
+<h2 id="lens-steps-title">Como funciona a<br>escolha das lentes.
 </h2>
 </div>
 <div>
-<p>Sua prescrição, sua rotina e o que importa para você. É assim que começa a conversa para encontrar suas lentes.</p>${link('lentes', `Conheça nossas orientações ${icon('diagonal')}`, 'text-link')}</div>
+<p>Veja o passo a passo na Pupila, da receita médica à escolha das lentes para a sua rotina.</p>${link('lentes', `Conheça nossas orientações ${icon('diagonal')}`, 'text-link')}</div>
 </div>
-<div class="wrap care-steps">
-<div>
-<span>01</span>
-<h3>Ouvir você.</h3>
-<p>Entender sua rotina e o que você procura.</p>
-</div>
-<div>
-<span>02</span>
-<h3>Olhar os detalhes.</h3>
-<p>Conversar sobre lentes, armações e ajuste.</p>
-</div>
-<div>
-<span>03</span>
-<h3>Escolher com calma.</h3>
-<p>Experimentar e encontrar o que faz sentido.</p>
-</div>
-</div>
+<ol class="wrap care-steps" role="list">
+<li>
+<span aria-hidden="true">01</span>
+<h3>Traga sua receita.</h3>
+<p>A equipe começa pela sua prescrição médica para saber quais lentes pode apresentar.</p>
+</li>
+<li>
+<span aria-hidden="true">02</span>
+<h3>Conte como usa os óculos.</h3>
+<p>Fale sobre leitura, trabalho, direção e outras atividades que fazem parte do seu dia.</p>
+</li>
+<li>
+<span aria-hidden="true">03</span>
+<h3>Compare as opções.</h3>
+<p>A equipe explica as diferenças entre as lentes compatíveis e informa valores e prazos para você escolher.</p>
+</li>
+</ol>
 </section>
     ${reviews}${faq}${location}`;
 
@@ -614,7 +611,7 @@ ${productBrands}
     'clip-levantado': ['Clip levantado', 'com clip solar levantado'],
     'clip-oliva': ['Clip oliva', 'com clip solar oliva']
   };
-  const catalogProducts = window.PUPILA_CATALOG_MODELS.map(({ category, brand, slug, description, facts, story, catalogUrl, identificationPending, audience, angles = ['frente', 'lateral', 'detalhe'] }) => {
+  const catalogProducts = window.PUPILA_CATALOG_MODELS.map(({ category, brand, slug, modelDetail, description, facts, story, catalogUrl, identificationPending, audience, angles = ['frente', 'lateral', 'detalhe'] }) => {
     const brandKey = brand.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/-$/, '');
     const views = angles.map(angle => {
       const [label, detail] = catalogAngles[angle];
@@ -625,7 +622,7 @@ ${productBrands}
       };
     });
     return {
-      slug, route: `${category}/${slug}`, description, brand,
+      slug, route: `${category}/${slug}`, description, brand, modelDetail,
       facts, story, identificationPending, catalogUrl,
       categories: [category], audiences: audience ? [audience] : ['feminino', 'masculino'],
       label: category === 'oculos-de-grau' ? 'ARMAÇÃO DE GRAU' : 'ÓCULOS DE SOL',
@@ -690,7 +687,7 @@ ${brands.map(brand => `<button type="button" data-catalog-brand-option="${brand}
 <p class="catalog-result" data-catalog-result aria-live="polite">${availableProducts.length} modelos em destaque</p>
 <div class="catalog-grid" data-catalog-grid>${availableProducts.map(productCard).join('')}</div>
 <p class="catalog-empty" data-catalog-empty hidden>Nenhum modelo corresponde a estes filtros. Experimente outra combinação ou fale com a Pupila.</p>
-<div class="button-row catalog-contact">${chat('Consultar a seleção', message)}${link('contato', 'Planeje sua visita', 'text-link')}</div>
+<div class="button-row catalog-contact">${chat('Consultar a seleção', message)}</div>
 </section>`;
   }
 
@@ -717,7 +714,7 @@ ${brands.map(brand => `<button type="button" data-catalog-brand-option="${brand}
 </h2>
 <p>Modelos, cores e disponibilidade mudam. Nossa equipe apresenta as opções atuais e ajuda você a encontrar o que combina com o seu estilo.</p>
 <p class="catalog-note">Estamos preparando o catálogo online. Enquanto isso, conheça a seleção na loja ou peça mais informações pelo WhatsApp.</p>
-<div class="button-row">${chat('Consultar a seleção', message)}${link('contato', 'Planeje sua visita', 'text-link')}</div>
+<div class="button-row">${chat('Consultar a seleção', message)}</div>
 </div>
 </div>
 ${availableProducts.length ? `<div class="catalog-grid">${availableProducts.map(productCard).join('')}</div>` : ''}
@@ -761,12 +758,16 @@ ${product.story ? `<h3>O desenho da linha</h3><p>${product.story}</p>` : ''}
     'index.html': { title: 'Ótica Pupila | Ótica em Joinville desde 1992', content: home, message: homeMessage }
   };
   products.forEach(product => {
-    const category = categories.find(([route]) => route === product.categories[0]);
-    const item = product.slug === 'ray-ban-meta' ? 'o Ray-Ban Meta Wayfarer Gen 3' : `os ${category[1].toLowerCase()} ${product.brand}`;
+    const prescription = product.categories[0] === 'oculos-de-grau';
+    const type = prescription ? 'Armação de grau' : 'Óculos de sol';
+    const model = product.modelDetail ? `${product.brand} ${product.modelDetail}` : product.brand;
+    const isMeta = product.slug === 'ray-ban-meta';
+    const title = isMeta ? 'Ray-Ban Meta Wayfarer Gen 3' : `${type} ${model}`;
+    const item = isMeta ? `o ${title}` : `${prescription ? 'a' : 'os'} ${type.toLowerCase()} ${model}`;
     const message = `Olá! Vi ${item} no site da Pupila. Qual o preço e a disponibilidade?`;
     pages[`${product.route}/index.html`] = {
-      title: `${product.brand} | Ótica Pupila`,
-      description: `${product.description} Ótica Pupila, Joinville.`,
+      title: `${title} | Ótica Pupila`,
+      description: `${product.description} Ótica Pupila em Joinville.`,
       content: productPage(product, message), message
     };
   });

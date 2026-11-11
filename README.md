@@ -27,7 +27,7 @@ Abra `http://127.0.0.1:4173/`. Sempre execute `npm run build` após alterar cont
 - `docs/REVISAO.md`: validação desta revisão. `docs/PENDENCIAS.md`: dados ainda necessários.
 - `docs/previews/`: 25 capturas históricas de versões anteriores; não representam automaticamente a versão atual e não são incluídas no pacote de publicação.
 
-Cada página funciona sem JavaScript, inclusive a navegação no celular, os links de WhatsApp e a leitura de todos os itens dos carrosséis. O WhatsApp é o único destino web externo. Os botões de conversa abrem o aplicativo com uma mensagem sugerida sobre o produto ou a categoria consultada. Rotas por hash usam JavaScript para o redirecionamento legado. Os links atuais são URLs normais.
+Cada página funciona sem JavaScript, inclusive a navegação no celular, os links de atendimento e a leitura de todos os itens dos carrosséis. Os botões de conversa abrem o WhatsApp com uma mensagem sugerida sobre o produto ou a categoria consultada. Os atalhos de localização abrem rotas para a loja no Google Maps. A home também incorpora o mapa do endereço. Rotas por hash usam JavaScript para o redirecionamento legado.
 
 ## Conteúdo
 

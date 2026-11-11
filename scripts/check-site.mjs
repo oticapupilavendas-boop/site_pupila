@@ -47,17 +47,27 @@ for (const route of Object.keys(pages)) {
   const description = source.match(/<meta name="description" content="([^"]+)"/)?.[1];
   assert(description?.length > 30 && description.length <= 160, `${route}: descrição inválida`);
   if (config.siteUrl && route !== '404.html') assert(source.includes('rel="canonical"') && source.includes('property="og:image"'), `${route}: SEO absoluto ausente`);
-  for (const [tag] of source.matchAll(/<(?:img|script|link|a)\b[^>]*>/g)) {
+  for (const [tag] of source.matchAll(/<(?:img|iframe|script|link|a)\b[^>]*>/g)) {
     const attr = attributes(tag);
     if (tag.startsWith('<img')) {
       imageCount++;
       assert(attr.alt !== undefined && Number(attr.width) > 0 && Number(attr.height) > 0, `${route}: imagem sem alt/dimensões`);
     }
+    if (tag.startsWith('<iframe')) {
+      const url = new URL(attr.src);
+      assert(route === 'index.html' && url.origin === 'https://www.google.com' && url.pathname === '/maps/embed' && url.searchParams.has('pb'), `${route}: mapa incorporado inválido`);
+      assert(attr.title && attr.loading === 'lazy', `${route}: mapa sem título ou carregamento sob demanda`);
+    }
     if (tag.startsWith('<a') && attr.href && /^(?:[a-z][a-z\d+.-]*:|\/\/)/i.test(attr.href) && !attr.href.startsWith('tel:')) {
-      const url = new URL(attr.href, 'https://example.invalid');
-      assert(url.origin === 'https://wa.me' && url.pathname === '/554734223223', `${route}: destino externo inesperado ${attr.href}`);
-      assert(url.searchParams.get('text')?.startsWith('Olá!') && url.searchParams.get('text').length >= 50, `${route}: mensagem de contexto ausente`);
-      assert(attr.target === '_blank' && attr.rel?.includes('noopener') && attr.rel?.includes('noreferrer'), `${route}: proteção do link de WhatsApp ausente`);
+      const url = new URL(attr.href.replaceAll('&amp;', '&'), 'https://example.invalid');
+      if (url.origin === 'https://wa.me') {
+        const message = url.searchParams.get('text');
+        assert(url.pathname === '/554734223223' && message?.startsWith('Olá!') && message.length >= 50, `${route}: WhatsApp sem número ou contexto válido`);
+        assert(!attr.target, `${route}: WhatsApp deve abrir na mesma aba`);
+      } else {
+        assert(url.origin === 'https://www.google.com' && url.pathname === '/maps/dir/', `${route}: destino externo inesperado ${attr.href}`);
+        assert(url.searchParams.get('api') === '1' && url.searchParams.get('dir_action') === 'navigate' && /Ótica Pupila.*Abdon Batista, 59.*Joinville/.test(url.searchParams.get('destination')), `${route}: rota da loja inválida`);
+      }
     }
     const refs = [attr.src, attr.href, ...(attr.srcset || '').split(',').map(value => value.trim().split(' ')[0])].filter(Boolean);
     for (const ref of refs) {
@@ -85,7 +95,8 @@ for (const [category, cardCount] of [['oculos-de-grau', 12], ['oculos-de-sol', 6
   assert(categoryProducts.every(product => source.includes(`<h3>${product.brand}</h3>`)), `${category}: título do cartão deve exibir a marca`);
   assert(source.includes('eyewear-photo-space'), `${category}: espaço da foto ausente`);
   assert(['todos', 'feminino', 'masculino'].every(audience => source.includes(`data-catalog-filter="${audience}"`)) && source.includes('data-catalog-brand'), `${category}: filtros ausentes`);
-  assert(source.includes('https://wa.me/554734223223?text=') && source.includes('Planeje sua visita'), `${category}: caminho de atendimento ausente`);
+  const selectionLink = source.match(/<a[^>]+href="(https:\/\/wa\.me\/[^"]+)"[^>]*>Consultar a seleção/);
+  assert(selectionLink && !source.includes('Planeje sua visita'), `${category}: ação do catálogo inválida`);
 }
 const catalogPhotos = new Set();
 for (const product of products) {
@@ -107,6 +118,7 @@ assert(read('lentes/essilor/index.html').includes('Essilor Varilux Especialista 
 const home = read('index.html');
 assert(home.includes('home-select-section'), 'destaque Select ausente na home');
 assert(home.includes('testimonials-grid') && home.includes('faq-list') && !home.includes('data-carousel'), 'avaliações e FAQ da home devem manter o formato');
+assert(home.includes('class="location-map"') && home.includes('Avaliações no Google'), 'mapa ou fonte das avaliações ausente na home');
 assert(read('contato/index.html').includes('Falar pelo WhatsApp'), 'atendimento pelo WhatsApp ausente');
 const faqPage = read('perguntas-frequentes/index.html').split('class="wrap faq-full"')[1].split('</main>')[0];
 const faqQuestions = [...faqPage.matchAll(/<summary>([^<]+)/g)].map(([, question]) => question);
