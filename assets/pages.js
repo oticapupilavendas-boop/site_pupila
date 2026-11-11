@@ -413,17 +413,17 @@ ${autoplay ? `<button class="motion-control" type="button" data-motion-toggle ar
     previous: 'Avaliação anterior', next: 'Próxima avaliação', autoplay: true
   });
 
-  // Arquivos originais da pasta 02 - LOGOS E INFORMAÇÕES DAS MARCAS no Drive.
+  // Seleção do Drive com Carrera e Tommy Hilfiger atualizados pela Pupila.
   const eyewearLogos = [
     ['adidas', 'adidas.png', 545, 366], ['Cacharel', 'cacharel.png', 350, 350],
-    ['Carmim', 'carmim.png', 592, 337], ['Carrera', 'carrera.jpg', 594, 336],
+    ['Carmim', 'carmim.png', 592, 337], ['Carrera', 'carrera.png', 320, 320],
     ['Emporio Armani', 'emporio-armani.png', 447, 447], ['Evoke', 'evoke.png', 738, 303],
     ['Guess', 'guess.png', 320, 320], ['HB', 'hb.jpg', 372, 372],
     ['Maresia', 'maresia.png', 299, 185], ['MAX&Co.', 'max-co.png', 738, 414],
     ['Miraflex', 'miraflex.png', 300, 100], ['Oakley', 'oakley.png', 320, 320],
     ['Polo Ralph Lauren', 'polo.png', 318, 159], ['Ray-Ban', 'ray-ban.png', 512, 512],
     ['Signus', 'signus.png', 549, 230], ['Stepper', 'stepper.png', 320, 320],
-    ['Timberland', 'timberland.png', 320, 320], ['Tommy Hilfiger', 'tommy.png', 738, 210],
+    ['Timberland', 'timberland.png', 320, 320], ['Tommy Hilfiger', 'tommy.png', 320, 320],
     ['Vogue Eyewear', 'vogue.png', 447, 447], ['X-Treme', 'x-treme.png', 738, 279]
   ];
   const brandCarousel = `<section class="section brand-strip" id="marcas-de-oculos" data-brand-carousel aria-labelledby="brand-strip-title">
@@ -609,7 +609,7 @@ ${productBrands}
 </h2>
 </div>
 <div>
-<p>Veja o passo a passo na Pupila, da receita médica à escolha das lentes para a sua rotina.</p>${link('lentes', `Conheça nossas orientações ${icon('diagonal')}`, 'text-link')}</div>
+<p>Veja o passo a passo na Pupila, da receita médica à escolha das lentes para a sua rotina. Conheça também a <a href="#/visioffice-3/index.html" class="visioffice-inline-link">medição digital com o Visioffice 3</a>.</p>${link('lentes', `Conheça nossas orientações ${icon('diagonal')}`, 'text-link')}</div>
 </div>
 <ol class="wrap care-steps" role="list">
 <li>
@@ -631,29 +631,40 @@ ${productBrands}
 </section>
     ${reviews}${faq}${brandCarousel}${location}`;
 
-  const visiofficeMessage = 'Olá! Vi a página do Visioffice 3 no site da Ótica Pupila e gostaria de saber como funciona a medição na loja.';
   const visioffice = `${crumb('Visioffice 3')}
 <section class="wrap visioffice-hero" aria-labelledby="visioffice-title">
 <div>
-<p class="eyebrow">MEDIÇÃO DIGITAL NA ÓTICA PUPILA</p>
-<h1 id="visioffice-title">Visioffice 3</h1>
-<p class="visioffice-lead">Medidas para a lente que você vai usar.</p>
-<p class="lede">Com a armação escolhida no rosto, a torre digital da Essilor registra medidas dos seus olhos e de como os óculos se posicionam. Nossa equipe usa essas informações para orientar a centragem e a personalização de lentes compatíveis.</p>
-<div class="button-row">${chat('Perguntar sobre a medição', visiofficeMessage)}<a class="text-link" href="#como-funciona">Como funciona ${icon('arrow')}</a></div>
+<p class="eyebrow">TECNOLOGIA ESSILOR · JOINVILLE</p>
+<h1 id="visioffice-title">Visioffice 3 na Ótica Pupila</h1>
+<p class="visioffice-lead">Medição digital para personalizar suas lentes.</p>
+<p class="lede">Na Pupila, em Joinville, usamos a torre de medição da Essilor com a armação escolhida no rosto. O Visioffice 3 registra a posição dos olhos e da armação para ajudar a definir onde as lentes devem ficar em relação às pupilas.</p>
+<a class="text-link" href="#como-funciona">Como fazemos a medição ${icon('arrow')}</a>
 </div>
-<figure><img src="assets/visioffice/torre-1000.webp" srcset="assets/visioffice/torre-560.webp 560w, assets/visioffice/torre-1000.webp 1000w" sizes="(max-width: 760px) 90vw, 45vw" width="1000" height="1778" fetchpriority="high" decoding="async" alt="Torre Visioffice 3 com espelho iluminado e tela no espaço de atendimento da Ótica Pupila">
-<figcaption>Visioffice 3 na Ótica Pupila, no Centro de Joinville.</figcaption></figure>
+<figure class="visioffice-photo"><img src="assets/visioffice/visioffice-3-torre.png" width="447" height="447" fetchpriority="high" decoding="async" alt="Torre de medição digital Essilor Visioffice 3 com tela lateral">
+<figcaption>Visioffice 3, da Essilor Instruments.</figcaption></figure>
 </section>
 <section class="visioffice-measures section" aria-labelledby="medidas-title">
 <div class="wrap">
-<h2 id="medidas-title">O que o equipamento mede</h2>
+<h2 id="medidas-title">O que o Visioffice 3 mede</h2>
 <dl class="visioffice-measure-grid">
 <div><dt>Distância entre as pupilas</dt><dd>Ajuda a posicionar as lentes horizontalmente em relação aos olhos.</dd></div>
 <div><dt>Altura de montagem</dt><dd>Indica a posição vertical da pupila na armação escolhida.</dd></div>
 <div><dt>Posição da armação</dt><dd>A distância entre o olho e a lente, a inclinação e a curvatura ajudam a descrever como os óculos ficam no rosto.</dd></div>
 </dl>
-<p class="visioffice-note">A Essilor também descreve medições do centro de rotação do olho com Eyecode® e análise da postura natural pelo protocolo opcional H3D. A equipe informa quais medições se aplicam à lente escolhida.</p>
 </div></section>
+<section class="wrap section visioffice-features" aria-labelledby="visioffice-features-title">
+<h2 id="visioffice-features-title">Tecnologias que usamos na Pupila</h2>
+<dl class="visioffice-measure-grid">
+<div><dt>Eyecode®</dt><dd>Localiza em três dimensões o centro de rotação de cada olho. Essa medida pode ser usada no cálculo das lentes compatíveis com a tecnologia.</dd></div>
+<div><dt>H3D</dt><dd>Analisa a postura natural da cabeça ao olhar para longe. A equipe considera essa postura ao medir como a armação se posiciona no rosto.</dd></div>
+<div><dt>Comportamento visual de perto</dt><dd>Avalia como você usa a visão de perto em uma tarefa como a leitura. O protocolo ajuda a personalizar modelos compatíveis da linha Varilux® XR.</dd></div>
+</dl>
+<p class="visioffice-note">A equipe aplica as medições conforme sua receita, a armação e o modelo de lente escolhido.</p>
+<div class="visioffice-photo-pair">
+<img src="assets/visioffice/visioffice-3-frontal.png" width="365" height="547" alt="Vista frontal da torre Visioffice 3 com base e tela lateral" loading="lazy" decoding="async">
+<img src="assets/visioffice/visioffice-3-tela.png" width="378" height="432" alt="Detalhe da tela de controle e do espelho iluminado do Visioffice 3" loading="lazy" decoding="async">
+</div>
+</section>
 <section class="wrap section visioffice-steps" id="como-funciona" aria-labelledby="visioffice-steps-title">
 <div>
 <h2 id="visioffice-steps-title">Como funciona na loja</h2>
@@ -663,12 +674,10 @@ ${productBrands}
 <li><h3>Converse sobre as lentes</h3><p>A equipe confere as medidas e orienta as opções de montagem e lentes compatíveis.</p></li>
 </ol>
 <p class="visioffice-note">A medição ajuda no ajuste das lentes e complementa a receita do seu oftalmologista.</p>
-${link('contato', `Ver endereço e horários ${icon('arrow')}`, 'text-link')}
+${link('lentes/essilor', `Conheça as lentes Essilor e Varilux ${icon('arrow')}`, 'text-link')}
 </div>
-<div class="visioffice-photo-pair">
-<img src="assets/visioffice/tela-720.webp" width="720" height="1280" alt="Tela do Visioffice 3 com as opções de atendimento e demonstração de lentes" loading="lazy" decoding="async">
-<img src="assets/visioffice/espelho-720.webp" width="720" height="1280" alt="Detalhe do espelho com iluminação lateral e marca Essilor" loading="lazy" decoding="async">
-</div>
+<figure class="visioffice-photo visioffice-store-photo"><img src="assets/visioffice/torre-1000.webp" srcset="assets/visioffice/torre-560.webp 560w, assets/visioffice/torre-1000.webp 1000w" sizes="(max-width: 760px) 90vw, 45vw" width="1000" height="1778" alt="Visioffice 3 instalado no espaço de atendimento da Ótica Pupila em Joinville" loading="lazy" decoding="async">
+<figcaption>Nosso equipamento na Ótica Pupila, no Centro de Joinville.</figcaption></figure>
 </section>`;
 
   const metaViews = [
@@ -834,9 +843,9 @@ ${product.story ? `<h3>O desenho da linha</h3><p>${product.story}</p>` : ''}
     ...existing,
     'index.html': { title: 'Ótica Pupila | Ótica em Joinville desde 1992', content: home, message: homeMessage },
     'visioffice-3/index.html': {
-      title: 'Visioffice 3 em Joinville | Ótica Pupila',
-      description: 'Conheça o Visioffice 3 da Essilor na Ótica Pupila, em Joinville. Veja como a medição digital orienta a centragem de lentes na armação escolhida.',
-      content: visioffice, message: visiofficeMessage
+      title: 'Visioffice 3 e medição digital em Joinville | Ótica Pupila',
+      description: 'Veja como a Ótica Pupila, em Joinville, usa o Visioffice 3 da Essilor, Eyecode, H3D e a medição de perto para personalizar lentes compatíveis.',
+      content: visioffice
     }
   };
   products.forEach(product => {
