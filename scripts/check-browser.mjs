@@ -114,6 +114,13 @@ try {
   const homeWhatsapp = new URL(await contactLink.getAttribute('href'));
   assert.equal(homeWhatsapp.origin, 'https://wa.me');
   assert.match(homeWhatsapp.searchParams.get('text'), /escolher um produto/);
+  assert.equal(await page.locator('.hero-buttons .button.primary img').count(), 0);
+  const metaArtLink = page.locator('.meta-feature-art > a');
+  assert.equal(await metaArtLink.getAttribute('href'), './ray-ban-meta/');
+  assert.equal(await page.locator('.meta-feature-art figcaption').innerText(), 'RAY-BAN META WAYFARER GEN 3');
+  await metaArtLink.click();
+  await page.waitForURL(base + 'ray-ban-meta/');
+  await page.goBack();
   const directions = page.locator('.location-layout').getByRole('link', { name: 'Como chegar' });
   const directionsHref = await directions.getAttribute('href');
   assert.equal(await page.getByRole('link', { name: 'Centro de Joinville, SC' }).getAttribute('href'), directionsHref);

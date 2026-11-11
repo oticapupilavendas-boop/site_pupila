@@ -492,7 +492,7 @@ ${link(parent[0], parent[1])}<span aria-hidden="true">/</span>` : ''}
 </h1>
 <p class="hero-description">O estilo é seu. O cuidado é nosso.<br>Óculos, relógios e semijoias para acompanhar<br class="desktop-break"> quem você é, em cada momento.</p>
 <div class="hero-buttons">
-<a href="#/index.html#categorias" class="button primary">Encontre seu estilo ${whatsappIcon}</a>${chat('Converse com a gente', homeMessage, 'button accent')}</div>
+<a href="#/index.html#categorias" class="button primary">Encontre seu estilo</a>${chat('Converse com a gente', homeMessage, 'button accent')}</div>
 <div class="hero-signature">
 <span class="signature-line">
 </span>
@@ -554,10 +554,11 @@ ${productBrands}
 <a class="button white" href="#/ray-ban-meta/index.html">Conheça o modelo ${icon('diagonal')}</a>
 </div>
 <figure class="meta-feature-art">
+<a href="#/ray-ban-meta/index.html" aria-label="Conheça o Ray-Ban Meta Wayfarer Gen 3">
 <img src="assets/0RW4011__601SSB__P21__shad__qt.webp" width="720" height="386" alt="RAY-BAN META WAYFARER GEN 3 preto fosco visto em três quartos" loading="lazy" decoding="async">
+</a>
 <figcaption>
 <span>${productName}</span>
-<span>RW4011 601SSB ${icon('diagonal')}</span>
 </figcaption>
 </figure>
 </div>
