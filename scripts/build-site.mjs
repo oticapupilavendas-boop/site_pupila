@@ -31,7 +31,7 @@ const descriptions = {
   'privacidade/index.html': 'Saiba como funciona o site da Ótica Pupila e como entrar em contato sobre privacidade.',
   'oculos-de-grau/index.html': 'Conheça a seleção de óculos de grau da Ótica Pupila em Joinville. Consulte armações, lentes e disponibilidade com nossa equipe.',
   'oculos-de-sol/index.html': 'Explore a seleção de óculos de sol da Ótica Pupila em Joinville. Filtre por marca e público e consulte a disponibilidade.',
-  'relogios/index.html': 'Conheça a seleção de relógios da Ótica Pupila em Joinville. Consulte modelos e opções com a equipe ou planeje sua visita.',
+  'relogios/index.html': 'Explore relógios Orient, Lince e X-Games na Ótica Pupila, em Joinville. Veja os detalhes de cada peça e consulte preço e disponibilidade com a loja.',
   'semijoias/index.html': 'Encontre semijoias para acompanhar seu estilo na Ótica Pupila em Joinville. Consulte a seleção com a equipe da loja.',
   'ray-ban-meta/index.html': 'Conheça o Ray-Ban Meta Wayfarer Gen 3 RW4011 601SSB na Ótica Pupila em Joinville. Veja os seis ângulos e consulte detalhes com a loja.',
   'lentes/index.html': 'Lentes para óculos HOYA, ZEISS e Essilor na Ótica Pupila em Joinville. Conheça as tecnologias e consulte opções com sua receita médica.',
@@ -57,7 +57,7 @@ for (const [route, page] of Object.entries(pages)) {
 <h2>Funcionamento do site</h2><p>Este site apresenta a loja e sua seleção. Não oferece contas, pagamentos ou formulários para coleta de dados pessoais. O código não utiliza cookies, pixels de publicidade, análise de audiência ou armazenamento local para acompanhar visitantes.</p>
 <h2>Hospedagem e registros técnicos</h2><p>${hosting}</p>
 <h2>Atendimento pelo WhatsApp</h2><p>Os botões de WhatsApp abrem o serviço com uma mensagem sugerida sobre o produto ou a página consultada. Você pode revisar a mensagem antes de enviá-la. Ao conversar com a loja, você pode compartilhar nome, telefone, fotos, receitas de óculos e outras informações para receber atendimento e consultar produtos. Receitas podem conter dados de saúde. As conversas são guardadas pela loja sem prazo de exclusão previamente definido. O WhatsApp também trata dados conforme suas próprias condições.</p>
-<h2>Mapa e rotas</h2><p>O Google fornece o mapa incorporado na página inicial. Os atalhos de localização abrem o Google Maps para traçar a rota até a loja. O Google pode usar informações do navegador ou a localização do dispositivo, conforme as permissões que você conceder.</p>
+<h2>Mapa e rotas</h2><p>O Google fornece os mapas incorporados nas páginas inicial e de contato. Os atalhos de localização abrem o Google Maps para traçar a rota até a loja. O Google pode usar informações do navegador ou a localização do dispositivo, conforme as permissões que você conceder.</p>
 <h2>Seus dados e contato</h2><p>${privacyReady ? `Para solicitar informações, acesso, correção ou exclusão de dados pessoais, escreva para ${escape(p.contact)}. A loja avaliará o pedido e eventuais obrigações legais de conservação.` : 'Durante a preparação desta versão, dúvidas podem ser encaminhadas à loja pelo telefone (47) 3422-3223. O canal definitivo para solicitações sobre dados pessoais ainda será confirmado.'}</p></article>`);
   }
   content = content.replace(/\b(href|src)="([^"]+)"/g, (match, attr, value) => {
