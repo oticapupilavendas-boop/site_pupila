@@ -92,6 +92,46 @@ document.addEventListener('DOMContentLoaded', () => {
   prepareCatalogEntrance();
   catalog?.addEventListener('focusin', event => revealCatalogGroup(event.target.closest('[data-catalog-card]')));
 
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  function watchCarouselMotion(carousel, viewport, onChange) {
+    const toggleMotion = carousel.querySelector('[data-motion-toggle]');
+    if (!('IntersectionObserver' in window)) return;
+    let visible = false;
+    let paused = false;
+    let hovered = false;
+    function update() {
+      toggleMotion.hidden = reducedMotion.matches;
+      toggleMotion.textContent = paused ? 'Retomar' : 'Pausar';
+      onChange(visible && !document.hidden && !reducedMotion.matches
+        && !paused && !hovered && !carousel.contains(document.activeElement));
+    }
+    const observer = new IntersectionObserver(([entry]) => {
+      visible = entry.intersectionRatio >= .35;
+      update();
+    }, { threshold: .35 });
+    observer.observe(viewport);
+    toggleMotion.addEventListener('click', () => {
+      paused = !paused;
+      update();
+    });
+    carousel.addEventListener('pointerenter', event => {
+      if (event.pointerType === 'mouse') {
+        hovered = true;
+        update();
+      }
+    });
+    carousel.addEventListener('pointerleave', () => {
+      hovered = false;
+      update();
+    });
+    carousel.addEventListener('focusin', update);
+    carousel.addEventListener('focusout', () => queueMicrotask(update));
+    reducedMotion.addEventListener('change', update);
+    document.addEventListener('visibilitychange', update);
+    update();
+  }
+
   for (const carousel of root.querySelectorAll('[data-carousel]')) {
     const track = carousel.querySelector('.carousel-slides');
     const slides = [...track.children];
@@ -110,13 +150,89 @@ document.addEventListener('DOMContentLoaded', () => {
     track.setAttribute('aria-live', 'polite');
     position.textContent = `1 / ${slides.length}`;
     controls.hidden = false;
-    controls.addEventListener('click', event => {
-      const step = event.target.closest('[data-carousel-step]');
-      if (!step) return;
+    function advance(step) {
       slides[current].setAttribute('aria-hidden', 'true');
-      current = (current + Number(step.dataset.carouselStep) + slides.length) % slides.length;
+      current = (current + step + slides.length) % slides.length;
       slides[current].setAttribute('aria-hidden', 'false');
       position.textContent = `${current + 1} / ${slides.length}`;
+    }
+    controls.addEventListener('click', event => {
+      const step = event.target.closest('[data-carousel-step]');
+      if (step) advance(Number(step.dataset.carouselStep));
+    });
+    if (carousel.hasAttribute('data-carousel-autoplay')) {
+      let timer;
+      watchCarouselMotion(carousel, track, running => {
+        clearInterval(timer);
+        track.setAttribute('aria-live', running ? 'off' : 'polite');
+        if (running) timer = setInterval(() => advance(1), 7500);
+      });
+    }
+  }
+
+  for (const carousel of root.querySelectorAll('[data-brand-carousel]')) {
+    const viewport = carousel.querySelector('.brand-strip-window');
+    const track = carousel.querySelector('.brand-strip-track');
+    const list = track.firstElementChild;
+    const duplicate = list.cloneNode(true);
+    duplicate.setAttribute('aria-hidden', 'true');
+    track.append(duplicate);
+    carousel.classList.add('brand-enhanced');
+    let offset = 0;
+    let frame = 0;
+    let previousTime = 0;
+    let running = false;
+    let jump;
+    let period;
+    let logoStep;
+
+    function paint() {
+      if (!period) return;
+      offset = ((offset % period) + period) % period;
+      track.style.transform = `translateX(${offset - period}px)`;
+    }
+    function measure() {
+      period = list.getBoundingClientRect().width;
+      logoStep = list.children[1].offsetLeft - list.children[0].offsetLeft;
+      paint();
+    }
+    function animate(time) {
+      frame = 0;
+      if (jump) {
+        jump.start ??= time;
+        const progress = Math.min((time - jump.start) / 350, 1);
+        const travelled = jump.distance * (1 - (1 - progress) ** 3);
+        offset += travelled - jump.travelled;
+        jump.travelled = travelled;
+        if (progress === 1) jump = undefined;
+      } else if (running && previousTime) {
+        offset += Math.min(time - previousTime, 50) * .024;
+      }
+      previousTime = time;
+      paint();
+      if (running || jump) frame = requestAnimationFrame(animate);
+    }
+    measure();
+    for (const arrow of carousel.querySelectorAll('[data-brand-step]')) {
+      arrow.hidden = false;
+      arrow.addEventListener('click', () => {
+        const distance = -Number(arrow.dataset.brandStep) * logoStep;
+        if (reducedMotion.matches) {
+          offset += distance;
+          paint();
+        } else {
+          jump = { distance: distance + (jump ? jump.distance - jump.travelled : 0), travelled: 0 };
+          if (!frame) frame = requestAnimationFrame(animate);
+        }
+      });
+    }
+    window.addEventListener('resize', measure);
+    watchCarouselMotion(carousel, viewport, active => {
+      running = active;
+      if (running && !frame) {
+        previousTime = 0;
+        frame = requestAnimationFrame(animate);
+      }
     });
   }
 

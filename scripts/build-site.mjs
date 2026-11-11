@@ -69,6 +69,8 @@ for (const [route, page] of Object.entries(pages)) {
     if (value.startsWith('assets/') || value.startsWith('lentes/')) return `${attr}="${prefix}${value}"`;
     return match;
   });
+  content = content.replace(/\bsrcset="([^"]+)"/g, (_, candidates) =>
+    `srcset="${candidates.split(',').map(candidate => candidate.trim().replace(/^assets\//, `${prefix}assets/`)).join(', ')}"`);
   // Responsive variants use actual source candidates, including on nested routes.
   content = content.replace(/src="([^"]*assets\/(image-0[234])\.webp)"/g, (match, src, stem) => `${match} srcset="${prefix}assets/${stem}-480.webp 480w, ${prefix}assets/${stem}-768.webp 768w, ${src} ${stem === 'image-02' ? 1536 : 1152}w" sizes="(max-width: 600px) 90vw, 50vw"`);
   content = content.replace(/src="([^"]*essilor-select-2026-1600\.webp)"/g, (match, src) => `${match} srcset="${prefix}assets/lenses/essilor-select-2026-800.webp 800w, ${src} 1600w" sizes="(max-width: 700px) 90vw, 50vw"`);
