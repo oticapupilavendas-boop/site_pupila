@@ -432,15 +432,15 @@ ${autoplay ? `<button class="motion-control" type="button" data-motion-toggle ar
   ];
   const brandCarousel = `<section class="section brand-strip" id="marcas-de-oculos" data-brand-carousel aria-labelledby="brand-strip-title">
 <div class="wrap">
-<div class="brand-strip-heading"><h2 id="brand-strip-title">Marcas de óculos na Pupila.</h2>
-<button class="motion-control" type="button" data-motion-toggle aria-controls="brand-strip-logos" hidden>Pausar</button></div>
+<div class="brand-strip-heading"><p class="eyebrow">MARCAS NA PUPILA</p><h2 id="brand-strip-title"><span>Marcas que você conhece.</span><br>Escolhas para o seu olhar.</h2></div>
+<div class="brand-strip-rule" aria-hidden="true"></div>
 <div class="brand-strip-layout">
 <button class="carousel-control brand-arrow brand-arrow-back" type="button" data-brand-step="-1" aria-controls="brand-strip-logos" aria-label="Logos anteriores" hidden>${icon('arrow')}</button>
 <div class="brand-strip-window" id="brand-strip-logos"><div class="brand-strip-track">
 <ul class="brand-strip-list" aria-label="Marcas de óculos">${eyewearLogos.map(([name, file, width, height]) => `<li><img src="assets/marcas/${file}" width="${width}" height="${height}" alt="${name}" loading="lazy" decoding="async"></li>`).join('')}</ul>
 </div></div>
 <button class="carousel-control brand-arrow" type="button" data-brand-step="1" aria-controls="brand-strip-logos" aria-label="Próximos logos" hidden>${icon('arrow')}</button>
-</div></div></section>`;
+</div><div class="brand-strip-bottom"><div class="brand-strip-rule" aria-hidden="true"></div><button class="motion-control" type="button" data-motion-toggle aria-controls="brand-strip-logos" hidden>Pausar</button></div></div></section>`;
 
   const productReviews = carousel({
     id: 'produto-avaliacoes', heading: 'Avaliações da nossa loja.', kicker: 'EXPERIÊNCIAS DE CLIENTES',

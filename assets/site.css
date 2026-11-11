@@ -198,17 +198,23 @@ summary::-webkit-details-marker { display: none; }
 .motion-control { min-height: 44px; padding: 0 12px; border: 1px solid var(--line); font-size: 13px; background: var(--paper); }
 .motion-control:hover { background: var(--soft); }
 
-/* Os arquivos da seleção do Drive mantêm as cores e proporções originais. */
-.brand-strip { border-block: 1px solid var(--line); background: var(--paper); padding-block: clamp(42px, 6vw, 84px); }
-.brand-strip-heading { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px; margin-bottom: 26px; }
-.brand-strip-heading h2 { font-size: clamp(30px, 4vw, 43px); }
-.brand-strip-list { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 12px; }
-.brand-strip-list li { display: grid; place-items: center; width: clamp(120px, 17vw, 190px); height: 110px; padding: 12px; border: 1px solid var(--line); background: var(--white); }
-.brand-strip-list img { width: 100%; height: 84px; object-fit: contain; }
+/* A faixa conserva as logos originais do Drive e a leitura do componente de referência. */
+.brand-strip { border-block: 1px solid var(--line); background: var(--paper); padding-block: clamp(64px, 8vw, 110px); }
+.brand-strip-heading { text-align: center; margin-bottom: 30px; }
+.brand-strip-heading .eyebrow { justify-content: center; margin-bottom: 18px; }
+.brand-strip-heading h2 { font-size: clamp(27px, 3.5vw, 43px); line-height: 1.2; }
+.brand-strip-heading h2 span { color: var(--muted); }
+.brand-strip-rule { width: min(100%, 410px); height: 1px; margin: 0 auto 20px; background: var(--line); -webkit-mask-image: linear-gradient(to right, transparent, black 20%, black 80%, transparent); mask-image: linear-gradient(to right, transparent, black 20%, black 80%, transparent); }
+.brand-strip-list { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 34px; }
+.brand-strip-list li { display: grid; place-items: center; width: clamp(116px, 15vw, 174px); height: 88px; }
+.brand-strip-list img { width: 100%; height: 64px; object-fit: contain; mix-blend-mode: multiply; }
 .brand-enhanced .brand-strip-layout { display: grid; grid-template-columns: 44px minmax(0, 1fr) 44px; align-items: center; gap: clamp(8px, 1.4vw, 18px); }
-.brand-enhanced .brand-strip-window { overflow: hidden; }
+.brand-enhanced .brand-strip-window { overflow: hidden; -webkit-mask-image: linear-gradient(to right, transparent, black 9%, black 91%, transparent); mask-image: linear-gradient(to right, transparent, black 9%, black 91%, transparent); }
 .brand-enhanced .brand-strip-track { display: flex; width: max-content; }
-.brand-enhanced .brand-strip-list { flex-wrap: nowrap; padding-right: 12px; }
+.brand-enhanced .brand-strip-list { flex-wrap: nowrap; padding-right: 34px; }
+.brand-strip-bottom { position: relative; min-height: 44px; margin-top: 20px; }
+.brand-strip-bottom .brand-strip-rule { margin: 0 auto; }
+.brand-strip-bottom .motion-control { position: absolute; top: -22px; right: 0; }
 .brand-arrow { border-radius: 50%; }
 .brand-arrow-back .icon { transform: rotate(180deg); }
 
@@ -241,8 +247,9 @@ summary::-webkit-details-marker { display: none; }
   .visioffice-measure-grid { gap: 0; }
 }
 @media (max-width: 480px) {
-  .brand-strip-list li { height: 86px; }
-  .brand-strip-list img { height: 60px; }
+  .brand-strip-list li { width: 125px; height: 75px; }
+  .brand-strip-list img { height: 55px; }
+  .brand-strip-bottom .motion-control { position: static; display: block; margin: 15px auto 0; }
   .carousel-controls { gap: 10px; }
 }
 .faq-section { background: #ecefe9; }
