@@ -1,17 +1,28 @@
 # Pendências para concluir o site
 
-Atualizado em 04/11/2026 — Issue #12. As correções técnicas possíveis já foram aplicadas. O site está em prévia e não foi publicado.
+Atualizado em 10/11/2026 — Issues #12 e #21. A versão atual está em revisão no PR #22.
 
-## Envie estes dados em uma resposta
+## Dados confirmados pelo proprietário em 10/11/2026
 
-Copie e preencha os campos abaixo. Se ainda não souber algum, escreva “a definir”.
+- Razão social: Ótica Pupila Ltda · CNPJ 85.346.955/0001-58.
+- Canal de privacidade: oticapupila.adm@gmail.com.
+- Endereço da loja e empresa: Rua Abdon Batista, 59, Centro, Joinville/SC, CEP 89201-010. Telefone: (47) 3422-3223.
+- Clientes enviam receitas e fotos pelo WhatsApp. A loja guarda as conversas sem prazo definido.
+- Domínio planejado: **oticapupilajvll.com.br**. Ainda não foi comprado. O endereço público atual usa GitHub Pages em `https://oticapupilavendas-boop.github.io/site_pupila/`.
+- Hospedagem pública atual: GitHub Pages. A documentação do GitHub informa registro de IP para segurança, mas não dá à loja um prazo específico de retenção nem a localização dos servidores.
+
+As fotos da fachada e do interior usadas no site receberam coordenadas do mapa público da loja nos metadados EXIF WebP. Isso identifica o endereço do estabelecimento, não o ponto de captura de cada câmera.
+
+## Informações adicionais ainda úteis
+
+Os campos confirmados abaixo são um registro. Informe apenas os itens ainda indefinidos quando tiver esses dados.
 
 ```text
 DADOS DA EMPRESA
-Razão social:
-CNPJ:
-Endereço completo da empresa (incluindo CEP):
-E-mail ou canal responsável por solicitações de privacidade:
+Razão social: Ótica Pupila Ltda (confirmado)
+CNPJ: 85.346.955/0001-58 (confirmado)
+Endereço completo da empresa (incluindo CEP): Rua Abdon Batista, 59, Centro, Joinville/SC, CEP 89201-010 (confirmado)
+E-mail ou canal responsável por solicitações de privacidade: oticapupila.adm@gmail.com (confirmado)
 Nome/cargo de quem revisa e aprova a política de privacidade:
 
 DADOS QUE APARECEM NO SITE — confirmar ou corrigir
@@ -32,8 +43,8 @@ Abri https://maps.app.goo.gl/fx92AvEfJ51patQ48 e é o perfil correto da loja: si
 Se não, link correto do perfil no Google Maps:
 
 PUBLICAÇÃO — ainda não escolhidos
-Domínio desejado ou já registrado (ex.: https://...):
-Serviço de hospedagem escolhido:
+Domínio desejado ou já registrado (ex.: https://...): oticapupilajvll.com.br (planejado; ainda não comprado)
+Serviço de hospedagem escolhido: GitHub Pages para a URL atual
 Acesso à hospedagem por convite/conector disponível: sim/não/a definir
 Link da documentação/política da hospedagem sobre dados e logs:
 País/região de armazenamento/processamento, se informado pelo serviço:
@@ -42,7 +53,7 @@ Prazo de retenção e finalidade dos logs, se informados pelo serviço:
 
 O CNPJ e a razão social podem ser enviados como texto ou por comprovante cadastral. O endereço legal pode ser diferente do endereço da loja; informe ambos nesse caso. Para os logs, basta inicialmente o nome do serviço e o link da política: eu verifico a documentação pública e identifico o que depender de configuração da conta.
 
-Com essas respostas, finalizo `site-config.json`, os demais dados empresariais e a política de privacidade. A loja deve revisar o texto final antes da publicação. Depois gero canonical, `og:url`, `og:image` e sitemap com o domínio real, preparo `dist/` e os ajustes específicos da hospedagem. O deploy segue a aprovação do PR prevista em `AGENTS.md`.
+O endereço público atual do GitHub Pages já está em `site-config.json`; canonical, `og:url`, `og:image` e sitemap apontam para ele. Quando o domínio planejado for comprado e ligado à hospedagem, atualize `siteUrl` e revise novamente os dados da hospedagem e a política. O deploy segue a aprovação do PR prevista em `AGENTS.md`.
 
 ## Só envie se quiser restaurar ou ampliar estes conteúdos
 

@@ -13,13 +13,15 @@ const legacyRoutes = ['ray-ban-meta','ray-ban-meta/','ray-ban-meta/index.html','
 const window = {};
 vm.runInNewContext(fs.readFileSync(path.join(root,'assets/routes.js'),'utf8'),{window});
 const routes = Object.keys(window.PUPILA_ROUTES).map(route => route.replace(/index\.html$/, ''));
+const siteBasePath = new URL(JSON.parse(fs.readFileSync(path.join(root, 'site-config.json'), 'utf8')).siteUrl || 'https://example.invalid/').pathname.replace(/\/$/, '');
 const mime = { '.html':'text/html; charset=utf-8','.js':'text/javascript; charset=utf-8','.css':'text/css; charset=utf-8','.svg':'image/svg+xml','.webp':'image/webp','.jpg':'image/jpeg','.png':'image/png','.woff2':'font/woff2' };
 const server = createServer((request,response) => {
   const pathname = decodeURIComponent(new URL(request.url, 'http://localhost').pathname);
-  let file = path.resolve(root, `.${pathname}`);
+  const localPath = siteBasePath && pathname.startsWith(`${siteBasePath}/`) ? pathname.slice(siteBasePath.length) : pathname;
+  let file = path.resolve(root, `.${localPath}`);
   if (file !== root && !file.startsWith(root + path.sep)) { response.writeHead(403).end(); return; }
   if (fs.existsSync(file) && fs.statSync(file).isDirectory()) {
-    if (!pathname.endsWith('/')) { response.writeHead(301,{Location:pathname+'/'}).end(); return; }
+    if (!localPath.endsWith('/')) { response.writeHead(301,{Location:pathname+'/'}).end(); return; }
     file=path.join(file,'index.html');
   }
   const exists=fs.existsSync(file) && fs.statSync(file).isFile();
@@ -291,7 +293,7 @@ try {
   assert.equal(missing.status(),404);
   assert.equal(await plain.locator('#main-nav').isVisible(),true);
   await plain.getByRole('link',{name:'Ótica Pupila — início'}).click();
-  assert.equal(new URL(plain.url()).pathname,'/');
+  assert.equal(new URL(plain.url()).pathname,`${siteBasePath}/`);
   await nojs.close();
   await page.setViewportSize({ width: 375, height: 900 });
   await page.goto(base+'contato/');

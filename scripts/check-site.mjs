@@ -15,6 +15,7 @@ new vm.Script(read('assets/app.js'));
 const pages = context.window.PUPILA_PAGES;
 const products = context.window.PUPILA_DATA.products;
 const config = JSON.parse(read('site-config.json'));
+const siteBasePath = config.siteUrl ? new URL(config.siteUrl).pathname.replace(/\/$/, '') : '';
 assert(Object.keys(pages).length === 33, 'quantidade inesperada de páginas');
 assert(products.length === 18 && new Set(products.map(product => product.brand)).size === products.length, 'o catálogo deve ter uma armação por marca no site inteiro');
 assert(['marcas/index.html', 'marcas/modelo/index.html'].every(route => !fs.existsSync(path.join(root, route)) && !Object.hasOwn(context.window.PUPILA_ROUTES, route)), 'página de marcas ainda presente');
@@ -73,7 +74,8 @@ for (const route of Object.keys(pages)) {
     for (const ref of refs) {
       if (/^(?:https?:|tel:|mailto:|data:)/.test(ref)) continue;
       const [pathname, fragment] = ref.split('#');
-      let target = pathname.startsWith('/') ? path.resolve(root, `.${pathname.split('?')[0]}`) : path.resolve(pageDir, pathname.split('?')[0] || path.basename(route));
+      const localPath = siteBasePath && pathname.startsWith(`${siteBasePath}/`) ? pathname.slice(siteBasePath.length) : pathname;
+      let target = localPath.startsWith('/') ? path.resolve(root, `.${localPath.split('?')[0]}`) : path.resolve(pageDir, localPath.split('?')[0] || path.basename(route));
       if (!pathname) target = path.join(root, route);
       else if (pathname.endsWith('/')) target = path.join(target, 'index.html');
       assert(fs.existsSync(target), `${route}: recurso inexistente ${ref}`);
