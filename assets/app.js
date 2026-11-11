@@ -120,20 +120,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  const copyWhatsapp = root.querySelector('[data-copy-whatsapp]');
-  if (copyWhatsapp && navigator.clipboard?.writeText) {
-    const status = root.querySelector('.copy-status');
-    copyWhatsapp.hidden = false;
-    copyWhatsapp.addEventListener('click', async () => {
-      try {
-        await navigator.clipboard.writeText(copyWhatsapp.dataset.copyWhatsapp);
-        status.textContent = 'Número copiado.';
-      } catch {
-        status.textContent = 'Selecione o número acima para copiar.';
-      }
-    });
-  }
-
   root.addEventListener('click', event => {
     const target = event.target.closest('a, button');
     if (!target) return;

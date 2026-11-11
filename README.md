@@ -20,18 +20,18 @@ Abra `http://127.0.0.1:4173/`. Sempre execute `npm run build` após alterar cont
 - `assets/catalog-products.js`: modelos do acervo, público no catálogo, fichas, fontes e ângulos; usado apenas na geração.
 - `assets/lens-pages.js`: conteúdo de lentes; compartilha o cabeçalho/rodapé sem extrair HTML de uma página antiga.
 - `scripts/build-site.mjs`: gera home, categorias, fichas de produto, história, FAQ, contato, privacidade e lentes, com títulos e descrições próprios.
-- `assets/app.js`: menu, teclado, galeria, filtros, carrosséis, entrada dos cartões, cópia do telefone e comparador de lentes. O conteúdo é gerado no HTML.
+- `assets/app.js`: menu, teclado, galeria, filtros, carrosséis, entrada dos cartões e comparador de lentes. O conteúdo é gerado no HTML.
 - `assets/routes.js`: mapa gerado para redirecionar endereços antigos `#/rota`, com ou sem `/index.html`, para os arquivos estáticos.
 - `404.html`: página da marca. A resposta HTTP 404 e sua ativação dependem da configuração da hospedagem.
 - `site-config.json`: domínio e dados empresariais/de hospedagem para finalizar a privacidade.
 - `docs/REVISAO.md`: validação desta revisão. `docs/PENDENCIAS.md`: dados ainda necessários.
 - `docs/previews/`: 25 capturas históricas de versões anteriores; não representam automaticamente a versão atual e não são incluídas no pacote de publicação.
 
-Cada página funciona sem JavaScript, inclusive a navegação no celular, o acesso ao número de atendimento e a leitura de todos os itens dos carrosséis. Os botões de contato levam à página da loja, que exibe o número para ligações ou WhatsApp. Rotas por hash usam JavaScript para o redirecionamento legado. Os links atuais são URLs normais.
+Cada página funciona sem JavaScript, inclusive a navegação no celular, os links de WhatsApp e a leitura de todos os itens dos carrosséis. O WhatsApp é o único destino web externo. Os botões de conversa abrem o aplicativo com uma mensagem sugerida sobre o produto ou a categoria consultada. Rotas por hash usam JavaScript para o redirecionamento legado. Os links atuais são URLs normais.
 
 ## Conteúdo
 
-Relógios e semijoias usam apresentação editorial, contato e visita. Consulte produtos, cores, configurações e disponibilidade com a loja. As categorias e fichas de produto exibem carrosséis com os trechos de avaliações da loja e perguntas frequentes sobre cada produto ou categoria. Na home, as avaliações seguem lado a lado no desktop e as perguntas usam uma lista expansível.
+Relógios e semijoias usam apresentação editorial, contato e visita. Consulte produtos, cores, configurações e disponibilidade com a loja. As categorias e fichas de produto exibem cinco trechos de avaliações reais da loja e seleções de perguntas frequentes. A página de FAQ reúne as 30 perguntas por tema. Na home, as duas avaliações ficam lado a lado no desktop e as cinco perguntas usam uma lista expansível.
 
 O catálogo inclui 18 armações, uma por marca no total, distribuídas entre 12 modelos de grau e 6 solares. O Ray-Ban Meta representa a Ray-Ban. Cada conjunto tem galeria WebP e ficha. Os filtros de marca e público podem ser combinados. A classificação segue o catálogo do fabricante quando disponível e a seleção da loja nos demais casos. Modelos unissex e peças sem público definido na seleção aparecem nos dois filtros.
 

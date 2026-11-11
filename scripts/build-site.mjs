@@ -56,7 +56,7 @@ for (const [route, page] of Object.entries(pages)) {
     content = content.replace(/<article class="wrap prose">[\s\S]*?<\/article>/, `<article class="wrap prose">${details}
 <h2>Funcionamento do site</h2><p>Este site apresenta a loja e sua seleção. Não oferece contas, pagamentos ou formulários para coleta de dados pessoais. O código não utiliza cookies, pixels de publicidade, análise de audiência ou armazenamento local para acompanhar visitantes.</p>
 <h2>Hospedagem e registros técnicos</h2><p>${hosting}</p>
-<h2>Atendimento</h2><p>A página de contato informa o endereço, os horários e o número de atendimento da loja. Ao usar o botão de copiar, o número vai para a área de transferência do seu dispositivo. As conversas por telefone ou WhatsApp acontecem fora do site.</p>
+<h2>Atendimento</h2><p>A página de contato informa o endereço, os horários e o número de atendimento da loja. Os botões de WhatsApp abrem o serviço com uma mensagem sugerida sobre o produto ou a página consultada. Você pode revisar a mensagem antes de enviá-la.</p>
 <h2>Contato sobre privacidade</h2><p>${privacyReady ? `Para solicitações sobre seus dados pessoais, incluindo acesso, correção ou exclusão, entre em contato por ${escape(p.contact)}.` : 'Durante a preparação desta versão, dúvidas podem ser encaminhadas à loja pelo telefone (47) 3422-3223. O canal definitivo para solicitações sobre dados pessoais ainda será confirmado.'}</p></article>`);
   }
   content = content.replace(/\b(href|src)="([^"]+)"/g, (match, attr, value) => {

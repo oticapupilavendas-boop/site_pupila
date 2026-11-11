@@ -10,7 +10,7 @@ fs.mkdirSync(results, { recursive: true });
 const fixture = fs.mkdtempSync(path.join(results, 'publish-'));
 fs.mkdirSync(path.join(fixture, 'scripts'));
 fs.mkdirSync(path.join(fixture, 'assets'));
-for (const file of ['scripts/build-site.mjs', 'assets/catalog-products.js', 'assets/pages.js', 'assets/lens-pages.js', 'assets/app.js', 'assets/site.css', 'assets/whatsapp.svg']) fs.copyFileSync(path.join(root, file), path.join(fixture, file));
+for (const file of ['scripts/build-site.mjs', 'assets/catalog-products.js', 'assets/pages.js', 'assets/lens-pages.js', 'assets/app.js', 'assets/site.css', 'assets/whatsapp.svg', 'assets/whatsapp-solid.svg']) fs.copyFileSync(path.join(root, file), path.join(fixture, file));
 fs.cpSync(path.join(root, 'assets/catalogo'), path.join(fixture, 'assets/catalogo'), { recursive: true });
 const config = JSON.parse(fs.readFileSync(path.join(root, 'site-config.json'), 'utf8'));
 config.siteUrl = '';
@@ -40,6 +40,7 @@ const catalogPhotos = fs.readdirSync(path.join(dist, 'assets/catalogo'), { recur
 assert.equal(catalogPhotos.length, 54, 'quantidade inesperada de fotos WebP do catálogo no pacote');
 assert(!sitemap.includes('404.html') && !sitemap.includes('/marcas/'));
 assert(fs.existsSync(path.join(dist, 'assets/whatsapp.svg')), 'ícone de atendimento ausente no pacote');
+assert(fs.existsSync(path.join(dist, 'assets/whatsapp-solid.svg')), 'ícone flutuante ausente no pacote');
 assert(fs.readFileSync(path.join(dist, 'robots.txt'), 'utf8').includes('Sitemap: https://example.invalid/pupila/sitemap.xml'));
 for (const file of ['site-config.json','package.json','docs','scripts','assets/catalog-products.js','assets/pages.js','assets/lens-pages.js']) assert(!fs.existsSync(path.join(dist,file)), `${file} exposto na publicação`);
 console.log('✓ Publicação: rejeita dados ausentes; gera canonical, sitemap, imagem social e política em fixture isolada');

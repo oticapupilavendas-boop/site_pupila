@@ -33,6 +33,7 @@
 }
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; scroll-padding-top: 112px; }
+html:not(.js) { scroll-behavior: auto; }
 body { margin: 0; }
 button, input, select, textarea { font: inherit; }
 a, button, summary { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
@@ -53,7 +54,8 @@ main:focus { outline: none; }
 .wrap { width: min(1280px, calc(100% - 112px)); margin-inline: auto; }
 .section { padding-block: var(--section-space); }
 .icon { width: 21px; height: 21px; flex: none; vertical-align: middle; }
-.whatsapp-icon { flex: none; width: 26px; height: 26px; border-radius: 50%; background: var(--whatsapp); }
+.whatsapp-icon { flex: none; width: 26px; height: 26px; }
+.button .whatsapp-icon { filter: invert(1); }
 .eyebrow { display: flex; align-items: center; gap: 10px; color: var(--navy); font-size: 11px; font-weight: 650; letter-spacing: .16em; line-height: 1.6; margin-bottom: 22px; text-transform: uppercase; }
 .eyebrow::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--red); flex: none; }
 .button { display: inline-flex; align-items: center; justify-content: center; gap: 25px; min-height: 52px; padding: 15px 23px; border: 1px solid transparent; font-size: 13px; font-weight: 550; line-height: 1.5; transition: background .2s, color .2s, transform .25s var(--ease); }
@@ -197,6 +199,12 @@ summary::-webkit-details-marker { display: none; }
 .faq-list summary { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding-block: 24px; font-size: 14px; line-height: 1.6; }
 .faq-list summary > span { font-size: 23px; font-weight: 400; transition: transform .2s; }
 .faq-list details[open] summary > span { transform: rotate(45deg); color: var(--red); }
+.faq-full { padding-bottom: var(--section-space); }
+.faq-topics { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 48px; }
+.faq-topics a { padding: 11px 15px; border: 1px solid var(--line); font-size: 13px; line-height: 1.5; }
+.faq-topics a:hover { background: var(--soft); }
+.faq-group { margin-bottom: 44px; }
+.faq-group h2 { margin-bottom: 22px; font-size: clamp(26px, 3vw, 36px); }
 .faq-answer { padding: 0 24px 24px 0; }
 .faq-answer p { font-size: 14px; }
 .location-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 100px; align-items: center; }
@@ -227,7 +235,6 @@ summary::-webkit-details-marker { display: none; }
 .footer-bottom { display: flex; justify-content: space-between; gap: 25px; border-top: 1px solid #ffffff24; padding-block: 24px 38px; font-size: 11px; color: #b9c9cb; }
 .footer-bottom a { padding-block: 5px; }
 .floating-contact { position: fixed; z-index: 40; right: 24px; bottom: calc(24px + env(safe-area-inset-bottom, 0px)); display: flex; align-items: center; gap: 10px; background: var(--whatsapp); color: var(--navy); min-height: 50px; padding: 10px 17px; font-size: 13px; font-weight: 650; border: 1px solid #12344220; border-radius: 40px; box-shadow: 0 4px 18px #12344220; transition: transform .25s var(--ease); }
-.floating-contact .whatsapp-icon { background: #000; }
 
 /* Secondary pages share the home proportions, palette and typography. */
 .breadcrumb { display: flex; gap: 13px; align-items: center; flex-wrap: wrap; padding-top: 30px; font-size: 11px; color: var(--muted); }
@@ -304,8 +311,6 @@ html:not(.js) .catalog-toolbar { display: none; }
 .contact-item .hours > div:last-child { border: 0; }
 .contact-phone { font-size: 24px; letter-spacing: -.035em; }
 .contact-item .small { font-size: 12px; margin-top: 20px; }
-.contact-item .copy-status { margin: 10px 0 0; font-size: 13px; }
-.copy-status:empty { margin: 0; }
 .contact-photo { height: 490px; }
 .contact-photo img { width: 100%; height: 100%; object-fit: cover; }
 .map-card { display: flex; gap: 20px; padding: 30px; background: var(--soft); margin-top: 20px; }
@@ -787,6 +792,7 @@ body[data-page="lentes"] .section { padding-block: clamp(44px, 5vw, 72px); }
 .lens-fields :focus-visible, .lens-select-banner :focus-visible, .topline :focus-visible { outline-color: #fff; }
 .site-footer .floating-contact:focus-visible { outline-color: var(--navy); box-shadow: 0 0 0 8px var(--paper); }
 @media (max-width: 900px) {
+  html:not(.js) #pupila-app .site-header { position: static; }
   html:not(.js) #pupila-app .header-main { height: auto; min-height: 80px; flex-wrap: wrap; }
   html:not(.js) #pupila-app .main-nav { display: flex; flex-direction: column; position: static; order: 3; width: 100%; max-height: none; }
   html:not(.js) #pupila-app .menu-toggle { display: none; }

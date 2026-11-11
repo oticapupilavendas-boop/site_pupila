@@ -106,8 +106,10 @@ try {
   assert.equal(await contactLink.innerText(), 'Fale com a Pupila');
   assert.equal(await contactLink.evaluate(el => getComputedStyle(el).backgroundColor), 'rgb(37, 211, 102)');
   assert.equal(await page.getByRole('link', { name: 'Converse com a gente' }).evaluate(el => getComputedStyle(el).backgroundColor), 'rgb(181, 54, 64)');
-  await contactLink.click();
-  await page.waitForURL(base+'contato/#atendimento');
+  const homeWhatsapp = new URL(await contactLink.getAttribute('href'));
+  assert.equal(homeWhatsapp.origin, 'https://wa.me');
+  assert.match(homeWhatsapp.searchParams.get('text'), /escolher um produto/);
+  await page.goto(base+'contato/#atendimento');
   assert.equal(await page.locator('#atendimento .contact-phone').innerText(), '(47) 3422-3223');
   await page.goto(base+'ray-ban-meta/');
   const views=page.locator('[data-product-view]');
@@ -120,7 +122,8 @@ try {
   await page.keyboard.press('Home');
   assert.match(await page.locator('.meta-gallery-count').innerText(),/01 \/ 06/);
   const productCTA = new URL(await page.getByRole('link',{name:'Quero conhecer de perto'}).getAttribute('href'), page.url());
-  assert.equal(productCTA.href, base+'contato/#atendimento');
+  assert.equal(productCTA.pathname, '/554734223223');
+  assert.match(productCTA.searchParams.get('text'), /Ray-Ban Meta Wayfarer Gen 3.*preço.*disponibilidade/);
   for (const route of galleryRoutes) {
     const [category, slug] = route.split('/');
     await page.goto(base+category+'/');
@@ -139,7 +142,9 @@ try {
     assert.equal(await angles.last().getAttribute('aria-pressed'),'true',route);
     assert.equal(await page.locator('.meta-gallery-count').innerText(),'03 / 03',route);
     const cta = new URL(await page.getByRole('link',{name:'Quero conhecer de perto'}).getAttribute('href'), page.url());
-    assert.equal(cta.href, base+'contato/#atendimento', route);
+    const brand = await page.locator('h1').innerText();
+    assert(cta.searchParams.get('text').includes(brand) && cta.searchParams.get('text').includes(category === 'oculos-de-sol' ? 'óculos de sol' : 'óculos de grau'), route);
+    assert.equal(await page.locator('.floating-contact').getAttribute('href'), cta.href, route);
     const details = page.getByRole('region',{name:'Ficha do modelo'});
     assert.equal(await details.locator('dt').count(),3,route);
     assert.equal(await details.locator('a').count(), 0, route);
@@ -201,7 +206,11 @@ try {
   assert.match(await reviews.locator('.carousel-slide:visible blockquote').innerText(), /Curitiba/);
   assert.equal(await nextReview.evaluate(el => el === document.activeElement), true);
   await nextReview.press('Space');
-  assert.match(await reviews.locator('.carousel-slide:visible blockquote').innerText(), /agradecer/);
+  assert.match(await reviews.locator('.carousel-slide:visible blockquote').innerText(), /informações claras/);
+  await reviews.getByRole('button', { name: 'Avaliação anterior' }).click();
+  await reviews.getByRole('button', { name: 'Avaliação anterior' }).click();
+  await reviews.getByRole('button', { name: 'Avaliação anterior' }).click();
+  assert.match(await reviews.locator('.carousel-slide:visible blockquote').innerText(), /produtos de qualidade/);
   const faq = page.locator('#produto-perguntas');
   assert.match(await faq.locator('.carousel-slide:visible h3').innerText(), /relógio pode molhar/);
   await faq.getByRole('button', { name: 'Próxima pergunta' }).click();
@@ -230,13 +239,20 @@ try {
     assert.equal(await plain.locator('#main-nav').isVisible(),true,route);
     assert.equal(await plain.locator('.menu-toggle').isVisible(),false,route);
     const href=await plain.locator('.floating-contact').getAttribute('href');
-    assert.equal(new URL(href, plain.url()).href, base+'contato/#atendimento', route);
+    const whatsapp = new URL(href);
+    assert.equal(whatsapp.origin, 'https://wa.me', route);
+    assert(whatsapp.searchParams.get('text').length >= 50, route);
   }
   await plain.goto(base+'lentes/');
   await plain.getByRole('link',{name:'Relógios',exact:true}).first().click();
   assert.equal(new URL(plain.url()).pathname,'/relogios/');
-  assert.equal(await plain.locator('#produto-avaliacoes .carousel-slide:visible').count(), 2);
-  assert.equal(await plain.locator('#produto-perguntas .carousel-slide:visible').count(), 3);
+  assert.equal(await plain.locator('#produto-avaliacoes .carousel-slide:visible').count(), 5);
+  assert.equal(await plain.locator('#produto-perguntas .carousel-slide:visible').count(), 5);
+  await plain.goto(base+'perguntas-frequentes/');
+  assert.equal(await plain.locator('.faq-full details').count(), 30);
+  await plain.getByRole('link', { name: 'Lentes HOYA', exact: true }).click();
+  await plain.locator('#faq-lentes-hoya + .faq-list summary').first().click();
+  assert.equal(await plain.locator('#faq-lentes-hoya + .faq-list details').first().getAttribute('open'), '');
   for (const route of removedRoutes) {
     assert.equal((await plain.goto(base+route+'/')).status(), 404, route);
   }

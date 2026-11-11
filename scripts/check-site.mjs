@@ -53,7 +53,12 @@ for (const route of Object.keys(pages)) {
       imageCount++;
       assert(attr.alt !== undefined && Number(attr.width) > 0 && Number(attr.height) > 0, `${route}: imagem sem alt/dimensões`);
     }
-    if (tag.startsWith('<a') && attr.href) assert(!/^(?:[a-z][a-z\d+.-]*:|\/\/)/i.test(attr.href) || attr.href.startsWith('tel:'), `${route}: link externo ${attr.href}`);
+    if (tag.startsWith('<a') && attr.href && /^(?:[a-z][a-z\d+.-]*:|\/\/)/i.test(attr.href) && !attr.href.startsWith('tel:')) {
+      const url = new URL(attr.href, 'https://example.invalid');
+      assert(url.origin === 'https://wa.me' && url.pathname === '/554734223223', `${route}: destino externo inesperado ${attr.href}`);
+      assert(url.searchParams.get('text')?.startsWith('Olá!') && url.searchParams.get('text').length >= 50, `${route}: mensagem de contexto ausente`);
+      assert(attr.target === '_blank' && attr.rel?.includes('noopener') && attr.rel?.includes('noreferrer'), `${route}: proteção do link de WhatsApp ausente`);
+    }
     const refs = [attr.src, attr.href, ...(attr.srcset || '').split(',').map(value => value.trim().split(' ')[0])].filter(Boolean);
     for (const ref of refs) {
       if (/^(?:https?:|tel:|mailto:|data:)/.test(ref)) continue;
@@ -80,7 +85,7 @@ for (const [category, cardCount] of [['oculos-de-grau', 12], ['oculos-de-sol', 6
   assert(categoryProducts.every(product => source.includes(`<h3>${product.brand}</h3>`)), `${category}: título do cartão deve exibir a marca`);
   assert(source.includes('eyewear-photo-space'), `${category}: espaço da foto ausente`);
   assert(['todos', 'feminino', 'masculino'].every(audience => source.includes(`data-catalog-filter="${audience}"`)) && source.includes('data-catalog-brand'), `${category}: filtros ausentes`);
-  assert(source.includes('../contato/#atendimento') && source.includes('Planeje sua visita'), `${category}: caminho de atendimento ausente`);
+  assert(source.includes('https://wa.me/554734223223?text=') && source.includes('Planeje sua visita'), `${category}: caminho de atendimento ausente`);
 }
 const catalogPhotos = new Set();
 for (const product of products) {
@@ -102,7 +107,17 @@ assert(read('lentes/essilor/index.html').includes('Essilor Varilux Especialista 
 const home = read('index.html');
 assert(home.includes('home-select-section'), 'destaque Select ausente na home');
 assert(home.includes('testimonials-grid') && home.includes('faq-list') && !home.includes('data-carousel'), 'avaliações e FAQ da home devem manter o formato');
-assert(read('contato/index.html').includes('data-copy-whatsapp="+554734223223"'), 'número de atendimento ausente');
+assert(read('contato/index.html').includes('Falar pelo WhatsApp'), 'atendimento pelo WhatsApp ausente');
+const faqPage = read('perguntas-frequentes/index.html').split('class="wrap faq-full"')[1].split('</main>')[0];
+const faqQuestions = [...faqPage.matchAll(/<summary>([^<]+)/g)].map(([, question]) => question);
+assert(faqQuestions.length === 30 && new Set(faqQuestions).size === 30, 'o FAQ deve reunir exatamente 30 perguntas diferentes');
+for (const route of productRoutes) {
+  const source = read(route);
+  const reviewSection = source.split('id="produto-avaliacoes"')[1].split('</section>')[0];
+  assert((reviewSection.match(/<blockquote>/g) || []).length === 5, `${route}: cinco avaliações esperadas`);
+  const questions = [...source.matchAll(/<article class="carousel-question"><h3>([^<]+)/g)].map(([, question]) => question);
+  assert(questions.length >= 5 && questions.every(question => faqQuestions.includes(question)), `${route}: perguntas de produto fora do FAQ central`);
+}
 const lenses = read('lentes/index.html');
 assert(lenses.indexOf('Como funciona o atendimento.') < lenses.indexOf('UM RECONHECIMENTO DA ESSILORLUXOTTICA') && lenses.indexOf('UM RECONHECIMENTO DA ESSILORLUXOTTICA') < lenses.indexOf('Três referências em lentes.'), 'ordem editorial de lentes alterada');
 assert(lenses.includes('Comparação conceitual') && lenses.includes('lens-comparison-range') && lenses.includes('Filtro de luz azul'), 'guia de tecnologias ausente');

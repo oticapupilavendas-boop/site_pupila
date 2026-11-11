@@ -28,6 +28,10 @@ window.PUPILA_DATA = {
 
 const company = window.PUPILA_DATA.company;
 const whatsappIcon = '<img class="whatsapp-icon" src="assets/whatsapp.svg" width="26" height="26" alt="">';
+const whatsappSolidIcon = '<img class="whatsapp-icon" src="assets/whatsapp-solid.svg" width="26" height="26" alt="">';
+const defaultMessage = 'Olá! Vim pelo site da Ótica Pupila e gostaria de falar com a equipe.';
+const homeMessage = 'Olá! Vi a seleção da Ótica Pupila no site e gostaria de ajuda para escolher um produto.';
+const whatsappLink = message => `href="https://wa.me/${company.whatsapp}?text=${encodeURIComponent(message)}" target="_blank" rel="noopener noreferrer"`;
 
 const story = `<section class="story-block wrap">
 <figure class="story-photo reveal">
@@ -55,6 +59,12 @@ const reviewQuotes = [
   'Quero agradecer imensamente pelo atendimento maravilhoso na ótica. A equipe foi super atenciosa, esclareceu todas as minhas dúvidas e me ajudou a escolher a armação perfeita. Recomendo de olhos fechados, sem trocadilho!',
   'Eu amo essa Ótica, saio de Curitiba pra fazer meus óculos nela, super bem atendida, atendimento nota mil, sem forçar compra, deixando super a vontade na escolha [...]'
 ];
+// Trechos adicionais conferidos no perfil da loja de Joinville: https://maps.app.goo.gl/fx92AvEfJ51patQ48
+const additionalReviewQuotes = [
+  '[…] informações claras, excelência em óculos e lentes.',
+  '[…] me ajudou a escolher os óculos ideais para o meu perfil.',
+  'Ótimo atendimento e produtos de qualidade.'
+];
 const testimonial = quote => `<figure class="testimonial">
 <span class="testimonial-mark" aria-hidden="true">“</span>
 <blockquote><p>${quote}</p></blockquote>
@@ -70,6 +80,71 @@ const reviews = `<section class="section wrap reviews-section" id="avaliacoes" a
 <div class="testimonials-grid">${reviewQuotes.map(testimonial).join('')}</div>
 </section>`;
 
+const faqGroups = {
+  'oculos-de-grau': { title: 'Óculos de grau', questions: [
+    ['O que devo levar para escolher meus óculos de grau?', 'Traga sua receita médica e, se já usa óculos, leve o par atual.'],
+    ['Qualquer armação funciona com a minha receita?', 'A combinação depende da prescrição, do tamanho e do formato da armação. A equipe pode conferir as opções de lente e montagem com você.'],
+    ['Como escolher lentes e armações?', 'Leve sua prescrição e conte à equipe como usa os óculos no dia a dia. A escolha deve considerar as orientações do profissional que acompanha sua visão, o ajuste e o conforto da armação.']
+  ] },
+  'oculos-de-sol': { title: 'Óculos de sol', questions: [
+    ['Lentes escuras garantem proteção UV?', 'A cor, sozinha, não comprova proteção. Ao escolher os óculos solares, verifique a indicação de proteção UVA e UVB do fabricante, como 100% UV ou UV400.'],
+    ['Lente polarizada e proteção UV são a mesma coisa?', 'A polarização reduz o brilho refletido em superfícies como água e asfalto. A proteção UV é uma característica separada que deve ser conferida na lente escolhida.'],
+    ['Posso fazer um óculos de sol com grau?', 'Depende da prescrição e da armação. Traga sua receita para a equipe conferir quais modelos e opções de lentes podem ser combinados.']
+  ] },
+  cuidados: { title: 'Cuidados com os óculos', questions: [
+    ['Como limpar as lentes dos meus óculos?', 'Enxágue para retirar partículas, use um produto indicado para suas lentes ou uma pequena quantidade de detergente neutro, enxágue e seque com uma microfibra limpa. Evite água quente e siga as orientações do fabricante.'],
+    ['Posso limpar os óculos na roupa?', 'Evite. O tecido e a poeira podem riscar as lentes. Prefira uma microfibra própria e limpa, retirando a sujeira antes de esfregar.'],
+    ['Como guardar meus óculos?', 'Use um estojo adequado e evite apoiar as lentes diretamente nas superfícies. Não deixe os óculos expostos ao calor intenso, como no painel de um carro.']
+  ] },
+  relogios: { title: 'Relógios', questions: [
+    ['Como saber se um relógio pode molhar?', 'A resistência à água depende do modelo. Confira a indicação do fabricante e as orientações de uso antes de molhar o relógio.'],
+    ['Posso experimentar o relógio antes de escolher?', 'Consulte os modelos na loja e experimente para comparar o tamanho da caixa e o ajuste da pulseira no pulso.']
+  ] },
+  semijoias: { title: 'Semijoias', questions: [
+    ['Como consultar o material e o acabamento de uma semijoia?', 'Pergunte à equipe sobre a composição e o acabamento da peça escolhida. As características variam conforme o modelo.'],
+    ['Como guardar minhas semijoias?', 'Guarde as peças secas e separadas para evitar atrito. Siga as orientações de cuidado indicadas para cada acabamento.']
+  ] },
+  lentes: { title: 'Lentes para óculos', questions: [
+    ['Preciso de receita para comprar lentes para óculos?', 'Sim. Traga sua receita médica para a equipe consultar as lentes e os tratamentos compatíveis com a prescrição.'],
+    ['Qual a diferença entre monofocal e multifocal progressiva?', 'A monofocal corrige uma distância principal. A multifocal progressiva reúne correções para longe, distância intermediária e perto na mesma lente.'],
+    ['Posso trocar as lentes e manter a minha armação?', 'Leve a armação à Pupila para conferir seu estado e se ela comporta as lentes indicadas na receita.']
+  ] },
+  'lentes/hoya': { title: 'Lentes HOYA', questions: [
+    ['O que são as lentes Hoyalux?', 'Hoyalux é uma família de lentes multifocais progressivas da HOYA para visão de perto, intermediária e de longe.'],
+    ['Qual a diferença entre Sensity e Hi-Vision?', 'Sensity é a linha fotocromática da HOYA. Hi-Vision reúne tratamentos de superfície, incluindo opções antirreflexo.']
+  ] },
+  'lentes/zeiss': { title: 'Lentes ZEISS', questions: [
+    ['O que diferencia ZEISS Office de DriveSafe?', 'A linha Office é voltada a atividades de perto e a distâncias intermediárias. DriveSafe foi desenvolvida para as demandas visuais ao dirigir.'],
+    ['O que é PhotoFusion X?', 'É uma tecnologia fotocromática da ZEISS. As lentes mudam de tonalidade conforme a luz.']
+  ] },
+  'lentes/essilor': { title: 'Lentes Essilor', questions: [
+    ['Qual é a diferença entre Varilux e Eyezen?', 'Varilux reúne lentes multifocais progressivas. Eyezen é uma linha de visão simples. A escolha depende da sua prescrição.'],
+    ['O que é Crizal?', 'É uma família de tratamentos Essilor para a superfície das lentes, com opções antirreflexo. A compatibilidade depende da lente escolhida.']
+  ] },
+  'lentes/contato': { title: 'Lentes de contato', questions: [
+    ['Posso comprar lentes de contato com a receita dos meus óculos?', 'Traga a prescrição médica para lentes de contato. O oftalmologista avalia a indicação e as características necessárias para a adaptação.'],
+    ['A Pupila faz adaptação de lentes de contato?', 'A loja consulta linhas e prazos conforme a prescrição. A adaptação e os exames são realizados com o oftalmologista.'],
+    ['Como consultar uma lente de contato de uma linha específica?', 'Informe à equipe a marca e a linha indicadas na receita. A Pupila pode verificar as configurações disponíveis e o prazo.']
+  ] },
+  'ray-ban-meta': { title: 'Ray-Ban Meta', questions: [
+    ['Posso colocar lentes de grau no Ray-Ban Meta?', 'Traga sua receita médica para a equipe conferir a compatibilidade com a armação e as opções de montagem.'],
+    ['O que posso fazer com o Ray-Ban Meta?', 'O modelo permite registrar fotos e vídeos e usar o áudio aberto para chamadas e músicas. Os recursos de IA variam conforme o país, o idioma e as atualizações.']
+  ] },
+  atendimento: { title: 'Atendimento na Pupila', questions: [
+    ['Posso comprar pelo site?', 'O site apresenta a seleção da Ótica Pupila. Para consultar disponibilidade, valores e formas de compra, fale com a equipe pelo WhatsApp ou visite a loja.'],
+    ['Posso experimentar os produtos antes de comprar?', 'Consulte a disponibilidade da peça que você quer experimentar e passe na loja para comparar opções com a equipe.'],
+    ['Onde fica a loja e quais são os horários?', 'Estamos na Rua Abdon Batista, 59, Centro, Joinville/SC. Atendemos de segunda a sexta, das 08h30 às 18h, e aos sábados, das 08h30 às 12h30. Aos domingos, a loja está fechada.']
+  ] }
+};
+const faqTopics = Object.entries(faqGroups).map(([key, group]) => ({ ...group, id: `faq-${key.replace('/', '-')}` }));
+const faqTotal = faqTopics.reduce((total, topic) => total + topic.questions.length, 0);
+const faqItems = questions => questions.map(([question, answer]) => `<details>
+<summary>${question}<span aria-hidden="true">+</span></summary>
+<div class="faq-answer"><p>${answer}</p></div>
+</details>`).join('\n');
+const [cleaning, clothing, storage] = faqGroups.cuidados.questions;
+const homeQuestions = [cleaning, clothing, faqGroups['oculos-de-sol'].questions[0], storage, faqGroups['oculos-de-grau'].questions[2]];
+
 const faq = `<section class="section faq-section">
 <div class="wrap faq-layout">
 <div>
@@ -81,43 +156,7 @@ const faq = `<section class="section faq-section">
 </svg>
 </a>
 </div>
-<div class="faq-list">
-<details>
-<summary>Como limpar as lentes dos meus óculos?<span aria-hidden="true">+</span>
-</summary>
-<div class="faq-answer">
-<p>Enxágue para retirar partículas, use um produto indicado para suas lentes ou uma pequena quantidade de detergente neutro, enxágue e seque com uma microfibra limpa. Evite água quente e siga as orientações do fabricante.</p>
-</div>
-</details>
-<details>
-<summary>Posso limpar os óculos na roupa?<span aria-hidden="true">+</span>
-</summary>
-<div class="faq-answer">
-<p>Evite. O tecido e a poeira podem riscar as lentes. Prefira uma microfibra própria e limpa, retirando a sujeira antes de esfregar.</p>
-</div>
-</details>
-<details>
-<summary>Lentes escuras garantem proteção UV?<span aria-hidden="true">+</span>
-</summary>
-<div class="faq-answer">
-<p>A cor, sozinha, não comprova proteção. Ao escolher os óculos solares, verifique a indicação de proteção UVA e UVB do fabricante, como 100% UV ou UV400.</p>
-</div>
-</details>
-<details>
-<summary>Como guardar meus óculos?<span aria-hidden="true">+</span>
-</summary>
-<div class="faq-answer">
-<p>Use um estojo adequado e evite apoiar as lentes diretamente nas superfícies. Não deixe os óculos expostos ao calor intenso, como no painel de um carro.</p>
-</div>
-</details>
-<details>
-<summary>Como escolher lentes e armações?<span aria-hidden="true">+</span>
-</summary>
-<div class="faq-answer">
-<p>Leve sua prescrição e conte à equipe como usa os óculos no dia a dia. A escolha deve considerar as orientações do profissional que acompanha sua visão, o ajuste e o conforto da armação.</p>
-</div>
-</details>
-</div>
+<div class="faq-list">${faqItems(homeQuestions)}</div>
 </div>
 </section>`;
 
@@ -159,7 +198,7 @@ const location = `<section class="section wrap location-layout">
 
 const existing = {
 
-"nossa-historia/index.html": { title: "Nossa história desde 1992 | Ótica Pupila", content: `<nav class="breadcrumb wrap" aria-label="Caminho da página">
+"nossa-historia/index.html": { message: "Olá! Conheci a história da Pupila no site e gostaria de falar com a equipe.", title: "Nossa história desde 1992 | Ótica Pupila", content: `<nav class="breadcrumb wrap" aria-label="Caminho da página">
 <a href="#/index.html" class="" >Início</a>
 <span aria-hidden="true">/</span>
 <span>Nossa história</span>
@@ -245,9 +284,7 @@ const existing = {
 <div>
 <h2>Fale com a Pupila</h2>
 <a href="tel:${company.phone}" class="contact-phone">${company.phoneDisplay}</a>
-<p class="small">Use esse número para ligar ou conversar pelo WhatsApp.</p>
-<button type="button" class="button primary" data-copy-whatsapp="+${company.whatsapp}" hidden>${whatsappIcon} Copiar número do WhatsApp</button>
-<p class="copy-status" role="status"></p>
+<div class="button-row"><a class="button primary" ${whatsappLink(defaultMessage)}>${whatsappIcon} Falar pelo WhatsApp</a></div>
 </div>
 </div>
 </div>
@@ -267,77 +304,24 @@ const existing = {
 </div>
 </section>` },
 
-"perguntas-frequentes/index.html": { title: "Perguntas frequentes | Ótica Pupila", content: `<nav class="breadcrumb wrap" aria-label="Caminho da página">
-<a href="#/index.html" class="" >Início</a>
-<span aria-hidden="true">/</span>
-<span>Perguntas frequentes</span>
+"perguntas-frequentes/index.html": { title: "Perguntas frequentes | Ótica Pupila",
+message: 'Olá! Li as perguntas frequentes da Pupila no site e gostaria de tirar uma dúvida com a equipe.',
+content: `<nav class="breadcrumb wrap" aria-label="Caminho da página">
+<a href="#/index.html">Início</a><span aria-hidden="true">/</span><span>Perguntas frequentes</span>
 </nav>
 <section class="page-intro wrap">
 <p class="eyebrow">CLAREZA PARA ESCOLHER</p>
 <h1>Perguntas frequentes.</h1>
-<p class="lede">Orientações simples sobre óculos, lentes e atendimento.</p>
+<p class="lede">${faqTotal} respostas sobre óculos, lentes, acessórios e atendimento.</p>
 </section>
-<section class="wrap faq-full">
-<div class="faq-list">
-<details>
-<summary>Como limpar as lentes dos meus óculos?<span aria-hidden="true">+</span>
-</summary>
-<div class="faq-answer">
-<p>Enxágue para retirar partículas, use um produto indicado para suas lentes ou uma pequena quantidade de detergente neutro, enxágue e seque com uma microfibra limpa. Evite água quente e siga as orientações do fabricante.</p>
-</div>
-</details>
-<details>
-<summary>Posso limpar os óculos na roupa?<span aria-hidden="true">+</span>
-</summary>
-<div class="faq-answer">
-<p>Evite. O tecido e a poeira podem riscar as lentes. Prefira uma microfibra própria e limpa, retirando a sujeira antes de esfregar.</p>
-</div>
-</details>
-<details>
-<summary>Lentes escuras garantem proteção UV?<span aria-hidden="true">+</span>
-</summary>
-<div class="faq-answer">
-<p>A cor, sozinha, não comprova proteção. Ao escolher os óculos solares, verifique a indicação de proteção UVA e UVB do fabricante, como 100% UV ou UV400.</p>
-</div>
-</details>
-<details>
-<summary>Como guardar meus óculos?<span aria-hidden="true">+</span>
-</summary>
-<div class="faq-answer">
-<p>Use um estojo adequado e evite apoiar as lentes diretamente nas superfícies. Não deixe os óculos expostos ao calor intenso, como no painel de um carro.</p>
-</div>
-</details>
-<details>
-<summary>Como escolher lentes e armações?<span aria-hidden="true">+</span>
-</summary>
-<div class="faq-answer">
-<p>Leve sua prescrição e conte à equipe como usa os óculos no dia a dia. A escolha deve considerar as orientações do profissional que acompanha sua visão, o ajuste e o conforto da armação.</p>
-</div>
-</details>
-<details>
-<summary>O site substitui uma avaliação da visão?<span aria-hidden="true">+</span>
-</summary>
-<div class="faq-answer">
-<p>Não. As informações aqui são educativas e não oferecem diagnóstico. Dúvidas ou alterações na visão precisam ser avaliadas por um profissional habilitado.</p>
-</div>
-</details>
-<details>
-<summary>Posso comprar pelo site?<span aria-hidden="true">+</span>
-</summary>
-<div class="faq-answer">
-<p>Este site é uma vitrine da Ótica Pupila. Para conhecer os modelos e receber atendimento, entre em contato ou visite nossa loja em Joinville.</p>
-</div>
-</details>
-<details>
-<summary>Onde fica a loja e quais são os horários?<span aria-hidden="true">+</span>
-</summary>
-<div class="faq-answer">
-<p>Estamos na Rua Abdon Batista, 59, Centro, Joinville/SC. Atendemos de segunda a sexta, das 08h30 às 18h; aos sábados, das 08h30 às 12h30. Aos domingos, a loja está fechada.</p>
-</div>
-</details>
-</div>
-<p class="small">Conteúdo educativo. Não substitui avaliação individual por profissional habilitado.</p>
-</section>` },
+<div class="wrap faq-full">
+<nav class="faq-topics" aria-label="Temas das perguntas">${faqTopics.map(topic => `<a href="#${topic.id}">${topic.title}</a>`).join('')}</nav>
+${faqTopics.map(topic => `<section class="faq-group" aria-labelledby="${topic.id}">
+<h2 id="${topic.id}">${topic.title}</h2>
+<div class="faq-list">${faqItems(topic.questions)}</div>
+</section>`).join('')}
+<p class="small">Dúvidas sobre a visão devem ser avaliadas por um profissional habilitado.</p>
+</div>` },
 
 "privacidade/index.html": { title: "Política de privacidade | Ótica Pupila", content: `<nav class="breadcrumb wrap" aria-label="Caminho da página">
 <a href="#/index.html" class="" >Início</a>
@@ -386,7 +370,7 @@ const existing = {
     'lentes/contato': 'lentes/contato/'
   };
   const link = (route, label, classes = '') => `<a class="${classes}" href="${lensPaths[route] || `#/${route}/index.html`}">${label}</a>`;
-  const chat = (label, classes = 'button primary') => `<a class="${classes}" href="#/contato/index.html#atendimento">${label}${icon('arrow')}</a>`;
+  const chat = (label, message = defaultMessage, classes = 'button primary') => `<a class="${classes}" ${whatsappLink(message)}>${label}${icon('arrow')}</a>`;
   const crumb = (label, parent) => `<nav class="breadcrumb wrap" aria-label="Caminho da página">
 <a href="#/index.html">Início</a>
 <span aria-hidden="true">/</span>${parent ? `
@@ -400,29 +384,6 @@ ${link(parent[0], parent[1])}<span aria-hidden="true">/</span>` : ''}
     ['semijoias', 'Semijoias', 'Pequenos detalhes. Grandes significados.', 'gem'],
     ['lentes', 'Lentes para óculos', 'Tecnologia e cuidado para cada olhar.', 'lens']
   ];
-  const catalogFaqs = {
-    'oculos-de-grau': [
-      ['O que devo levar para escolher meus óculos de grau?', 'Traga sua receita médica e, se já usa óculos, leve o par atual. Conte à equipe em quais atividades você mais usa as lentes.'],
-      ['Qualquer armação funciona com a minha receita?', 'A combinação depende da prescrição, do tamanho e do formato da armação. A equipe pode conferir as opções de lente e montagem com você.'],
-      ['Posso experimentar as armações na loja?', 'Sim. Consulte a disponibilidade antes da visita e experimente as armações para comparar o peso e o ajuste.']
-    ],
-    'oculos-de-sol': [
-      ['Como conferir a proteção UV dos óculos de sol?', 'Confira na descrição do fabricante a indicação de proteção UVA e UVB, como UV400 ou 100% UV. A cor da lente, por si só, não comprova proteção.'],
-      ['Lente polarizada e proteção UV são a mesma coisa?', 'A polarização reduz o brilho refletido em superfícies como água e asfalto. A proteção UV é uma característica separada que deve ser conferida na lente escolhida.'],
-      ['Posso fazer um óculos de sol com grau?', 'Depende da prescrição e da armação. Traga sua receita para a equipe conferir quais modelos e opções de lentes podem ser combinados.']
-    ],
-    relogios: [
-      ['Como saber se um relógio pode molhar?', 'A resistência à água depende do modelo. Confira a indicação do fabricante e as orientações de uso antes de molhar o relógio.'],
-      ['Posso experimentar o relógio antes de escolher?', 'Consulte os modelos na loja e experimente para comparar o tamanho da caixa e o ajuste da pulseira no pulso.'],
-      ['Como consultar modelos e preços de relógios?', 'Fale com a Pupila ou visite a loja. A equipe pode informar quais modelos estão disponíveis e os valores de cada peça.']
-    ],
-    semijoias: [
-      ['Como consultar o material e o acabamento de uma peça?', 'Pergunte à equipe sobre a composição e o acabamento da peça escolhida. As características variam conforme o modelo.'],
-      ['Como guardar minhas semijoias?', 'Guarde as peças secas e separadas para evitar atrito. Siga as orientações de cuidado indicadas para cada acabamento.'],
-      ['Como saber quais semijoias estão disponíveis?', 'Consulte a equipe da Pupila ou visite a loja para conhecer as peças, tamanhos e acabamentos disponíveis.']
-    ]
-  };
-
   function carousel({ id, heading, kicker, description, slides, previous, next }) {
     return `<section class="section product-carousel${id === 'produto-perguntas' ? ' faq-section' : ''}" id="${id}" data-carousel aria-labelledby="${id}-title">
 <div class="wrap carousel-layout">
@@ -442,11 +403,12 @@ ${link(parent[0], parent[1])}<span aria-hidden="true">/</span>` : ''}
   const productReviews = carousel({
     id: 'produto-avaliacoes', heading: 'Avaliações da nossa loja.', kicker: 'EXPERIÊNCIAS DE CLIENTES',
     description: 'O que os clientes contam sobre o atendimento na Pupila.',
-    slides: reviewQuotes.map(testimonial), previous: 'Avaliação anterior', next: 'Próxima avaliação'
+    slides: [...reviewQuotes, ...additionalReviewQuotes].map(testimonial), previous: 'Avaliação anterior', next: 'Próxima avaliação'
   });
-  const productHelp = questions => productReviews + carousel({
+  const productHelp = (topic, related) => productReviews + carousel({
     id: 'produto-perguntas', heading: 'Perguntas frequentes.', kicker: 'BOM SABER',
-    slides: questions.map(([question, answer]) => `<article class="carousel-question"><h3>${question}</h3><p>${answer}</p></article>`),
+    description: link('perguntas-frequentes', `Ver todas as ${faqTotal} perguntas`, 'text-link'),
+    slides: [...faqGroups[topic].questions, ...faqGroups[related].questions].map(([question, answer]) => `<article class="carousel-question"><h3>${question}</h3><p>${answer}</p></article>`),
     previous: 'Pergunta anterior', next: 'Próxima pergunta'
   });
 
@@ -485,7 +447,7 @@ ${link(parent[0], parent[1])}<span aria-hidden="true">/</span>` : ''}
 </div>
     </div>
 </header>`;
-  const footer = `
+  const footer = (message = defaultMessage) => `
     <section class="visit-cta" aria-label="Planeje sua visita">
 <div class="wrap">
 <div>
@@ -518,7 +480,7 @@ ${link(parent[0], parent[1])}<span aria-hidden="true">/</span>` : ''}
 <div class="wrap footer-bottom">
 <span>Ótica Pupila · Desde 1992</span>${link('privacidade', 'Política de privacidade')}<a href="#/index.html">Feito para olhar de perto. ↑</a>
 </div>
-    <a class="floating-contact" href="#/contato/index.html#atendimento">${whatsappIcon}<span>Fale com a Pupila</span>
+    <a class="floating-contact" ${whatsappLink(message)}>${whatsappSolidIcon}<span>Fale com a Pupila</span>
 </a>
 </footer>`;
 
@@ -533,7 +495,7 @@ ${link(parent[0], parent[1])}<span aria-hidden="true">/</span>` : ''}
 </h1>
 <p class="hero-description">O estilo é seu. O cuidado é nosso.<br>Óculos, relógios e semijoias para acompanhar<br class="desktop-break"> quem você é, em cada momento.</p>
 <div class="hero-buttons">
-<a href="#/index.html#categorias" class="button primary">Encontre seu estilo ${whatsappIcon}</a>${chat('Converse com a gente', 'button accent')}</div>
+<a href="#/index.html#categorias" class="button primary">Encontre seu estilo ${whatsappIcon}</a>${chat('Converse com a gente', homeMessage, 'button accent')}</div>
 <div class="hero-signature">
 <span class="signature-line">
 </span>
@@ -691,12 +653,7 @@ ${productBrands}
       ['Áudio', 'Alto-falantes abertos e seis microfones'],
       ['Autonomia', 'Até 9 horas de uso por carga']
     ],
-    support: 'Recursos de IA variam conforme país, idioma e atualizações. A autonomia varia com o uso.',
-    faq: [
-      ['Posso fazer lentes de grau para esta armação Ray-Ban?', 'Traga sua receita médica para a equipe conferir a compatibilidade e as opções de montagem.'],
-      ['Quais recursos posso usar na armação inteligente?', 'O modelo permite registrar fotos e vídeos e usar o áudio aberto para chamadas e músicas. Os recursos de IA variam conforme o país, o idioma e as atualizações.'],
-      ['Posso conhecer a armação de perto?', 'Consulte a disponibilidade com a Pupila antes de visitar a loja.']
-    ]
+    support: 'Recursos de IA variam conforme país, idioma e atualizações. A autonomia varia com o uso.'
   }, ...catalogProducts];
   window.PUPILA_META_VIEWS = metaViews;
   window.PUPILA_DATA.products = products;
@@ -708,7 +665,7 @@ ${productBrands}
 </a>`;
   }
 
-  function eyewearCatalog(category, availableProducts) {
+  function eyewearCatalog(category, availableProducts, message) {
     const [route, name, description] = category;
     const brands = [...new Set(availableProducts.map(product => product.brand))].sort((a, b) => a.localeCompare(b, 'pt-BR'));
     return `${crumb(name)}<section class="page-intro eyewear-intro wrap">
@@ -733,14 +690,14 @@ ${brands.map(brand => `<button type="button" data-catalog-brand-option="${brand}
 <p class="catalog-result" data-catalog-result aria-live="polite">${availableProducts.length} modelos em destaque</p>
 <div class="catalog-grid" data-catalog-grid>${availableProducts.map(productCard).join('')}</div>
 <p class="catalog-empty" data-catalog-empty hidden>Nenhum modelo corresponde a estes filtros. Experimente outra combinação ou fale com a Pupila.</p>
-<div class="button-row catalog-contact">${chat('Consultar a seleção')}${link('contato', 'Planeje sua visita', 'text-link')}</div>
+<div class="button-row catalog-contact">${chat('Consultar a seleção', message)}${link('contato', 'Planeje sua visita', 'text-link')}</div>
 </section>`;
   }
 
-  function catalog(category) {
+  function catalog(category, message) {
     const [route, name, description, symbol] = category;
     const availableProducts = products.filter(product => product.categories.includes(route));
-    if ((route === 'oculos-de-grau' || route === 'oculos-de-sol') && availableProducts.length >= 2) return eyewearCatalog(category, availableProducts);
+    if ((route === 'oculos-de-grau' || route === 'oculos-de-sol') && availableProducts.length >= 2) return eyewearCatalog(category, availableProducts, message);
     const accessories = route === 'relogios' || route === 'semijoias';
     return `${crumb(name)}<section class="page-intro wrap">
 <p class="eyebrow">NOSSA SELEÇÃO</p>
@@ -760,19 +717,16 @@ ${brands.map(brand => `<button type="button" data-catalog-brand-option="${brand}
 </h2>
 <p>Modelos, cores e disponibilidade mudam. Nossa equipe apresenta as opções atuais e ajuda você a encontrar o que combina com o seu estilo.</p>
 <p class="catalog-note">Estamos preparando o catálogo online. Enquanto isso, conheça a seleção na loja ou peça mais informações pelo WhatsApp.</p>
-<div class="button-row">${chat('Consultar a seleção')}${link('contato', 'Planeje sua visita', 'text-link')}</div>
+<div class="button-row">${chat('Consultar a seleção', message)}${link('contato', 'Planeje sua visita', 'text-link')}</div>
 </div>
 </div>
 ${availableProducts.length ? `<div class="catalog-grid">${availableProducts.map(productCard).join('')}</div>` : ''}
 </section>`;
   }
-  function productPage(product) {
+  function productPage(product, message) {
     const catalogCategory = categories.find(([route]) => route === product.categories[0]);
     const facts = `<dl class="product-facts">${product.facts.map(([term, detail]) => `<div><dt>${term}</dt><dd>${detail}</dd></div>`).join('')}</dl>`;
-    const questions = product.faq || [
-      [`Posso experimentar a armação ${product.brand} das fotos?`, 'Consulte a disponibilidade da peça com a Pupila antes de visitar a loja.'],
-      ...catalogFaqs[catalogCategory[0]].slice(0, 2)
-    ];
+    const help = product.slug === 'ray-ban-meta' ? productHelp('ray-ban-meta', 'oculos-de-grau') : productHelp(catalogCategory[0], 'cuidados');
     return `${crumb(product.brand, catalogCategory)}
     <section class="product-page wrap" aria-labelledby="product-title">
 <div class="product-gallery" role="group" data-product-gallery="${product.slug}" aria-label="Galeria de imagens — ${product.brand}">
@@ -791,7 +745,7 @@ ${availableProducts.length ? `<div class="catalog-grid">${availableProducts.map(
 <p class="eyebrow">${product.eyebrow || product.label}</p>
 <h1 id="product-title">${product.brand}</h1>
 <p>${product.description}</p>
-${chat('Quero conhecer de perto')}<p class="availability-note">Tamanho, preço e disponibilidade sob consulta à loja.</p>
+${chat('Quero conhecer de perto', message)}<p class="availability-note">Tamanho, preço e disponibilidade sob consulta à loja.</p>
 ${link(catalogCategory[0], `Voltar para ${catalogCategory[1].toLowerCase()}`, 'text-link')}
 <section class="product-details" aria-labelledby="product-details-title">
 <h2 id="product-details-title">Ficha do modelo</h2>
@@ -800,26 +754,31 @@ ${facts}
 ${product.support ? `<p class="product-support-note">${product.support}</p>` : ''}
 ${product.story ? `<h3>O desenho da linha</h3><p>${product.story}</p>` : ''}
 </section></div>
-</section>${productHelp(questions)}`;
+</section>${help}`;
   }
   const pages = {
     ...existing,
-    'index.html': { title: 'Ótica Pupila | Ótica em Joinville desde 1992', content: home }
+    'index.html': { title: 'Ótica Pupila | Ótica em Joinville desde 1992', content: home, message: homeMessage }
   };
   products.forEach(product => {
+    const category = categories.find(([route]) => route === product.categories[0]);
+    const item = product.slug === 'ray-ban-meta' ? 'o Ray-Ban Meta Wayfarer Gen 3' : `os ${category[1].toLowerCase()} ${product.brand}`;
+    const message = `Olá! Vi ${item} no site da Pupila. Qual o preço e a disponibilidade?`;
     pages[`${product.route}/index.html`] = {
       title: `${product.brand} | Ótica Pupila`,
       description: `${product.description} Ótica Pupila, Joinville.`,
-      content: productPage(product)
+      content: productPage(product, message), message
     };
   });
   categories.filter(c => c[0] !== 'lentes').forEach(c => {
-    pages[`${c[0]}/index.html`] = { title: `${c[1]} | Ótica Pupila`, content: catalog(c) + productHelp(catalogFaqs[c[0]]) };
+    const message = `Olá! Vi a seleção de ${c[1].toLowerCase()} no site da Pupila. Gostaria de consultar as opções disponíveis e os preços.`;
+    const related = c[0].startsWith('oculos-') ? 'cuidados' : 'atendimento';
+    pages[`${c[0]}/index.html`] = { title: `${c[1]} | Ótica Pupila`, content: catalog(c, message) + productHelp(c[0], related), message };
   });
   window.PUPILA_CHROME = { header, footer, chat, productHelp };
   window.PUPILA_PAGES = Object.fromEntries(Object.entries(pages).map(([route, page]) => [route, {
     title: page.title,
     description: page.description,
-    html: `${header}<main id="conteudo" tabindex="-1">${page.content}</main>${footer}`
+    html: `${header}<main id="conteudo" tabindex="-1">${page.content}</main>${footer(page.message)}`
   }]));
 })();
