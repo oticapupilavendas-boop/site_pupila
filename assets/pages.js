@@ -72,16 +72,15 @@ const testimonial = quote => `<figure class="testimonial">
 <blockquote><p>${quote}</p></blockquote>
 <figcaption>Trecho de avaliação de cliente</figcaption>
 </figure>`;
-const reviews = `<section class="section wrap reviews-section" id="avaliacoes" aria-labelledby="reviews-title">
-<div class="section-heading">
-<div>
-<p class="eyebrow">EXPERIÊNCIAS DE CLIENTES</p>
-<h2 id="reviews-title">Conheça as avaliações<br>da nossa loja.</h2>
-</div>
-<p class="review-source"><span class="review-source-mark" aria-hidden="true"></span>Avaliações no Google</p>
-</div>
-<div class="testimonials-grid">${reviewQuotes.map(testimonial).join('')}</div>
-</section>`;
+// Seleção de avaliações de cinco estrelas conferida em 11/11/2026:
+// https://maps.app.goo.gl/fx92AvEfJ51patQ48
+const selectedGoogleReviews = [
+  ['excelência em óculos e lentes', 'Um cliente conta que sua família frequenta a Pupila há mais de 25 anos e elogia a clareza das informações.'],
+  ['esclareceu todas as minhas dúvidas', 'Um cliente elogia a atenção da equipe ao ajudá-lo a encontrar a armação que procurava.'],
+  ['excelente qualidade dos produtos', 'Uma cliente destaca o cuidado da equipe do primeiro contato ao pós-venda.'],
+  ['os óculos ideais para o meu perfil', 'Uma cliente relata que a equipe a acolheu desde a chegada e a ajudou na escolha. Também elogia a organização da loja.'],
+  ['Conquistaram nossa confiança', 'Uma cliente destaca a atenção com que sua mãe foi atendida, o profissionalismo e a qualidade dos produtos.']
+];
 
 const faqGroups = {
   'oculos-de-grau': { title: 'Óculos de grau', questions: [
@@ -387,8 +386,8 @@ ${link(parent[0], parent[1])}<span aria-hidden="true">/</span>` : ''}
     ['semijoias', 'Semijoias', 'Pequenos detalhes. Grandes significados.', 'gem'],
     ['lentes', 'Lentes para óculos', 'Tecnologia e cuidado para cada olhar.', 'lens']
   ];
-  function carousel({ id, heading, kicker, description, slides, previous, next }) {
-    return `<section class="section product-carousel${id === 'produto-perguntas' ? ' faq-section' : ''}" id="${id}" data-carousel aria-labelledby="${id}-title">
+  function carousel({ id, heading, kicker, description, slides, previous, next, autoplay = false }) {
+    return `<section class="section product-carousel${id === 'produto-perguntas' ? ' faq-section' : ''}" id="${id}" data-carousel${autoplay ? ' data-carousel-autoplay' : ''} aria-labelledby="${id}-title">
 <div class="wrap carousel-layout">
 <div><p class="eyebrow">${kicker}</p><h2 id="${id}-title">${heading}</h2>${description ? `<p class="carousel-description">${description}</p>` : ''}</div>
 <div>
@@ -397,11 +396,47 @@ ${link(parent[0], parent[1])}<span aria-hidden="true">/</span>` : ''}
 <button class="carousel-control" type="button" data-carousel-step="-1" aria-controls="${id}-slides" aria-label="${previous}">${icon('arrow')}</button>
 <span class="carousel-position" data-carousel-position aria-hidden="true"></span>
 <button class="carousel-control" type="button" data-carousel-step="1" aria-controls="${id}-slides" aria-label="${next}">${icon('arrow')}</button>
+${autoplay ? `<button class="motion-control" type="button" data-motion-toggle aria-controls="${id}-slides" hidden>Pausar</button>` : ''}
 </div>
 </div>
 </div>
 </section>`;
   }
+
+  const reviews = carousel({
+    id: 'avaliacoes', heading: 'O que dizem sobre a Pupila.', kicker: 'AVALIAÇÕES DE CLIENTES',
+    description: '<span class="review-source"><span class="review-source-mark" aria-hidden="true"></span>Seleção do Google</span>',
+    slides: selectedGoogleReviews.map(([excerpt, summary]) => `<article class="google-testimonial">
+<span class="review-stars" role="img" aria-label="5 de 5 estrelas"><span aria-hidden="true">★★★★★</span></span>
+<h3>“${excerpt}”</h3><p>${summary}</p><span class="review-caption">Trecho e resumo de avaliação do Google</span>
+</article>`),
+    previous: 'Avaliação anterior', next: 'Próxima avaliação', autoplay: true
+  });
+
+  // Seleção do Drive com Carrera e Tommy Hilfiger atualizados pela Pupila.
+  const eyewearLogos = [
+    ['adidas', 'adidas.png', 545, 366], ['Cacharel', 'cacharel.png', 350, 350],
+    ['Carmim', 'carmim.png', 592, 337], ['Carrera', 'carrera.png', 320, 320],
+    ['Emporio Armani', 'emporio-armani.png', 447, 447], ['Evoke', 'evoke.png', 738, 303],
+    ['Guess', 'guess.png', 320, 320], ['HB', 'hb.jpg', 372, 372],
+    ['Maresia', 'maresia.png', 299, 185], ['MAX&Co.', 'max-co.png', 738, 414],
+    ['Miraflex', 'miraflex.png', 300, 100], ['Oakley', 'oakley.png', 320, 320],
+    ['Polo Ralph Lauren', 'polo.png', 318, 159], ['Ray-Ban', 'ray-ban.png', 512, 512],
+    ['Signus', 'signus.png', 549, 230], ['Stepper', 'stepper.png', 320, 320],
+    ['Timberland', 'timberland.png', 320, 320], ['Tommy Hilfiger', 'tommy.png', 320, 320],
+    ['Vogue Eyewear', 'vogue.png', 447, 447], ['X-Treme', 'x-treme.png', 738, 279]
+  ];
+  const brandCarousel = `<section class="section brand-strip" id="marcas-de-oculos" data-brand-carousel aria-labelledby="brand-strip-title">
+<div class="wrap">
+<div class="brand-strip-heading"><p class="eyebrow">MARCAS NA PUPILA</p><h2 id="brand-strip-title"><span>Marcas que você conhece.</span><br>Escolhas para o seu olhar.</h2></div>
+<div class="brand-strip-rule" aria-hidden="true"></div>
+<div class="brand-strip-layout">
+<button class="carousel-control brand-arrow brand-arrow-back" type="button" data-brand-step="-1" aria-controls="brand-strip-logos" aria-label="Logos anteriores" hidden>${icon('arrow')}</button>
+<div class="brand-strip-window" id="brand-strip-logos"><div class="brand-strip-track">
+<ul class="brand-strip-list" aria-label="Marcas de óculos">${eyewearLogos.map(([name, file, width, height]) => `<li><img src="assets/marcas/${file}" width="${width}" height="${height}" alt="${name}" loading="lazy" decoding="async"></li>`).join('')}</ul>
+</div></div>
+<button class="carousel-control brand-arrow" type="button" data-brand-step="1" aria-controls="brand-strip-logos" aria-label="Próximos logos" hidden>${icon('arrow')}</button>
+</div><div class="brand-strip-bottom"><div class="brand-strip-rule" aria-hidden="true"></div><button class="motion-control" type="button" data-motion-toggle aria-controls="brand-strip-logos" hidden>Pausar</button></div></div></section>`;
 
   const productReviews = carousel({
     id: 'produto-avaliacoes', heading: 'Avaliações da nossa loja.', kicker: 'EXPERIÊNCIAS DE CLIENTES',
@@ -438,6 +473,7 @@ ${link(parent[0], parent[1])}<span aria-hidden="true">/</span>` : ''}
 <summary>A Pupila ${icon('chevron')}</summary>
 <div class="submenu">${link('nossa-historia', 'Nossa história')}${link('perguntas-frequentes', 'Perguntas frequentes')}</div>
 </details>
+        ${link('visioffice-3', 'Visioffice 3', 'nav-link')}
         ${link('contato', 'Visite a loja', 'nav-link mobile-visit')}
       </nav>
       <div class="header-actions">${link('contato', `Visite a loja ${icon('diagonal')}`, 'button outline header-visit')}<button type="button" class="menu-toggle" aria-controls="main-nav" aria-expanded="false">${icon('menu')}<span>Menu</span>
@@ -573,7 +609,7 @@ ${productBrands}
 </h2>
 </div>
 <div>
-<p>Veja o passo a passo na Pupila, da receita médica à escolha das lentes para a sua rotina.</p>${link('lentes', `Conheça nossas orientações ${icon('diagonal')}`, 'text-link')}</div>
+<p>Veja o passo a passo na Pupila, da receita médica à escolha das lentes para a sua rotina. Conheça também a <a href="#/visioffice-3/index.html" class="visioffice-inline-link">medição digital com o Visioffice 3</a>.</p>${link('lentes', `Conheça nossas orientações ${icon('diagonal')}`, 'text-link')}</div>
 </div>
 <ol class="wrap care-steps" role="list">
 <li>
@@ -593,7 +629,56 @@ ${productBrands}
 </li>
 </ol>
 </section>
-    ${reviews}${faq}${location}`;
+    ${reviews}${faq}${brandCarousel}${location}`;
+
+  const visioffice = `${crumb('Visioffice 3')}
+<section class="wrap visioffice-hero" aria-labelledby="visioffice-title">
+<div>
+<p class="eyebrow">TECNOLOGIA ESSILOR · JOINVILLE</p>
+<h1 id="visioffice-title">Visioffice 3 na Ótica Pupila</h1>
+<p class="visioffice-lead">Medição digital para personalizar suas lentes.</p>
+<p class="lede">Na Pupila, em Joinville, usamos a torre de medição da Essilor com a armação escolhida no rosto. O Visioffice 3 registra a posição dos olhos e da armação para ajudar a definir onde as lentes devem ficar em relação às pupilas.</p>
+<a class="text-link" href="#como-funciona">Como fazemos a medição ${icon('arrow')}</a>
+</div>
+<figure class="visioffice-photo"><img src="assets/visioffice/visioffice-3-torre.png" width="447" height="447" fetchpriority="high" decoding="async" alt="Torre de medição digital Essilor Visioffice 3 com tela lateral">
+<figcaption>Visioffice 3, da Essilor Instruments.</figcaption></figure>
+</section>
+<section class="visioffice-measures section" aria-labelledby="medidas-title">
+<div class="wrap">
+<h2 id="medidas-title">O que o Visioffice 3 mede</h2>
+<dl class="visioffice-measure-grid">
+<div><dt>Distância entre as pupilas</dt><dd>Ajuda a posicionar as lentes horizontalmente em relação aos olhos.</dd></div>
+<div><dt>Altura de montagem</dt><dd>Indica a posição vertical da pupila na armação escolhida.</dd></div>
+<div><dt>Posição da armação</dt><dd>A distância entre o olho e a lente, a inclinação e a curvatura ajudam a descrever como os óculos ficam no rosto.</dd></div>
+</dl>
+</div></section>
+<section class="wrap section visioffice-features" aria-labelledby="visioffice-features-title">
+<h2 id="visioffice-features-title">Tecnologias que usamos na Pupila</h2>
+<dl class="visioffice-measure-grid">
+<div><dt>Eyecode®</dt><dd>Localiza em três dimensões o centro de rotação de cada olho. Essa medida pode ser usada no cálculo das lentes compatíveis com a tecnologia.</dd></div>
+<div><dt>H3D</dt><dd>Analisa a postura natural da cabeça ao olhar para longe. A equipe considera essa postura ao medir como a armação se posiciona no rosto.</dd></div>
+<div><dt>Comportamento visual de perto</dt><dd>Avalia como você usa a visão de perto em uma tarefa como a leitura. O protocolo ajuda a personalizar modelos compatíveis da linha Varilux® XR.</dd></div>
+</dl>
+<p class="visioffice-note">A equipe aplica as medições conforme sua receita, a armação e o modelo de lente escolhido.</p>
+<div class="visioffice-photo-pair">
+<img src="assets/visioffice/visioffice-3-frontal.png" width="365" height="547" alt="Vista frontal da torre Visioffice 3 com base e tela lateral" loading="lazy" decoding="async">
+<img src="assets/visioffice/visioffice-3-tela.png" width="378" height="432" alt="Detalhe da tela de controle e do espelho iluminado do Visioffice 3" loading="lazy" decoding="async">
+</div>
+</section>
+<section class="wrap section visioffice-steps" id="como-funciona" aria-labelledby="visioffice-steps-title">
+<div>
+<h2 id="visioffice-steps-title">Como funciona na loja</h2>
+<ol>
+<li><h3>Traga sua receita</h3><p>A equipe confere a prescrição e conversa com você sobre sua rotina.</p></li>
+<li><h3>Experimente a armação</h3><p>Com os óculos ajustados, você olha para o equipamento seguindo a orientação da equipe.</p></li>
+<li><h3>Converse sobre as lentes</h3><p>A equipe confere as medidas e orienta as opções de montagem e lentes compatíveis.</p></li>
+</ol>
+<p class="visioffice-note">A medição ajuda no ajuste das lentes e complementa a receita do seu oftalmologista.</p>
+${link('lentes/essilor', `Conheça as lentes Essilor e Varilux ${icon('arrow')}`, 'text-link')}
+</div>
+<figure class="visioffice-photo visioffice-store-photo"><img src="assets/visioffice/torre-1000.webp" srcset="assets/visioffice/torre-560.webp 560w, assets/visioffice/torre-1000.webp 1000w" sizes="(max-width: 760px) 90vw, 45vw" width="1000" height="1778" alt="Visioffice 3 instalado no espaço de atendimento da Ótica Pupila em Joinville" loading="lazy" decoding="async">
+<figcaption>Nosso equipamento na Ótica Pupila, no Centro de Joinville.</figcaption></figure>
+</section>`;
 
   const metaViews = [
     { image: 'assets/0RW4011__601SSB__P21__shad__qt.webp', label: 'Três quartos', alt: 'RAY-BAN META WAYFARER GEN 3: vista de três quartos com haste direita' },
@@ -752,11 +837,16 @@ ${facts}
 ${product.support ? `<p class="product-support-note">${product.support}</p>` : ''}
 ${product.story ? `<h3>O desenho da linha</h3><p>${product.story}</p>` : ''}
 </section></div>
-</section>${help}`;
+</section>${help}${brandCarousel}`;
   }
   const pages = {
     ...existing,
-    'index.html': { title: 'Ótica Pupila | Ótica em Joinville desde 1992', content: home, message: homeMessage }
+    'index.html': { title: 'Ótica Pupila | Ótica em Joinville desde 1992', content: home, message: homeMessage },
+    'visioffice-3/index.html': {
+      title: 'Visioffice 3 e medição digital em Joinville | Ótica Pupila',
+      description: 'Veja como a Ótica Pupila, em Joinville, usa o Visioffice 3 da Essilor, Eyecode, H3D e a medição de perto para personalizar lentes compatíveis.',
+      content: visioffice
+    }
   };
   products.forEach(product => {
     const prescription = product.categories[0] === 'oculos-de-grau';
@@ -775,7 +865,8 @@ ${product.story ? `<h3>O desenho da linha</h3><p>${product.story}</p>` : ''}
   categories.filter(c => c[0] !== 'lentes').forEach(c => {
     const message = `Olá! Vi a seleção de ${c[1].toLowerCase()} no site da Pupila. Gostaria de consultar as opções disponíveis e os preços.`;
     const related = c[0].startsWith('oculos-') ? 'cuidados' : 'atendimento';
-    pages[`${c[0]}/index.html`] = { title: `${c[1]} | Ótica Pupila`, content: catalog(c, message) + productHelp(c[0], related), message };
+    const brands = c[0].startsWith('oculos-') ? brandCarousel : '';
+    pages[`${c[0]}/index.html`] = { title: `${c[1]} | Ótica Pupila`, content: catalog(c, message) + productHelp(c[0], related) + brands, message };
   });
   window.PUPILA_CHROME = { header, footer, chat, productHelp };
   window.PUPILA_PAGES = Object.fromEntries(Object.entries(pages).map(([route, page]) => [route, {

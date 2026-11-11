@@ -69,6 +69,8 @@ for (const [route, page] of Object.entries(pages)) {
     if (value.startsWith('assets/') || value.startsWith('lentes/')) return `${attr}="${prefix}${value}"`;
     return match;
   });
+  content = content.replace(/\bsrcset="([^"]+)"/g, (_, candidates) =>
+    `srcset="${candidates.split(',').map(candidate => candidate.trim().replace(/^assets\//, `${prefix}assets/`)).join(', ')}"`);
   // Responsive variants use actual source candidates, including on nested routes.
   content = content.replace(/src="([^"]*assets\/(image-0[234])\.webp)"/g, (match, src, stem) => `${match} srcset="${prefix}assets/${stem}-480.webp 480w, ${prefix}assets/${stem}-768.webp 768w, ${src} ${stem === 'image-02' ? 1536 : 1152}w" sizes="(max-width: 600px) 90vw, 50vw"`);
   content = content.replace(/src="([^"]*essilor-select-2026-1600\.webp)"/g, (match, src) => `${match} srcset="${prefix}assets/lenses/essilor-select-2026-800.webp 800w, ${src} 1600w" sizes="(max-width: 700px) 90vw, 50vw"`);
@@ -76,7 +78,12 @@ for (const [route, page] of Object.entries(pages)) {
   content = content.replace(/<nav id="main-nav"[\s\S]*?<\/nav>/, nav => nav.replaceAll(`href="${currentHref}"`, `href="${currentHref}" aria-current="page"`));
   const noindex = route === '404.html';
   const url = siteUrl ? `${siteUrl}/${publicPath(route)}` : '';
-  const image = siteUrl ? `${siteUrl}/assets/social-pupila.jpg` : '';
+  const isVisioffice = route === 'visioffice-3/index.html';
+  const socialImage = isVisioffice
+    ? ['assets/visioffice/visioffice-3-torre.png', 447, 447, 'Torre de medição digital Essilor Visioffice 3']
+    : ['assets/social-pupila.jpg', 1200, 630, 'Ótica Pupila — Joinville, desde 1992'];
+  const [imagePath, imageWidth, imageHeight, imageAlt] = socialImage;
+  const image = siteUrl ? `${siteUrl}/${imagePath}` : '';
   output.set(route, `<!doctype html>
 <html lang="pt-BR">
 <head>
@@ -89,9 +96,9 @@ for (const [route, page] of Object.entries(pages)) {
   <meta property="og:locale" content="pt_BR">
   <meta property="og:title" content="${escape(page.title)}">
   <meta property="og:description" content="${escape(description)}">
-  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:card" content="${isVisioffice ? 'summary' : 'summary_large_image'}">
   ${url && route !== '404.html' ? `<link rel="canonical" href="${escape(url)}">\n  <meta property="og:url" content="${escape(url)}">` : ''}
-  ${image ? `<meta property="og:image" content="${escape(image)}">\n  <meta property="og:image:width" content="1200">\n  <meta property="og:image:height" content="630">\n  <meta property="og:image:alt" content="Ótica Pupila — Joinville, desde 1992">` : ''}
+  ${image ? `<meta property="og:image" content="${escape(image)}">\n  <meta property="og:image:width" content="${imageWidth}">\n  <meta property="og:image:height" content="${imageHeight}">\n  <meta property="og:image:alt" content="${escape(imageAlt)}">` : ''}
   <title>${escape(page.title)}</title>
   <link rel="icon" href="${prefix}assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="${prefix}assets/site.css">
