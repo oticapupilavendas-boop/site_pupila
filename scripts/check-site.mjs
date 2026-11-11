@@ -56,7 +56,7 @@ for (const route of Object.keys(pages)) {
     }
     if (tag.startsWith('<iframe')) {
       const url = new URL(attr.src);
-      assert(route === 'index.html' && url.origin === 'https://www.google.com' && url.pathname === '/maps/embed' && url.searchParams.has('pb'), `${route}: mapa incorporado inválido`);
+      assert(['index.html', 'contato/index.html'].includes(route) && url.origin === 'https://www.google.com' && url.pathname === '/maps/embed' && url.searchParams.has('pb'), `${route}: mapa incorporado inválido`);
       assert(attr.title && attr.loading === 'lazy', `${route}: mapa sem título ou carregamento sob demanda`);
     }
     if (tag.startsWith('<a') && attr.href && /^(?:[a-z][a-z\d+.-]*:|\/\/)/i.test(attr.href) && !attr.href.startsWith('tel:')) {
@@ -127,7 +127,15 @@ for (const route of Object.keys(pages)) {
   const logos = [...read(route).matchAll(/<img src="[^"]*assets\/marcas\/([^"]+)"/g)].map(([, file]) => file);
   assert(logos.length === (eyewearRoutes.has(route) ? 20 : 0) && logos.length === new Set(logos).size, `${route}: seleção de logos inesperada`);
 }
-assert(read('contato/index.html').includes('Falar pelo WhatsApp'), 'atendimento pelo WhatsApp ausente');
+const contactPage = read('contato/index.html');
+assert(contactPage.includes('Falar pelo WhatsApp') && contactPage.includes('class="location-map contact-map"') && contactPage.includes('Traçar rota até a loja'), 'mapa, rota ou atendimento ausente em Contato');
+const watchPage = read('relogios/index.html');
+assert((watchPage.match(/class="watch-card(?: watch-card-featured)?"/g) || []).length === 21, 'seleção de relógios incompleta');
+assert(['Orient', 'Lince', 'X-Games'].every(brand => watchPage.includes(`<h2 id="watch-${brand.toLowerCase()}-title">${brand}</h2>`)), 'marcas de relógios ausentes');
+for (const file of fs.readdirSync(path.join(root, 'assets/relogios'))) {
+  const bytes = fs.readFileSync(path.join(root, 'assets/relogios', file));
+  if (file.endsWith('.webp')) assert(bytes.subarray(8, 12).toString() === 'WEBP' && bytes.length < 100000, `foto de relógio inválida ou pesada: ${file}`);
+}
 const faqPage = read('perguntas-frequentes/index.html').split('class="wrap faq-full"')[1].split('</main>')[0];
 const faqQuestions = [...faqPage.matchAll(/<summary>([^<]+)/g)].map(([, question]) => question);
 assert(faqQuestions.length === 30 && new Set(faqQuestions).size === 30, 'o FAQ deve reunir exatamente 30 perguntas diferentes');

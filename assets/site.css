@@ -340,6 +340,44 @@ html:not(.js) .catalog-toolbar { display: none; }
 .catalog-editorial h2 { margin-bottom: 25px; }
 .catalog-editorial p { font-size: 14px; }
 .catalog-note { border-top: 1px solid var(--line); padding-top: 20px; }
+.watch-hero { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, .9fr); gap: clamp(34px, 6vw, 90px); align-items: center; padding-block: 42px 76px; }
+.watch-hero-copy { max-width: 600px; }
+.watch-hero h1 { max-width: 11ch; }
+.watch-hero h1 em { color: var(--red); }
+.watch-hero .lede { margin-block: 30px 22px; }
+.watch-hero-photo { position: relative; background: var(--soft); min-height: 480px; display: grid; place-items: center; overflow: hidden; }
+.watch-hero-photo img { width: 100%; height: 480px; object-fit: contain; mix-blend-mode: multiply; }
+.watch-hero-photo figcaption { position: absolute; left: 0; bottom: 0; max-width: 75%; padding: 15px 20px; background: var(--navy); color: white; font-size: 12px; line-height: 1.5; }
+.watch-collection { padding-bottom: var(--section-space); }
+.watch-collection-heading { max-width: 680px; margin-bottom: 32px; }
+.watch-collection-heading p:last-child { margin: 20px 0 0; }
+.watch-brand-nav { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-block: 1px solid var(--line); margin-bottom: 70px; }
+.watch-brand-nav a { min-width: 0; display: flex; align-items: center; justify-content: space-between; gap: 14px; min-height: 116px; padding: 16px 24px; border-right: 1px solid var(--line); transition: background .25s var(--ease); }
+.watch-brand-nav a:last-child { border-right: 0; }
+.watch-brand-nav a:hover { background: var(--soft); }
+.watch-brand-nav img { width: 82px; height: 82px; object-fit: contain; mix-blend-mode: multiply; }
+.watch-brand-nav span { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; }
+.watch-brand-nav .icon { width: 17px; height: 17px; }
+.watch-chapter { padding-top: 38px; margin-bottom: 82px; border-top: 1px solid var(--line); scroll-margin-top: 130px; }
+.watch-chapter-heading { display: flex; align-items: end; gap: 24px; margin-bottom: 30px; }
+.watch-chapter-index { align-self: start; color: var(--red); font-size: 11px; letter-spacing: .12em; white-space: nowrap; padding-top: 7px; }
+.watch-chapter-heading h2 { margin-bottom: 10px; }
+.watch-chapter-heading p { max-width: 55ch; margin: 0; font-size: 14px; }
+.watch-chapter-count { margin-left: auto; padding-bottom: 8px; color: var(--muted); font-size: 12px; white-space: nowrap; }
+.watch-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+.watch-card { min-width: 0; display: flex; flex-direction: column; background: var(--soft); }
+.watch-card figure { display: grid; place-items: center; min-height: 300px; overflow: hidden; }
+.watch-card figure img { width: 100%; height: 300px; object-fit: contain; mix-blend-mode: multiply; transition: transform .45s var(--ease); }
+.watch-card:hover figure img { transform: scale(1.045); }
+.watch-card-copy { display: flex; flex: 1; flex-direction: column; align-items: start; padding: 21px 24px 25px; border-top: 1px solid var(--line); }
+.watch-card-number { color: var(--red); font-size: 11px; font-weight: 700; letter-spacing: .12em; }
+.watch-card-copy p { margin: 18px 0 4px; color: var(--muted); font-size: 12px; }
+.watch-card-copy h3 { font-size: clamp(21px, 2vw, 27px); }
+.watch-card-copy .text-link { margin-top: auto; padding-top: 25px; }
+.watch-card-featured { grid-column: span 2; display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr); }
+.watch-card-featured figure, .watch-card-featured figure img { height: 100%; min-height: 420px; }
+.watch-card-featured .watch-card-copy { border-top: 0; border-left: 1px solid var(--line); justify-content: end; padding: 32px; }
+.watch-selection-note { max-width: 80ch; border-top: 1px solid var(--line); padding-top: 22px; margin: -20px 0 0; font-size: 13px; }
 .lens-editorial, .history-spread { display: grid; grid-template-columns: 1fr 1fr; gap: 90px; align-items: center; }
 .lens-editorial figure, .history-spread figure { height: 580px; }
 .lens-editorial img, .history-spread img { width: 100%; height: 100%; object-fit: cover; }
@@ -367,6 +405,7 @@ html:not(.js) .catalog-toolbar { display: none; }
 .contact-item .small { font-size: 12px; margin-top: 20px; }
 .contact-photo { height: 490px; }
 .contact-photo img { width: 100%; height: 100%; object-fit: cover; }
+.contact-map { height: 330px; margin-top: 20px; }
 .map-card { display: flex; gap: 20px; padding: 30px; background: var(--soft); margin-top: 20px; }
 .map-card h3 { font-size: 23px; margin-bottom: 16px; }
 .map-card p { font-size: 14px; margin-bottom: 6px; }
@@ -472,6 +511,11 @@ html:not(.js) .catalog-toolbar { display: none; }
   .meta-page-heading, .product-page-heading { max-width: 650px; }
   .meta-page-heading h1, .product-page-heading h1 { font-size: 46px; }
   .catalog-editorial > figure, .lens-editorial figure, .history-spread figure { height: 520px; }
+  .watch-hero { gap: 34px; }
+  .watch-hero-photo, .watch-hero-photo img { min-height: 390px; height: 390px; }
+  .watch-brand-nav a { padding-inline: 12px; }
+  .watch-brand-nav img { width: 65px; height: 65px; }
+  .watch-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (max-width: 650px) {
   :root { --section-space: 64px; }
@@ -586,6 +630,7 @@ html:not(.js) .catalog-toolbar { display: none; }
   .care-note { padding: 28px; }
   .care-note h2 { font-size: 31px; }
   .contact-photo { height: 390px; }
+  .contact-map { height: 300px; }
   .map-card { padding: 25px 20px; }
   .contact-item h2 { font-size: 25px; }
   .contact-item p { font-size: 15px; }
@@ -603,6 +648,23 @@ html:not(.js) .catalog-toolbar { display: none; }
   .catalog-card-copy { border-top: 0; border-left: 1px solid var(--line); padding: 18px; }
   .catalog-card-copy h3 { font-size: clamp(21px, 5.5vw, 27px); }
   .catalog-card .text-link { font-size: 14px; gap: 8px; }
+  .watch-hero { grid-template-columns: 1fr; gap: 28px; padding-block: 27px 54px; }
+  .watch-hero h1 { font-size: clamp(45px, 11vw, 64px); }
+  .watch-hero .lede { margin-block: 23px 10px; }
+  .watch-hero-photo, .watch-hero-photo img { min-height: 350px; height: 350px; }
+  .watch-hero-photo figcaption { max-width: 88%; }
+  .watch-brand-nav { grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: minmax(170px, 54vw); overflow-x: auto; margin-bottom: 45px; }
+  .watch-brand-nav a { min-height: 90px; }
+  .watch-brand-nav img { width: 58px; height: 58px; }
+  .watch-chapter { margin-bottom: 60px; scroll-margin-top: 100px; }
+  .watch-chapter-heading { align-items: start; flex-wrap: wrap; gap: 12px; }
+  .watch-chapter-heading > div { width: calc(100% - 60px); }
+  .watch-chapter-count { margin-left: 0; }
+  .watch-grid { grid-template-columns: 1fr; gap: 14px; }
+  .watch-card-featured { grid-column: auto; display: flex; }
+  .watch-card figure, .watch-card figure img, .watch-card-featured figure, .watch-card-featured figure img { min-height: 0; height: 280px; }
+  .watch-card-featured .watch-card-copy { border-left: 0; border-top: 1px solid var(--line); padding: 21px 24px 25px; }
+  .watch-selection-note { margin-top: 0; }
   .meta-page, .product-page { padding-top: 26px; gap: 33px; }
   .meta-gallery-main, .product-gallery-main { padding-block: 30px; }
   .meta-gallery-main img, .product-gallery-main img { aspect-ratio: 1.3; }
@@ -640,6 +702,7 @@ html:not(.js) .catalog-toolbar { display: none; }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation: none !important; transition: none !important; }
+  .watch-card:hover figure img { transform: none; }
 }
 @media (forced-colors: active) {
   .button, .category-card, .meta-view, .product-view, .catalog-filter, .catalog-brand-filter summary, .carousel-control, .floating-contact { border: 1px solid ButtonText; }
