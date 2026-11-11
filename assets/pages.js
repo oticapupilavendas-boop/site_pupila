@@ -255,6 +255,7 @@ const existing = {
 <div>
 <h2>Nosso endereço</h2>
 <p>Rua Abdon Batista, 59<br>Centro · Joinville/SC</p>
+<a href="${mapsDirections}" class="button outline">Traçar rota até a loja <span aria-hidden="true">↗</span></a>
 </div>
 </div>
 <div class="contact-item">
@@ -302,6 +303,9 @@ const existing = {
 <h3>Seu caminho até a Pupila.</h3>
 <p>Procure a fachada azul e vermelha na Rua Abdon Batista, 59, no Centro de Joinville.</p>
 </div>
+</div>
+<div class="location-map contact-map">
+<iframe src="${mapsEmbed}" title="Mapa da Ótica Pupila na Rua Abdon Batista, 59, em Joinville" width="600" height="450" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 </div>
 </div>
 </section>` },
@@ -777,10 +781,58 @@ ${brands.map(brand => `<button type="button" data-catalog-brand-option="${brand}
 </section>`;
   }
 
+  const watchBrands = [
+    { name: 'Orient', id: 'orient', logo: 'orient-logo.png', intro: 'Mostradores e acabamentos para quem gosta de marcar presença com discrição.', watches: [
+      ['orient-18.webp', 'Automático com mostrador verde'],
+      ['orient-14.webp', 'Cronógrafo prateado'],
+      ['orient-15.webp', 'Automático prateado'],
+      ['orient-16.webp', 'Crystal dourado'],
+      ['orient-17.webp', 'Dourado com mostrador escuro'],
+      ['orient-19.webp', 'Dourado com mostrador claro'],
+      ['orient-20.webp', 'Cronógrafo preto']
+    ] },
+    { name: 'Lince', id: 'lince', logo: 'lince-logo.png', intro: 'Do brilho do dourado ao contraste do preto, detalhes para diferentes momentos.', watches: [
+      ['lince-08.webp', 'Dourado com submostradores'],
+      ['lince-05.webp', 'Dourado com mostrador preto'],
+      ['lince-06.webp', 'Dourado com mostrador claro'],
+      ['lince-07.webp', 'Preto com mostrador estampado'],
+      ['lince-09.webp', 'Dourado com pulseira de malha'],
+      ['lince-10.webp', 'Pulseira de malha e mostrador preto'],
+      ['lince-11.webp', 'Dourado com pulseira de elos'],
+      ['lince-12.webp', 'Digital prateado'],
+      ['lince-13.webp', 'Dual Time com pulseira verde']
+    ] },
+    { name: 'X-Games', id: 'x-games', logo: 'x-game-logo.png', intro: 'Pulseiras marcantes, mostradores digitais e desenho esportivo.', watches: [
+      ['x-game-03.webp', 'Preto com pulseira verde'],
+      ['x-game-00.webp', 'Digital com detalhes verdes'],
+      ['x-game-01.webp', 'Smartwatch preto'],
+      ['x-game-02.webp', 'Dourado com mostrador escuro'],
+      ['x-game-04.webp', 'Prateado com mostrador azul']
+    ] }
+  ];
+  const watchCard = (brand, [image, description], index) => `<article class="watch-card${index === 0 ? ' watch-card-featured' : ''}">
+<figure><img src="assets/relogios/${image}" width="720" height="960" alt="Relógio ${brand.name}: ${description.toLowerCase()}" loading="lazy" decoding="async"></figure>
+<div class="watch-card-copy"><span class="watch-card-number">${String(index + 1).padStart(2, '0')} / ${String(brand.watches.length).padStart(2, '0')}</span><p>${brand.name}</p><h3>${description}</h3><a class="text-link" ${whatsappLink(`Olá! Vi o relógio ${brand.name}, ${description.toLowerCase()}, no site da Pupila. Qual o preço e a disponibilidade?`)}>Consultar este relógio ${icon('diagonal')}</a></div>
+</article>`;
+  const watchPage = `${crumb('Relógios')}
+<section class="watch-hero wrap" aria-labelledby="watch-title">
+<div class="watch-hero-copy"><p class="eyebrow">RELÓGIOS · SELEÇÃO PUPILA</p><h1 id="watch-title">O tempo também tem <em>estilo.</em></h1>
+<p class="lede">Descubra relógios Orient, Lince e X-Games na Ótica Pupila, em Joinville. Explore formatos e acabamentos, depois consulte a peça escolhida com nossa equipe.</p>
+<a class="text-link" href="#colecao-relogios">Explorar a seleção ${icon('arrow')}</a></div>
+<figure class="watch-hero-photo"><img src="assets/relogios/orient-18.webp" width="720" height="960" alt="Relógio Orient automático prateado com mostrador verde" fetchpriority="high" decoding="async"><figcaption>Três marcas. Muitos jeitos de acompanhar o dia.</figcaption></figure>
+</section>
+<section class="watch-collection wrap" id="colecao-relogios" aria-labelledby="watch-collection-title">
+<div class="watch-collection-heading"><p class="eyebrow">ESCOLHA PELOS DETALHES</p><h2 id="watch-collection-title">Encontre o seu ritmo.</h2><p>As fotos mostram a seleção enviada pela loja. Preço e disponibilidade são confirmados no atendimento.</p></div>
+<nav class="watch-brand-nav" aria-label="Ir para uma marca de relógios">${watchBrands.map(brand => `<a href="#relogios-${brand.id}" aria-label="Ver relógios ${brand.name}"><img src="assets/relogios/${brand.logo}" width="160" height="160" alt="" loading="lazy" decoding="async"><span>${brand.name} ${icon('arrow')}</span></a>`).join('')}</nav>
+${watchBrands.map((brand, i) => `<section class="watch-chapter" id="relogios-${brand.id}" aria-labelledby="watch-${brand.id}-title"><div class="watch-chapter-heading"><span class="watch-chapter-index">0${i + 1} / 03</span><div><h2 id="watch-${brand.id}-title">${brand.name}</h2><p>${brand.intro}</p></div><span class="watch-chapter-count">${brand.watches.length} relógios</span></div><div class="watch-grid">${brand.watches.map((watch, index) => watchCard(brand, watch, index)).join('')}</div></section>`).join('')}
+<p class="watch-selection-note">As imagens apresentam os relógios da seleção da Pupila. Confirme a referência, as características, o preço e a disponibilidade da peça com a equipe da loja.</p>
+</section>`;
+
   function catalog(category, message) {
     const [route, name, description, symbol] = category;
     const availableProducts = products.filter(product => product.categories.includes(route));
     if ((route === 'oculos-de-grau' || route === 'oculos-de-sol') && availableProducts.length >= 2) return eyewearCatalog(category, availableProducts, message);
+    if (route === 'relogios') return watchPage;
     const accessories = route === 'relogios' || route === 'semijoias';
     return `${crumb(name)}<section class="page-intro wrap">
 <p class="eyebrow">NOSSA SELEÇÃO</p>
@@ -866,7 +918,7 @@ ${product.story ? `<h3>O desenho da linha</h3><p>${product.story}</p>` : ''}
     const message = `Olá! Vi a seleção de ${c[1].toLowerCase()} no site da Pupila. Gostaria de consultar as opções disponíveis e os preços.`;
     const related = c[0].startsWith('oculos-') ? 'cuidados' : 'atendimento';
     const brands = c[0].startsWith('oculos-') ? brandCarousel : '';
-    pages[`${c[0]}/index.html`] = { title: `${c[1]} | Ótica Pupila`, content: catalog(c, message) + productHelp(c[0], related) + brands, message };
+    pages[`${c[0]}/index.html`] = { title: c[0] === 'relogios' ? 'Relógios Orient, Lince e X-Games em Joinville | Ótica Pupila' : `${c[1]} | Ótica Pupila`, content: catalog(c, message) + productHelp(c[0], related) + brands, message };
   });
   window.PUPILA_CHROME = { header, footer, chat, productHelp };
   window.PUPILA_PAGES = Object.fromEntries(Object.entries(pages).map(([route, page]) => [route, {
