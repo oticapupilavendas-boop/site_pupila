@@ -1,13 +1,14 @@
 {
-  "siteUrl": "",
+  "siteUrl": "https://oticapupilavendas-boop.github.io/site_pupila/",
+  "plannedDomain": "oticapupilajvll.com.br",
   "privacy": {
-    "legalName": "",
-    "cnpj": "",
-    "address": "",
-    "contact": "",
-    "hosting": "",
-    "hostingCountry": "",
-    "logRetention": "",
-    "reviewedOn": ""
+    "legalName": "Ótica Pupila Ltda",
+    "cnpj": "85.346.955/0001-58",
+    "address": "Rua Abdon Batista, 59, Centro, Joinville/SC, CEP 89201-010",
+    "contact": "oticapupila.adm@gmail.com",
+    "hosting": "GitHub Pages",
+    "hostingCountry": "Localização dos servidores não informada à Ótica Pupila pelo provedor",
+    "logRetention": "O GitHub registra o endereço IP para segurança; não informa à Ótica Pupila um prazo específico de guarda desses registros",
+    "reviewedOn": "10/11/2026"
   }
 }
