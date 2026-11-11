@@ -345,7 +345,9 @@ try {
   const beforeMotion = await brandTrack.evaluate(el => new DOMMatrix(getComputedStyle(el).transform).m41);
   await page.clock.runFor(500);
   const afterMotion = await brandTrack.evaluate(el => new DOMMatrix(getComputedStyle(el).transform).m41);
-  assert(afterMotion > beforeMotion, 'logos devem se mover da esquerda para a direita');
+  const brandPeriod = await brandTrack.locator('ul').first().evaluate(el => el.getBoundingClientRect().width);
+  const brandTravel = ((afterMotion - beforeMotion) % brandPeriod + brandPeriod) % brandPeriod;
+  assert(brandTravel > 0 && brandTravel < 40, 'logos devem se mover da esquerda para a direita');
   await brands.getByRole('button', {name:'Pausar'}).click();
   const stopped = await brandTrack.evaluate(el => el.style.transform);
   await page.clock.runFor(500);

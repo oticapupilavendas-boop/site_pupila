@@ -94,7 +94,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
-  function watchCarouselMotion(carousel, viewport, onChange) {
+  function watchCarouselMotion(carousel, viewport, onChange, slowOnHover = false) {
     const toggleMotion = carousel.querySelector('[data-motion-toggle]');
     if (!('IntersectionObserver' in window)) return;
     let visible = false;
@@ -104,7 +104,7 @@ document.addEventListener('DOMContentLoaded', () => {
       toggleMotion.hidden = reducedMotion.matches;
       toggleMotion.textContent = paused ? 'Retomar' : 'Pausar';
       onChange(visible && !document.hidden && !reducedMotion.matches
-        && !paused && !hovered && !carousel.contains(document.activeElement));
+        && !paused && (!hovered || slowOnHover) && !carousel.contains(document.activeElement), hovered);
     }
     const observer = new IntersectionObserver(([entry]) => {
       visible = entry.intersectionRatio >= .35;
@@ -182,6 +182,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let frame = 0;
     let previousTime = 0;
     let running = false;
+    let hovered = false;
     let jump;
     let period;
     let logoStep;
@@ -206,7 +207,7 @@ document.addEventListener('DOMContentLoaded', () => {
         jump.travelled = travelled;
         if (progress === 1) jump = undefined;
       } else if (running && previousTime) {
-        offset += Math.min(time - previousTime, 50) * .024;
+        offset += Math.min(time - previousTime, 50) * (hovered ? .008 : .024);
       }
       previousTime = time;
       paint();
@@ -227,13 +228,14 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
     window.addEventListener('resize', measure);
-    watchCarouselMotion(carousel, viewport, active => {
+    watchCarouselMotion(carousel, viewport, (active, isHovered) => {
       running = active;
+      hovered = isHovered;
       if (running && !frame) {
         previousTime = 0;
         frame = requestAnimationFrame(animate);
       }
-    });
+    }, true);
   }
 
   root.addEventListener('click', event => {
