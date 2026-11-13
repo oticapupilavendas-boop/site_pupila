@@ -1,0 +1,29 @@
+body {
+  min-height: 100vh;
+  min-height: 100svh;
+  margin: 0;
+  display: grid;
+  place-items: center;
+  background: #f8f6f2;
+}
+
+.preview {
+  display: grid;
+  place-items: center;
+  width: min(94vw, 1080px);
+  min-height: 68vh;
+  min-height: 68svh;
+  perspective: 1100px;
+}
+
+.glasses {
+  display: block;
+  width: min(86vw, 760px);
+  height: auto;
+  pointer-events: none;
+}
+
+.preview:focus-visible {
+  outline: 2px solid #123745;
+  outline-offset: 2px;
+}
