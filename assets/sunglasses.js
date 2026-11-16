@@ -14,7 +14,7 @@
   const root = document.body.dataset.root || './';
   const viewer = document.createElement('model-viewer');
   const attributes = {
-    src: `${root}assets/models/timberland-solar.glb?v=2`,
+    src: `${root}assets/models/timberland-solar.glb?v=3`,
     'environment-image': `${root}assets/models/pupila-studio-centered.hdr`,
     'camera-orbit': '0deg 90deg auto',
     'field-of-view': '28deg',
