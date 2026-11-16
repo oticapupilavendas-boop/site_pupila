@@ -48,6 +48,7 @@ for (const route of Object.keys(pages)) {
   const description = source.match(/<meta name="description" content="([^"]+)"/)?.[1];
   assert(description?.length > 30 && description.length <= 160, `${route}: descrição inválida`);
   if (config.siteUrl && route !== '404.html') assert(source.includes('rel="canonical"') && source.includes('property="og:image"'), `${route}: SEO absoluto ausente`);
+  assert(source.includes('http-equiv="Content-Security-Policy"') && source.includes("script-src 'self'") && source.includes("object-src 'none'"), `${route}: política de segurança ausente`);
   for (const [tag] of source.matchAll(/<(?:img|iframe|script|link|a)\b[^>]*>/g)) {
     const attr = attributes(tag);
     if (tag.startsWith('<img')) {
@@ -133,6 +134,7 @@ assert(!home.includes('class="hero-model"'), 'bloco 3D redundante ainda presente
 assert(fs.existsSync(path.join(root, 'assets/models/timberland-solar.glb')) && fs.statSync(path.join(root, 'assets/models/timberland-solar.glb')).size > 100000, 'modelo 3D Timberland ausente ou inválido');
 assert(read('assets/sunglasses.js').includes("'(min-width: 651px) and (hover: hover) and (pointer: fine)'"), 'modelo 3D deve carregar apenas no desktop');
 assert(!read('assets/sunglasses.js').includes('camera-controls'), 'modelo 3D não deve permitir arraste');
+assert(read('assets/sunglasses.js').includes("import('./vendor/model-viewer-4.4.0.min.js')") && fs.statSync(path.join(root, 'assets/vendor/model-viewer-4.4.0.min.js')).size > 1000000, 'modelo 3D deve carregar de arquivo local');
 const contactPage = read('contato/index.html');
 assert(contactPage.includes('Falar pelo WhatsApp') && contactPage.includes('class="location-map contact-map"') && contactPage.includes('Traçar rota até a loja'), 'mapa, rota ou atendimento ausente em Contato');
 const watchPage = read('relogios/index.html');
