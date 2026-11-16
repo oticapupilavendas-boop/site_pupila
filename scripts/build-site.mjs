@@ -32,7 +32,7 @@ const descriptions = {
   'oculos-de-grau/index.html': 'Conheça a seleção de óculos de grau da Ótica Pupila em Joinville. Consulte armações, lentes e disponibilidade com nossa equipe.',
   'oculos-de-sol/index.html': 'Explore a seleção de óculos de sol da Ótica Pupila em Joinville. Filtre por marca e público e consulte a disponibilidade.',
   'relogios/index.html': 'Explore relógios Orient, Lince e X-Games na Ótica Pupila, em Joinville. Veja os detalhes de cada peça e consulte preço e disponibilidade com a loja.',
-  'semijoias/index.html': 'Encontre semijoias para acompanhar seu estilo na Ótica Pupila em Joinville. Consulte a seleção com a equipe da loja.',
+  'semijoias/index.html': 'Berloques, pulseiras, correntes, colares, brincos, prata, pedras naturais e ouro sob encomenda na Ótica Pupila em Joinville.',
   'ray-ban-meta/index.html': 'Conheça o Ray-Ban Meta Wayfarer Gen 3 RW4011 601SSB na Ótica Pupila em Joinville. Veja os seis ângulos e consulte detalhes com a loja.',
   'lentes/index.html': 'Lentes para óculos HOYA, ZEISS e Essilor na Ótica Pupila em Joinville. Conheça as tecnologias e consulte opções com sua receita médica.',
   'lentes/hoya/index.html': 'Conheça as famílias de lentes HOYA na Ótica Pupila em Joinville. Consulte tecnologias, tratamentos e opções conforme sua receita médica.',

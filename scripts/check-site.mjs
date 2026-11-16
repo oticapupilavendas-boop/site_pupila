@@ -20,7 +20,7 @@ assert(Object.keys(pages).length === 34, 'quantidade inesperada de páginas');
 assert(products.length === 18 && new Set(products.map(product => product.brand)).size === products.length, 'o catálogo deve ter uma armação por marca no site inteiro');
 assert(['marcas/index.html', 'marcas/modelo/index.html'].every(route => !fs.existsSync(path.join(root, route)) && !Object.hasOwn(context.window.PUPILA_ROUTES, route)), 'página de marcas ainda presente');
 const productRoutes = new Set([
-  'oculos-de-grau/index.html', 'oculos-de-sol/index.html', 'relogios/index.html', 'semijoias/index.html',
+  'oculos-de-grau/index.html', 'oculos-de-sol/index.html', 'relogios/index.html',
   ...Object.keys(pages).filter(route => route.startsWith('lentes/')),
   ...products.map(product => `${product.route}/index.html`)
 ]);
@@ -138,6 +138,12 @@ assert(contactPage.includes('Falar pelo WhatsApp') && contactPage.includes('clas
 const watchPage = read('relogios/index.html');
 assert((watchPage.match(/class="watch-card(?: watch-card-featured)?"/g) || []).length === 21, 'seleção de relógios incompleta');
 assert(['Orient', 'Lince', 'X-Games'].every(brand => watchPage.includes(`<h2 id="watch-${brand.toLowerCase()}-title">${brand}</h2>`)), 'marcas de relógios ausentes');
+const jewelryPage = read('semijoias/index.html');
+const jewelryMain = jewelryPage.split('<main id="conteudo" tabindex="-1">')[1].split('</main>')[0];
+assert(!jewelryMain.includes('<img'), 'a página de semijoias não deve usar fotografias');
+assert((jewelryMain.match(/class="jewelry-number"/g) || []).length === 8, 'a página de semijoias deve apresentar oito categorias');
+assert(['Berloques', 'Pulseiras', 'Correntes', 'Colares', 'Joias de pedras naturais', 'Brincos', 'Prata', 'Ouro sob encomenda'].every(item => jewelryMain.includes(item)), 'categorias de semijoias incompletas');
+assert(!jewelryMain.includes('produto-avaliacoes') && !jewelryMain.includes('carousel-question'), 'a página informativa de semijoias não deve incluir avaliações ou FAQ de produto');
 for (const file of fs.readdirSync(path.join(root, 'assets/relogios'))) {
   const bytes = fs.readFileSync(path.join(root, 'assets/relogios', file));
   if (file.endsWith('.webp')) assert(bytes.subarray(8, 12).toString() === 'WEBP' && bytes.length < 100000, `foto de relógio inválida ou pesada: ${file}`);

@@ -833,12 +833,54 @@ ${watchBrands.map((brand, i) => `<section class="watch-chapter" id="relogios-${b
 <p class="watch-selection-note">As imagens apresentam os relógios da seleção da Pupila. Confirme a referência, as características, o preço e a disponibilidade da peça com a equipe da loja.</p>
 </section>`;
 
+  const jewelryItems = [
+    ['01', 'Berloques', 'Pequenos símbolos para personalizar pulseiras e guardar significados.'],
+    ['02', 'Pulseiras', 'Modelos para usar sozinhos ou criar composições.'],
+    ['03', 'Correntes', 'Opções para diferentes estilos e ocasiões.'],
+    ['04', 'Colares', 'Peças delicadas ou marcantes para completar o visual.'],
+    ['05', 'Joias de pedras naturais', 'Cores e formas da natureza em peças cheias de personalidade.'],
+    ['06', 'Brincos', 'Opções para o dia a dia e ocasiões especiais.'],
+    ['07', 'Prata', 'Peças em prata para diferentes estilos.'],
+    ['08', 'Ouro sob encomenda', 'Consulte possibilidades, prazos e valores com a nossa equipe.']
+  ];
+  const jewelryPage = message => `${crumb('Semijoias')}
+<section class="jewelry-hero wrap" aria-labelledby="jewelry-title">
+<div class="jewelry-hero-copy">
+<p class="eyebrow">SEMIJOIAS · SELEÇÃO PUPILA</p>
+<h1 id="jewelry-title">Detalhes que combinam com <em>você.</em></h1>
+<p class="lede">Na Pupila, você também encontra semijoias para presentear, combinar e usar todos os dias.</p>
+<a class="text-link" href="#tipos-semijoias">Conheça as opções ${icon('arrow')}</a>
+</div>
+<aside class="jewelry-hero-note" aria-label="Destaques da seleção">
+<span>Prata</span>
+<span>Pedras naturais</span>
+<span>Ouro sob encomenda</span>
+<p>A disponibilidade das peças pode variar. Consulte a equipe da loja.</p>
+</aside>
+</section>
+<section class="jewelry-selection wrap" id="tipos-semijoias" aria-labelledby="jewelry-selection-title">
+<header class="jewelry-selection-heading">
+<div><p class="eyebrow">O QUE VOCÊ ENCONTRA</p><h2 id="jewelry-selection-title">Uma seleção para cada detalhe.</h2></div>
+<p>Conheça as categorias disponíveis e consulte modelos, materiais e valores com a equipe da Pupila.</p>
+</header>
+<ol class="jewelry-list">
+${jewelryItems.map(([number, name, description]) => `<li><span class="jewelry-number">${number}</span><div><h3>${name}</h3><p>${description}</p></div></li>`).join('')}
+</ol>
+</section>
+<section class="jewelry-order" aria-labelledby="jewelry-order-title">
+<div class="wrap">
+<div><p class="eyebrow">OURO SOB ENCOMENDA</p><h2 id="jewelry-order-title">Uma escolha feita com mais intenção.</h2></div>
+<div><p>Para peças em ouro, fale com a equipe para consultar possibilidades, prazo e valores.</p>${chat('Consultar semijoias', message, 'button white')}</div>
+</div>
+</section>`;
+
   function catalog(category, message) {
     const [route, name, description, symbol] = category;
     const availableProducts = products.filter(product => product.categories.includes(route));
     if ((route === 'oculos-de-grau' || route === 'oculos-de-sol') && availableProducts.length >= 2) return eyewearCatalog(category, availableProducts, message);
     if (route === 'relogios') return watchPage;
-    const accessories = route === 'relogios' || route === 'semijoias';
+    if (route === 'semijoias') return jewelryPage(message);
+    const accessories = route === 'relogios';
     return `${crumb(name)}<section class="page-intro wrap">
 <p class="eyebrow">NOSSA SELEÇÃO</p>
 <h1>${name}, do seu jeito.
@@ -923,7 +965,9 @@ ${product.story ? `<h3>O desenho da linha</h3><p>${product.story}</p>` : ''}
     const message = `Olá! Vi a seleção de ${c[1].toLowerCase()} no site da Pupila. Gostaria de consultar as opções disponíveis e os preços.`;
     const related = c[0].startsWith('oculos-') ? 'cuidados' : 'atendimento';
     const brands = c[0].startsWith('oculos-') ? brandCarousel : '';
-    pages[`${c[0]}/index.html`] = { title: c[0] === 'relogios' ? 'Relógios Orient, Lince e X-Games em Joinville | Ótica Pupila' : `${c[1]} | Ótica Pupila`, content: catalog(c, message) + productHelp(c[0], related) + brands, message };
+    const help = c[0] === 'semijoias' ? '' : productHelp(c[0], related);
+    const title = c[0] === 'relogios' ? 'Relógios Orient, Lince e X-Games em Joinville | Ótica Pupila' : c[0] === 'semijoias' ? 'Semijoias em Joinville | Ótica Pupila' : `${c[1]} | Ótica Pupila`;
+    pages[`${c[0]}/index.html`] = { title, content: catalog(c, message) + help + brands, message };
   });
   window.PUPILA_CHROME = { header, footer, chat, productHelp };
   window.PUPILA_PAGES = Object.fromEntries(Object.entries(pages).map(([route, page]) => [route, {
