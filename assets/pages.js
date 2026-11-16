@@ -536,7 +536,10 @@ ${autoplay ? `<button class="motion-control" type="button" data-motion-toggle ar
 </div>
 </div>
       <figure class="hero-photo">
-<img src="assets/image-04.webp" width="1152" height="1536" alt="Expositor de óculos e espaço de atendimento da Ótica Pupila" fetchpriority="high" decoding="async">
+<img class="hero-photo-mobile" src="assets/image-04.webp" width="1152" height="1536" alt="Expositor de óculos e espaço de atendimento da Ótica Pupila" fetchpriority="high" decoding="async">
+<div class="hero-sunglasses-stage" data-sunglasses role="img" aria-label="Óculos solares pretos com lentes cinza-escuras">
+<img class="hero-sunglasses-poster" src="assets/models/timberland-solar-poster.png?v=2" width="1080" height="720" alt="" fetchpriority="high" decoding="async">
+</div>
 <figcaption>
 <div>
 <span>EM JOINVILLE, DESDE 1992.</span>

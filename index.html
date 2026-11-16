@@ -19,12 +19,14 @@
   <meta property="og:image:alt" content="Ótica Pupila — Joinville, desde 1992">
   <title>Ótica Pupila | Ótica em Joinville desde 1992</title>
   <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="./assets/site.css">
+  <link rel="stylesheet" href="./assets/site.css?v=5">
   <link rel="preload" as="font" href="./assets/fonts/dm-sans-latin.woff2" type="font/woff2" crossorigin>
   <link rel="preload" as="font" href="./assets/fonts/cormorant-garamond-italic-latin.woff2" type="font/woff2" crossorigin>
-  <link rel="preload" as="image" href="./assets/image-04.webp" imagesrcset="./assets/image-04-480.webp 480w, ./assets/image-04-768.webp 768w, ./assets/image-04.webp 1152w" imagesizes="(max-width: 600px) 90vw, 50vw" fetchpriority="high">
+  <link rel="preload" as="image" href="./assets/image-04.webp" imagesrcset="./assets/image-04-480.webp 480w, ./assets/image-04-768.webp 768w, ./assets/image-04.webp 1152w" imagesizes="90vw" media="(max-width: 650px)" fetchpriority="high">
+  <link rel="preload" as="image" href="./assets/models/timberland-solar-poster.png?v=2" media="(min-width: 651px)" fetchpriority="high">
   <script defer src="./assets/routes.js"></script>
   <script src="./assets/app.js"></script>
+  <script defer src="./assets/sunglasses.js?v=7"></script>
 </head>
 <body data-root="./" data-page="index">
   <div id="pupila-app">
@@ -86,7 +88,10 @@
 </div>
 </div>
       <figure class="hero-photo">
-<img src="./assets/image-04.webp" srcset="./assets/image-04-480.webp 480w, ./assets/image-04-768.webp 768w, ./assets/image-04.webp 1152w" sizes="(max-width: 600px) 90vw, 50vw" width="1152" height="1536" alt="Expositor de óculos e espaço de atendimento da Ótica Pupila" fetchpriority="high" decoding="async">
+<img class="hero-photo-mobile" src="./assets/image-04.webp" srcset="./assets/image-04-480.webp 480w, ./assets/image-04-768.webp 768w, ./assets/image-04.webp 1152w" sizes="(max-width: 600px) 90vw, 50vw" width="1152" height="1536" alt="Expositor de óculos e espaço de atendimento da Ótica Pupila" fetchpriority="high" decoding="async">
+<div class="hero-sunglasses-stage" data-sunglasses role="img" aria-label="Óculos solares pretos com lentes cinza-escuras">
+<img class="hero-sunglasses-poster" src="./assets/models/timberland-solar-poster.png?v=2" width="1080" height="720" alt="" fetchpriority="high" decoding="async">
+</div>
 <figcaption>
 <div>
 <span>EM JOINVILLE, DESDE 1992.</span>

@@ -101,12 +101,13 @@ for (const [route, page] of Object.entries(pages)) {
   ${image ? `<meta property="og:image" content="${escape(image)}">\n  <meta property="og:image:width" content="${imageWidth}">\n  <meta property="og:image:height" content="${imageHeight}">\n  <meta property="og:image:alt" content="${escape(imageAlt)}">` : ''}
   <title>${escape(page.title)}</title>
   <link rel="icon" href="${prefix}assets/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="${prefix}assets/site.css">
+  <link rel="stylesheet" href="${prefix}assets/site.css?v=${route === 'index.html' ? '5' : '3'}">
   <link rel="preload" as="font" href="${prefix}assets/fonts/dm-sans-latin.woff2" type="font/woff2" crossorigin>
   ${route === 'index.html' ? `<link rel="preload" as="font" href="${prefix}assets/fonts/cormorant-garamond-italic-latin.woff2" type="font/woff2" crossorigin>
-  <link rel="preload" as="image" href="${prefix}assets/image-04.webp" imagesrcset="${prefix}assets/image-04-480.webp 480w, ${prefix}assets/image-04-768.webp 768w, ${prefix}assets/image-04.webp 1152w" imagesizes="(max-width: 600px) 90vw, 50vw" fetchpriority="high">` : ''}
+  <link rel="preload" as="image" href="${prefix}assets/image-04.webp" imagesrcset="${prefix}assets/image-04-480.webp 480w, ${prefix}assets/image-04-768.webp 768w, ${prefix}assets/image-04.webp 1152w" imagesizes="90vw" media="(max-width: 650px)" fetchpriority="high">
+  <link rel="preload" as="image" href="${prefix}assets/models/timberland-solar-poster.png?v=2" media="(min-width: 651px)" fetchpriority="high">` : ''}
   <script defer src="${prefix}assets/routes.js"></script>
-  <script src="${prefix}assets/app.js"></script>
+  <script src="${prefix}assets/app.js"></script>${route === 'index.html' ? `\n  <script defer src="${prefix}assets/sunglasses.js?v=7"></script>` : ''}
 </head>
 <body data-root="${prefix}" data-page="${route.split('/')[0].replace('.html', '')}">
   <div id="pupila-app">${content}</div>

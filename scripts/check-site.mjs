@@ -127,6 +127,11 @@ for (const route of Object.keys(pages)) {
   const logos = [...read(route).matchAll(/<img src="[^"]*assets\/marcas\/([^"]+)"/g)].map(([, file]) => file);
   assert(logos.length === (eyewearRoutes.has(route) ? 20 : 0) && logos.length === new Set(logos).size, `${route}: seleção de logos inesperada`);
 }
+assert(home.includes('class="hero-photo-mobile"') && home.includes('data-sunglasses') && home.includes('assets/models/timberland-solar-poster.png'), 'hero responsivo com óculos 3D ausente');
+assert(!home.includes('class="hero-model"'), 'bloco 3D redundante ainda presente na home');
+assert(fs.existsSync(path.join(root, 'assets/models/timberland-solar.glb')) && fs.statSync(path.join(root, 'assets/models/timberland-solar.glb')).size > 100000, 'modelo 3D Timberland ausente ou inválido');
+assert(read('assets/sunglasses.js').includes("'(min-width: 651px) and (hover: hover) and (pointer: fine)'"), 'modelo 3D deve carregar apenas no desktop');
+assert(!read('assets/sunglasses.js').includes('camera-controls'), 'modelo 3D não deve permitir arraste');
 assert(read('contato/index.html').includes('Falar pelo WhatsApp'), 'atendimento pelo WhatsApp ausente');
 const faqPage = read('perguntas-frequentes/index.html').split('class="wrap faq-full"')[1].split('</main>')[0];
 const faqQuestions = [...faqPage.matchAll(/<summary>([^<]+)/g)].map(([, question]) => question);

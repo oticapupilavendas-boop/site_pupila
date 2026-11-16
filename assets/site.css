@@ -111,8 +111,16 @@ summary::-webkit-details-marker { display: none; }
 .hero-signature { display: flex; align-items: center; gap: 14px; margin-top: 34px; font-size: 11px; line-height: 1.65; color: var(--muted); }
 .signature-line { width: 26px; height: 1px; background: var(--red); }
 .hero-photo { position: relative; height: 565px; margin-top: 0; margin-right: 17px; }
-.hero-photo > img { width: 100%; height: 100%; object-fit: cover; object-position: 54% 48%; border-radius: 2px 2px 100px 2px; }
-.hero-photo figcaption { display: flex; justify-content: space-between; align-items: center; position: absolute; left: -25px; right: 35px; bottom: 24px; padding: 23px 26px; background: var(--navy); color: white; }
+.hero-photo > .hero-photo-mobile, .hero-photo > figcaption { display: none; }
+.hero-photo > .hero-photo-mobile { width: 100%; height: 100%; object-fit: cover; object-position: 54% 48%; border-radius: 2px 2px 100px 2px; }
+.hero-sunglasses-stage { position: absolute; inset: 0; overflow: hidden; background: var(--paper); }
+.hero-sunglasses-poster, .hero-sunglasses-stage model-viewer { position: absolute; inset: 0; width: 100%; height: 100%; }
+.hero-sunglasses-poster, .hero-sunglasses-stage model-viewer { transform: scale(1.08); }
+.hero-sunglasses-poster { object-fit: contain; }
+.hero-sunglasses-stage model-viewer { opacity: 0; pointer-events: none; touch-action: pan-y; --poster-color: transparent; --progress-bar-color: var(--navy); transition: opacity .35s ease; }
+.hero-sunglasses-stage.is-ready model-viewer { opacity: 1; }
+.hero-sunglasses-stage.is-ready .hero-sunglasses-poster { visibility: hidden; }
+.hero-photo figcaption { justify-content: space-between; align-items: center; position: absolute; left: -25px; right: 35px; bottom: 24px; padding: 23px 26px; background: var(--navy); color: white; }
 .hero-photo figcaption span { display: block; font-size: 11px; letter-spacing: .16em; color: #d4dfdd; margin-bottom: 8px; }
 .hero-photo figcaption strong { font-size: 20px; font-weight: 400; letter-spacing: -.025em; }
 .round-link { display: grid; place-items: center; border: 1px solid #ffffff60; width: 44px; height: 44px; border-radius: 50%; transition: background .2s; }
@@ -121,6 +129,10 @@ summary::-webkit-details-marker { display: none; }
 .hero-footnote > span { font-size: 11px; letter-spacing: .16em; }
 .hero-footnote a { display: flex; align-items: center; gap: 26px; font-size: 11px; min-height: 44px; }
 .hero-footnote a span { font-size: 20px; }
+@media print {
+  .hero-sunglasses-stage model-viewer { display: none; }
+  .hero-sunglasses-stage.is-ready .hero-sunglasses-poster { visibility: visible; }
+}
 .categories-section { padding-top: 80px; }
 .categories-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
 .category-card { display: flex; flex-direction: column; padding: 26px 23px 22px; min-height: 247px; position: relative; border-right: 1px solid var(--line); transition: background .25s; }
@@ -506,8 +518,9 @@ html:not(.js) .catalog-toolbar { display: none; }
   .hero-buttons .button { padding-inline: 17px; gap: 17px; font-size: 12px; }
   .hero-signature { display: none; }
   .hero-photo { height: 365px; margin-right: 10px; }
-  .hero-photo > img { object-position: center 49%; border-bottom-right-radius: 65px; }
-  .hero-photo figcaption { left: 12px; right: 12px; bottom: 17px; padding: 19px; }
+  .hero-sunglasses-stage { display: none; }
+  .hero-photo > .hero-photo-mobile { display: block; object-position: center 49%; border-bottom-right-radius: 65px; }
+  .hero-photo > figcaption { display: flex; left: 12px; right: 12px; bottom: 17px; padding: 19px; }
   .hero-photo figcaption strong { font-size: 20px; }
   .hero-photo figcaption span { font-size: 11px; }
   .hero-footnote { display: none; }
