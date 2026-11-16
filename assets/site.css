@@ -153,7 +153,7 @@ summary::-webkit-details-marker { display: none; }
 .feature-topline > span { font-size: 11px; letter-spacing: .12em; color: #cad7d8; }
 .meta-feature-grid { display: grid; grid-template-columns: .85fr 1.15fr; gap: 70px; align-items: center; }
 .meta-feature-copy h2 { font-size: clamp(40px, 4.2vw, 62px); margin-bottom: 22px; }
-.brand-accent { color: #f18f98; }
+.brand-accent { color: var(--red); }
 .meta-feature-copy > p:not(.product-name) { color: #d1dcdb; font-size: 14px; max-width: 41ch; }
 .meta-feature-copy .button { margin-top: 8px; }
 .meta-feature-art { background: #e6e7df; color: var(--navy); padding: 18px 22px 0; overflow: hidden; }
@@ -211,7 +211,7 @@ summary::-webkit-details-marker { display: none; }
 .motion-control:hover { background: var(--soft); }
 
 /* A faixa conserva as logos originais do Drive e a leitura do componente de referência. */
-.brand-strip { border-block: 1px solid var(--line); background: var(--paper); padding-block: clamp(64px, 8vw, 110px); }
+.brand-strip { border-block: 1px solid var(--line); background: var(--white); padding-block: clamp(64px, 8vw, 110px); }
 .brand-strip-heading { text-align: center; margin-bottom: 30px; }
 .brand-strip-heading .eyebrow { justify-content: center; margin-bottom: 18px; }
 .brand-strip-heading h2 { font-size: clamp(27px, 3.5vw, 43px); line-height: 1.2; }
@@ -314,8 +314,9 @@ summary::-webkit-details-marker { display: none; }
 .breadcrumb a { text-decoration: underline; text-underline-offset: 4px; padding-block: 10px; }
 .page-intro { padding-block: 44px 60px; }
 .page-intro h1 { max-width: 1000px; }
-.eyewear-intro { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, .75fr); align-items: center; gap: clamp(24px, 4vw, 64px); }
-.eyewear-photo-space { aspect-ratio: 16 / 10; background: var(--soft); border: 1px solid var(--line); }
+.eyewear-intro { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr); align-items: center; gap: clamp(24px, 4vw, 64px); }
+.eyewear-photo-space { aspect-ratio: 16 / 10; overflow: hidden; background: var(--white); }
+.eyewear-photo-space img { width: 100%; height: 100%; object-fit: cover; object-position: center; }
 .lede { margin-top: 26px; margin-bottom: 0; max-width: 64ch; font-size: 17px; }
 .catalog-section { padding-bottom: var(--section-space); }
 .catalog-listing { border-top: 1px solid var(--line); padding-top: 32px; }
@@ -589,7 +590,7 @@ html:not(.js) .catalog-toolbar { display: none; }
   .page-intro { padding-block: 32px 38px; }
   .page-intro h1 { font-size: 45px; }
   .eyewear-intro, .carousel-layout { grid-template-columns: 1fr; }
-  .eyewear-photo-space { aspect-ratio: 16 / 7; }
+  .eyewear-photo-space { aspect-ratio: 16 / 10; }
   .carousel-controls { justify-content: flex-start; }
   .lede { font-size: 16px; margin-top: 22px; }
   .catalog-editorial, .lens-editorial, .history-spread, .contact-layout { grid-template-columns: 1fr; gap: 35px; }
@@ -783,7 +784,7 @@ body[data-page="lentes"] .section { padding-block: clamp(44px, 5vw, 72px); }
 .lens-brand-mark img[src$="zeiss.png"] { transform: scale(1.15); }
 .lens-select-banner { background: var(--navy); color: white; padding-block: clamp(48px, 6vw, 82px); }
 .lens-select-banner .eyebrow, .lens-select-banner p { color: var(--paper); }
-.lens-select-banner em { color: #ffb7b9; }
+.lens-select-banner em { color: var(--red); }
 .lens-select-banner h2 { max-width: 830px; }
 .lens-select-banner p:last-child { margin: 25px 0 0; }
 .lens-certificate { display: grid; grid-template-columns: .7fr 1.3fr; gap: 50px; align-items: center; border-top: 1px solid var(--line); }

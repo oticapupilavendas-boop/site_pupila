@@ -107,7 +107,7 @@ for (const [route, page] of Object.entries(pages)) {
   <link rel="preload" as="image" href="${prefix}assets/image-04.webp" imagesrcset="${prefix}assets/image-04-480.webp 480w, ${prefix}assets/image-04-768.webp 768w, ${prefix}assets/image-04.webp 1152w" imagesizes="90vw" media="(max-width: 650px)" fetchpriority="high">
   <link rel="preload" as="image" href="${prefix}assets/models/timberland-solar-poster.png?v=2" media="(min-width: 651px)" fetchpriority="high">` : ''}
   <script defer src="${prefix}assets/routes.js"></script>
-  <script src="${prefix}assets/app.js"></script>${route === 'index.html' ? `\n  <script defer src="${prefix}assets/sunglasses.js?v=7"></script>` : ''}
+  <script src="${prefix}assets/app.js"></script>${route === 'index.html' ? `\n  <script defer src="${prefix}assets/sunglasses.js?v=8"></script>` : ''}
 </head>
 <body data-root="${prefix}" data-page="${route.split('/')[0].replace('.html', '')}">
   <div id="pupila-app">${content}</div>

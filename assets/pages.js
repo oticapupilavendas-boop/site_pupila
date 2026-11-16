@@ -255,6 +255,7 @@ const existing = {
 <div>
 <h2>Nosso endereço</h2>
 <p>Rua Abdon Batista, 59<br>Centro · Joinville/SC</p>
+<a href="https://www.google.com/maps/dir/?api=1&amp;destination=%C3%93tica%20Pupila%2C%20Rua%20Abdon%20Batista%2C%2059%2C%20Centro%2C%20Joinville%20-%20SC%2C%2089201-010&amp;dir_action=navigate" class="button accent" target="_blank" rel="noreferrer">Como chegar <svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 18 18 6M6 6h12v12"/></svg></a>
 </div>
 </div>
 <div class="contact-item">
@@ -471,9 +472,8 @@ ${autoplay ? `<button class="motion-control" type="button" data-motion-toggle ar
 </details>
         <details class="nav-group nav-about">
 <summary>A Pupila ${icon('chevron')}</summary>
-<div class="submenu">${link('nossa-historia', 'Nossa história')}${link('perguntas-frequentes', 'Perguntas frequentes')}</div>
+<div class="submenu">${link('nossa-historia', 'Nossa história')}${link('visioffice-3', 'Visioffice 3')}${link('perguntas-frequentes', 'Perguntas frequentes')}</div>
 </details>
-        ${link('visioffice-3', 'Visioffice 3', 'nav-link')}
         ${link('contato', 'Visite a loja', 'nav-link mobile-visit')}
       </nav>
       <div class="header-actions">${link('contato', `Visite a loja ${icon('diagonal')}`, 'button outline header-visit')}<button type="button" class="menu-toggle" aria-controls="main-nav" aria-expanded="false">${icon('menu')}<span>Menu</span>
@@ -637,9 +637,9 @@ ${productBrands}
   const visioffice = `${crumb('Visioffice 3')}
 <section class="wrap visioffice-hero" aria-labelledby="visioffice-title">
 <div>
-<p class="eyebrow">TECNOLOGIA ESSILOR · JOINVILLE</p>
+<p class="eyebrow">UMA DAS ÚNICAS EM JOINVILLE</p>
 <h1 id="visioffice-title">Visioffice 3 na Ótica Pupila</h1>
-<p class="visioffice-lead">Medição digital para personalizar suas lentes.</p>
+<p class="visioffice-lead">Somos uma das únicas óticas de Joinville com essa tecnologia.</p>
 <p class="lede">Na Pupila, em Joinville, usamos a torre de medição da Essilor com a armação escolhida no rosto. O Visioffice 3 registra a posição dos olhos e da armação para ajudar a definir onde as lentes devem ficar em relação às pupilas.</p>
 <a class="text-link" href="#como-funciona">Como fazemos a medição ${icon('arrow')}</a>
 </div>
@@ -754,13 +754,16 @@ ${link('lentes/essilor', `Conheça as lentes Essilor e Varilux ${icon('arrow')}`
   function eyewearCatalog(category, availableProducts, message) {
     const [route, name, description] = category;
     const brands = [...new Set(availableProducts.map(product => product.brand))].sort((a, b) => a.localeCompare(b, 'pt-BR'));
+    const editorialPhoto = route === 'oculos-de-grau'
+      ? { src: 'assets/editorial/oculos-grau-ralph-lauren.webp', alt: 'Mulher elegante usando uma armação de óculos Ralph Lauren' }
+      : { src: 'assets/editorial/oculos-sol-emporio-armani.webp', alt: 'Homem elegante usando óculos de sol azul-marinho' };
     return `${crumb(name)}<section class="page-intro eyewear-intro wrap">
 <div>
 <p class="eyebrow">NOSSA SELEÇÃO</p>
 <h1>${name}, do seu jeito.</h1>
 <p class="lede">${description} Conheça os modelos em destaque e consulte a disponibilidade com a equipe.</p>
 </div>
-<div class="eyewear-photo-space" aria-hidden="true"></div>
+<figure class="eyewear-photo-space"><img src="${editorialPhoto.src}" width="1586" height="992" alt="${editorialPhoto.alt}" loading="eager" decoding="async" fetchpriority="high"></figure>
 </section>
 <section class="wrap catalog-section catalog-listing" data-catalog data-category="${route}" aria-labelledby="catalog-title">
 <div class="catalog-heading"><div><p class="eyebrow">MODELOS EM DESTAQUE</p><h2 id="catalog-title">Escolha pelo seu olhar.</h2></div><p>Consulte modelos, cores e disponibilidade com a equipe da loja.</p></div>
