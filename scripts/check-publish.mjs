@@ -35,7 +35,8 @@ const privacy = fs.readFileSync(path.join(dist, 'privacidade/index.html'), 'utf8
 assert(privacy.includes('Empresa de teste &amp; exemplo') && privacy.includes('privacidade@example.invalid'));
 assert(!privacy.includes('Esta prévia aguarda'));
 const sitemap = fs.readFileSync(path.join(dist, 'sitemap.xml'), 'utf8');
-assert.equal((sitemap.match(/<url>/g) || []).length, 32);
+assert.equal((sitemap.match(/<url>/g) || []).length, 33);
+assert(sitemap.includes('https://example.invalid/pupila/visioffice-3/'));
 const catalogPhotos = fs.readdirSync(path.join(dist, 'assets/catalogo'), { recursive: true }).filter(file => file.endsWith('.webp'));
 assert.equal(catalogPhotos.length, 54, 'quantidade inesperada de fotos WebP do catálogo no pacote');
 assert(!sitemap.includes('404.html') && !sitemap.includes('/marcas/'));

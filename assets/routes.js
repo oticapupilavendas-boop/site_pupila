@@ -6,6 +6,7 @@ window.PUPILA_ROUTES = {
   "privacidade/index.html": "privacidade/",
   "404.html": "404.html",
   "index.html": "",
+  "visioffice-3/index.html": "visioffice-3/",
   "ray-ban-meta/index.html": "ray-ban-meta/",
   "oculos-de-grau/cacharel-preto-clip-on/index.html": "oculos-de-grau/cacharel-preto-clip-on/",
   "oculos-de-grau/emporio-armani-preto-clip-on/index.html": "oculos-de-grau/emporio-armani-preto-clip-on/",

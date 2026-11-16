@@ -16,7 +16,7 @@ const pages = context.window.PUPILA_PAGES;
 const products = context.window.PUPILA_DATA.products;
 const config = JSON.parse(read('site-config.json'));
 const siteBasePath = config.siteUrl ? new URL(config.siteUrl).pathname.replace(/\/$/, '') : '';
-assert(Object.keys(pages).length === 33, 'quantidade inesperada de páginas');
+assert(Object.keys(pages).length === 34, 'quantidade inesperada de páginas');
 assert(products.length === 18 && new Set(products.map(product => product.brand)).size === products.length, 'o catálogo deve ter uma armação por marca no site inteiro');
 assert(['marcas/index.html', 'marcas/modelo/index.html'].every(route => !fs.existsSync(path.join(root, route)) && !Object.hasOwn(context.window.PUPILA_ROUTES, route)), 'página de marcas ainda presente');
 const productRoutes = new Set([
@@ -119,8 +119,19 @@ assert(read('assets/site.css').includes('prefers-reduced-motion: reduce'), 'movi
 assert(read('lentes/essilor/index.html').includes('Essilor Varilux Especialista Select 2026'), 'certificação ausente');
 const home = read('index.html');
 assert(home.includes('home-select-section'), 'destaque Select ausente na home');
-assert(home.includes('testimonials-grid') && home.includes('faq-list') && !home.includes('data-carousel'), 'avaliações e FAQ da home devem manter o formato');
-assert(home.includes('class="location-map"') && home.includes('Avaliações no Google'), 'mapa ou fonte das avaliações ausente na home');
+assert(home.includes('id="avaliacoes" data-carousel data-carousel-autoplay') && home.includes('faq-list'), 'carrossel de avaliações ou FAQ ausente na home');
+assert(home.includes('class="location-map"') && home.includes('Seleção do Google'), 'mapa ou fonte das avaliações ausente na home');
+assert(home.indexOf('class="faq-list"') < home.indexOf('id="marcas-de-oculos"') && home.indexOf('id="marcas-de-oculos"') < home.indexOf('class="location-map"'), 'faixa de marcas fora da posição na home');
+const eyewearRoutes = new Set(['index.html', 'oculos-de-grau/index.html', 'oculos-de-sol/index.html', ...products.map(product => `${product.route}/index.html`)]);
+for (const route of Object.keys(pages)) {
+  const logos = [...read(route).matchAll(/<img src="[^"]*assets\/marcas\/([^"]+)"/g)].map(([, file]) => file);
+  assert(logos.length === (eyewearRoutes.has(route) ? 20 : 0) && logos.length === new Set(logos).size, `${route}: seleção de logos inesperada`);
+}
+assert(home.includes('class="hero-photo-mobile"') && home.includes('data-sunglasses') && home.includes('assets/models/timberland-solar-poster.png'), 'hero responsivo com óculos 3D ausente');
+assert(!home.includes('class="hero-model"'), 'bloco 3D redundante ainda presente na home');
+assert(fs.existsSync(path.join(root, 'assets/models/timberland-solar.glb')) && fs.statSync(path.join(root, 'assets/models/timberland-solar.glb')).size > 100000, 'modelo 3D Timberland ausente ou inválido');
+assert(read('assets/sunglasses.js').includes("'(min-width: 651px) and (hover: hover) and (pointer: fine)'"), 'modelo 3D deve carregar apenas no desktop');
+assert(!read('assets/sunglasses.js').includes('camera-controls'), 'modelo 3D não deve permitir arraste');
 assert(read('contato/index.html').includes('Falar pelo WhatsApp'), 'atendimento pelo WhatsApp ausente');
 const faqPage = read('perguntas-frequentes/index.html').split('class="wrap faq-full"')[1].split('</main>')[0];
 const faqQuestions = [...faqPage.matchAll(/<summary>([^<]+)/g)].map(([, question]) => question);

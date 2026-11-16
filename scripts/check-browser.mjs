@@ -303,7 +303,7 @@ try {
   await page.goto(base+'ray-ban-meta/');
   if(process.env.AXE_SCRIPT) {
     const violations=[];
-    for (const route of ['','oculos-de-grau/','oculos-de-sol/','ray-ban-meta/','contato/','lentes/','lentes/essilor/','privacidade/','404.html',...galleryRoutes]) {
+    for (const route of ['','oculos-de-grau/','oculos-de-sol/','ray-ban-meta/','visioffice-3/','contato/','lentes/','lentes/essilor/','privacidade/','404.html',...galleryRoutes]) {
       await page.goto(base+route);
       await page.addScriptTag({path:process.env.AXE_SCRIPT});
       const result=await page.evaluate(()=>axe.run(document,{runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21aa','wcag22aa','best-practice']}}));
@@ -316,10 +316,47 @@ try {
   await page.setViewportSize({width:1440,height:1000});
   await page.goto(base);
   await page.screenshot({path:path.join(output,'home-desktop.png'),fullPage:true});
+  await page.locator('#avaliacoes').screenshot({path:path.join(output,'avaliacoes-desktop.png')});
+  await page.locator('#marcas-de-oculos').screenshot({path:path.join(output,'marcas-desktop.png')});
+  await page.goto(base+'visioffice-3/');
+  await page.screenshot({path:path.join(output,'visioffice-desktop.png')});
   await page.setViewportSize({width:375,height:900});
+  await page.screenshot({path:path.join(output,'visioffice-mobile.png'),fullPage:true});
+  await page.goto(base);
   await page.screenshot({path:path.join(output,'home-mobile.png'),fullPage:true});
   await page.goto(base+'oculos-de-grau/');
   await page.screenshot({path:path.join(output,'categoria-mobile.png'),fullPage:true});
+  await page.setViewportSize({width:1280,height:850});
+  await page.emulateMedia({reducedMotion:'no-preference'});
+  await page.clock.install();
+  await page.goto(base);
+  const homeReviews = page.locator('#avaliacoes');
+  const reviewPosition = homeReviews.locator('[data-carousel-position]');
+  await page.clock.fastForward(8000);
+  assert.equal(await reviewPosition.textContent(), '1 / 5', 'avaliação avançou antes de aparecer');
+  await homeReviews.locator('.carousel-slides').scrollIntoViewIfNeeded();
+  await page.waitForFunction(() => document.querySelector('#avaliacoes-slides').getAttribute('aria-live') === 'off');
+  await page.clock.fastForward(8000);
+  assert.equal(await reviewPosition.textContent(), '2 / 5', 'avaliação não avançou ao ficar visível');
+  const brands = page.locator('#marcas-de-oculos');
+  const brandTrack = brands.locator('.brand-strip-track');
+  await brands.locator('.brand-strip-window').scrollIntoViewIfNeeded();
+  await page.clock.runFor(200);
+  const beforeMotion = await brandTrack.evaluate(el => new DOMMatrix(getComputedStyle(el).transform).m41);
+  await page.clock.runFor(500);
+  const afterMotion = await brandTrack.evaluate(el => new DOMMatrix(getComputedStyle(el).transform).m41);
+  const brandPeriod = await brandTrack.locator('ul').first().evaluate(el => el.getBoundingClientRect().width);
+  const brandTravel = ((afterMotion - beforeMotion) % brandPeriod + brandPeriod) % brandPeriod;
+  assert(brandTravel > 0 && brandTravel < 40, 'logos devem se mover da esquerda para a direita');
+  await brands.getByRole('button', {name:'Pausar'}).click();
+  const stopped = await brandTrack.evaluate(el => el.style.transform);
+  await page.clock.runFor(500);
+  assert.equal(await brandTrack.evaluate(el => el.style.transform), stopped, 'pausa da faixa de marcas');
+  await brands.getByRole('button', {name:'Próximos logos'}).press('Enter');
+  await page.clock.runFor(500);
+  assert.notEqual(await brandTrack.evaluate(el => el.style.transform), stopped, 'seta da faixa de marcas via teclado');
+  await page.clock.fastForward(8000);
+  assert.equal(await reviewPosition.textContent(), '2 / 5', 'avaliação avançou fora da tela');
   assert.deepEqual(errors,[],'erros de navegador/rede');
   console.log(`✓ ${layoutChecks} cenários de layout; menu, galeria, filtros, carrosséis, movimento, comparador, ${legacyRoutes.length} URLs legadas e ${routes.length} páginas sem JavaScript`);
   fs.writeFileSync(path.join(output,'browser-summary.json'),JSON.stringify({engine:process.env.BROWSER_CHANNEL||process.env.BROWSER||'chromium',layoutChecks,noJavaScript:routes.length,legacyRoutes:legacyRoutes.length,axe:Boolean(process.env.AXE_SCRIPT),navigationCancellations,errors},null,2));
