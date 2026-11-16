@@ -42,6 +42,22 @@ const descriptions = {
   '404.html': 'Encontre as páginas e os canais de atendimento da Ótica Pupila em Joinville.'
 };
 const output = new Map();
+const addExternalLinkTargets = html => html.replace(/<a\b([^>]*\bhref=")(https?:\/\/[^\"]+)("[^>]*)>/gi, (match, prefix, href, suffix) => {
+  const url = new URL(href.replaceAll('&amp;', '&'));
+  if (siteUrl && url.origin === new URL(siteUrl).origin) return match;
+  if (!/\btarget\s*=/i.test(suffix)) suffix += ' target="_blank"';
+  if (/\brel\s*=/i.test(suffix)) {
+    suffix = suffix.replace(/\brel="([^"]*)"/i, (_, rel) => {
+      const tokens = new Set(rel.split(/\s+/).filter(Boolean));
+      tokens.add('noopener');
+      tokens.add('noreferrer');
+      return `rel="${[...tokens].join(' ')}"`;
+    });
+  } else {
+    suffix += ' rel="noopener noreferrer"';
+  }
+  return `<a${prefix}${href}${suffix}>`;
+});
 for (const [route, page] of Object.entries(pages)) {
   const prefix = route === '404.html' ? (siteUrl ? new URL(siteUrl).pathname.replace(/\/?$/, '/') : '/') : '../'.repeat(route.split('/').length - 1) || './';
   const description = descriptions[route] ?? page.description;
@@ -84,7 +100,7 @@ for (const [route, page] of Object.entries(pages)) {
     : ['assets/social-pupila.jpg', 1200, 630, 'Ótica Pupila — Joinville, desde 1992'];
   const [imagePath, imageWidth, imageHeight, imageAlt] = socialImage;
   const image = siteUrl ? `${siteUrl}/${imagePath}` : '';
-  output.set(route, `<!doctype html>
+  output.set(route, addExternalLinkTargets(`<!doctype html>
 <html lang="pt-BR">
 <head>
   <meta charset="utf-8">
@@ -113,7 +129,7 @@ for (const [route, page] of Object.entries(pages)) {
   <div id="pupila-app">${content}</div>
 </body>
 </html>
-`.replace(/[ \t]+$/gm, ''));
+`.replace(/[ \t]+$/gm, '')));
 }
 output.set('assets/routes.js', `/* Gerado por scripts/build-site.mjs. */\nwindow.PUPILA_ROUTES = ${JSON.stringify(Object.fromEntries(Object.keys(pages).map(route => [route, publicPath(route)])), null, 2)};\n`);
 output.set('robots.txt', `User-agent: *\nAllow: /\n${siteUrl ? `Sitemap: ${siteUrl}/sitemap.xml\n` : ''}`);

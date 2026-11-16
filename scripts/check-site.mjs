@@ -64,10 +64,11 @@ for (const route of Object.keys(pages)) {
       if (url.origin === 'https://wa.me') {
         const message = url.searchParams.get('text');
         assert(url.pathname === '/554734223223' && message?.startsWith('Olá!') && message.length >= 50, `${route}: WhatsApp sem número ou contexto válido`);
-        assert(!attr.target, `${route}: WhatsApp deve abrir na mesma aba`);
+        assert(attr.target === '_blank' && /\bnoopener\b/.test(attr.rel || '') && /\bnoreferrer\b/.test(attr.rel || ''), `${route}: WhatsApp deve abrir em nova aba com proteção`);
       } else {
         assert(url.origin === 'https://www.google.com' && url.pathname === '/maps/dir/', `${route}: destino externo inesperado ${attr.href}`);
         assert(url.searchParams.get('api') === '1' && url.searchParams.get('dir_action') === 'navigate' && /Ótica Pupila.*Abdon Batista, 59.*Joinville/.test(url.searchParams.get('destination')), `${route}: rota da loja inválida`);
+        assert(attr.target === '_blank' && /\bnoopener\b/.test(attr.rel || '') && /\bnoreferrer\b/.test(attr.rel || ''), `${route}: link externo deve abrir em nova aba com proteção`);
       }
     }
     const refs = [attr.src, attr.href, ...(attr.srcset || '').split(',').map(value => value.trim().split(' ')[0])].filter(Boolean);
