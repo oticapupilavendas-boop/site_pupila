@@ -59,9 +59,9 @@ O navegador cobre as 33 páginas em 320, 375, 768, 901, 1024 e 1440 px. Verifica
 
 ## Preparação para publicação
 
-O domínio e a hospedagem ainda não foram escolhidos. Na prévia, não há canonical, `og:url`, `og:image` absoluto ou sitemap com domínio inventado. `robots.txt` e a imagem social de 1200 × 630 já existem.
+O domínio público configurado é `https://oticapupilajlle.com.br`. O build já gera canonical, `og:url`, `og:image`, `robots.txt`, `sitemap.xml` e o arquivo `CNAME` para o GitHub Pages.
 
-Depois de preencher `site-config.json` com os dados confirmados, execute:
+Antes de publicar, conclua o apontamento DNS e associe esse domínio nas configurações do GitHub Pages. Depois, execute:
 
 ```sh
 npm run build
@@ -69,7 +69,7 @@ npm test
 npm run build:publish
 ```
 
-Com domínio HTTPS configurado, o build emite canonical, `og:url`, `og:image` e `sitemap.xml` com as 32 páginas principais, excluindo a página 404. `build:publish` exige também todos os campos de privacidade e produz `dist/`, sem documentação interna, scripts de geração, configuração ou originais pesados. Esse comando prepara arquivos e não envia nada para uma hospedagem. A adequação da política deve ser revisada pelo responsável da empresa.
+O build emite canonical, `og:url`, `og:image` e `sitemap.xml` com as páginas principais, excluindo a página 404. `build:publish` exige também todos os campos de privacidade e produz `dist/`, sem documentação interna, scripts de geração, configuração ou originais pesados. Esse comando prepara arquivos e não envia nada para uma hospedagem. A adequação da política deve ser revisada pelo responsável da empresa.
 
 Configure o diretório publicado como `dist/` e a página de erro como `404.html`. Cabeçalhos de segurança, cache e redirecionamentos de servidor serão definidos conforme a hospedagem escolhida. Depois do deploy, conferir os canais reais da loja, o domínio HTTPS, as prévias sociais e o PageSpeed/CrUX.
 
