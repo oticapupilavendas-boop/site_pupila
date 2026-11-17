@@ -1,6 +1,6 @@
 # Pendências para concluir o site
 
-Atualizado em 10/11/2026 — Issues #12 e #21. A versão atual está em revisão no PR #22.
+Atualizado em 17/11/2026 — Issues #12, #21 e #41. A versão atual está em revisão no PR #22.
 
 ## Dados confirmados pelo proprietário em 10/11/2026
 
@@ -8,7 +8,7 @@ Atualizado em 10/11/2026 — Issues #12 e #21. A versão atual está em revisão
 - Canal de privacidade: oticapupila.adm@gmail.com.
 - Endereço da loja e empresa: Rua Abdon Batista, 59, Centro, Joinville/SC, CEP 89201-010. Telefone: (47) 3422-3223.
 - Clientes enviam receitas e fotos pelo WhatsApp. A loja guarda as conversas sem prazo definido.
-- Domínio planejado: **oticapupilajvll.com.br**. Ainda não foi comprado. O endereço público atual usa GitHub Pages em `https://oticapupilavendas-boop.github.io/site_pupila/`.
+- Domínio confirmado: **oticapupilajlle.com.br**. A configuração do site está pronta; faltam o apontamento DNS e a associação no GitHub Pages antes da ativação.
 - Hospedagem pública atual: GitHub Pages. A documentação do GitHub informa registro de IP para segurança, mas não dá à loja um prazo específico de retenção nem a localização dos servidores.
 
 As fotos da fachada e do interior usadas no site receberam coordenadas do mapa público da loja nos metadados EXIF WebP. Isso identifica o endereço do estabelecimento, não o ponto de captura de cada câmera.
@@ -42,8 +42,8 @@ Se não, número correto com DDD:
 Abri https://maps.app.goo.gl/fx92AvEfJ51patQ48 e é o perfil correto da loja: sim/não
 Se não, link correto do perfil no Google Maps:
 
-PUBLICAÇÃO — ainda não escolhidos
-Domínio desejado ou já registrado (ex.: https://...): oticapupilajvll.com.br (planejado; ainda não comprado)
+PUBLICAÇÃO
+Domínio desejado ou já registrado (ex.: https://...): oticapupilajlle.com.br (comprado; DNS e associação ao GitHub Pages pendentes)
 Serviço de hospedagem escolhido: GitHub Pages para a URL atual
 Acesso à hospedagem por convite/conector disponível: sim/não/a definir
 Link da documentação/política da hospedagem sobre dados e logs:
@@ -53,7 +53,7 @@ Prazo de retenção e finalidade dos logs, se informados pelo serviço:
 
 O CNPJ e a razão social podem ser enviados como texto ou por comprovante cadastral. O endereço legal pode ser diferente do endereço da loja; informe ambos nesse caso. Para os logs, basta inicialmente o nome do serviço e o link da política: eu verifico a documentação pública e identifico o que depender de configuração da conta.
 
-O endereço público atual do GitHub Pages já está em `site-config.json`; canonical, `og:url`, `og:image` e sitemap apontam para ele. Quando o domínio planejado for comprado e ligado à hospedagem, atualize `siteUrl` e revise novamente os dados da hospedagem e a política. O deploy segue a aprovação do PR prevista em `AGENTS.md`.
+O domínio público já está em `site-config.json`; canonical, `og:url`, `og:image` e sitemap apontam para ele. Depois de configurar o domínio nas configurações do GitHub Pages, DNS e HTTPS, revise a política de privacidade e confirme o endereço publicado. O deploy segue a aprovação do PR prevista em `AGENTS.md`.
 
 ## Só envie se quiser restaurar ou ampliar estes conteúdos
 
@@ -79,7 +79,7 @@ O endereço público atual do GitHub Pages já está em `site-config.json`; cano
 | 2 — Páginas apenas por hash | Corrigido: 18 HTML completos e URLs próprias. |
 | 3 — Categoria vazia | Corrigido: apresentação editorial e atendimento. |
 | 4 — Ano/CI | Corrigido: “Desde 1992”; testes com 2027/2028. |
-| 5 — SEO absoluto | Robots e imagem social presentes; gerador de canonical/OG/sitemap testado. Ativação aguarda domínio. |
+| 5 — SEO absoluto | Robots, imagem social, canonical, Open Graph e sitemap configurados para `oticapupilajlle.com.br`. Ativação aguarda a associação no GitHub Pages, DNS e HTTPS. |
 | 6 — Filtros | Corrigido: ocultos com menos de dois produtos; público universal corrigido. |
 | 7 — Estoque contraditório | Corrigido: retiradas as promessas de estoque. |
 | 8 — Navegação/WhatsApp sem JS | Corrigido nas 18 páginas. |
