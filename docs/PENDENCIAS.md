@@ -53,7 +53,7 @@ Prazo de retenção e finalidade dos logs, se informados pelo serviço:
 
 O CNPJ e a razão social podem ser enviados como texto ou por comprovante cadastral. O endereço legal pode ser diferente do endereço da loja; informe ambos nesse caso. Para os logs, basta inicialmente o nome do serviço e o link da política: eu verifico a documentação pública e identifico o que depender de configuração da conta.
 
-O domínio público já está em `site-config.json`; canonical, `og:url`, `og:image` e sitemap apontam para ele. O pacote de publicação também inclui `CNAME` para o GitHub Pages. Depois de configurar DNS e HTTPS, revise a política de privacidade e confirme o endereço publicado. O deploy segue a aprovação do PR prevista em `AGENTS.md`.
+O domínio público já está em `site-config.json`; canonical, `og:url`, `og:image` e sitemap apontam para ele. Depois de configurar o domínio nas configurações do GitHub Pages, DNS e HTTPS, revise a política de privacidade e confirme o endereço publicado. O deploy segue a aprovação do PR prevista em `AGENTS.md`.
 
 ## Só envie se quiser restaurar ou ampliar estes conteúdos
 
@@ -79,7 +79,7 @@ O domínio público já está em `site-config.json`; canonical, `og:url`, `og:im
 | 2 — Páginas apenas por hash | Corrigido: 18 HTML completos e URLs próprias. |
 | 3 — Categoria vazia | Corrigido: apresentação editorial e atendimento. |
 | 4 — Ano/CI | Corrigido: “Desde 1992”; testes com 2027/2028. |
-| 5 — SEO absoluto | Robots, imagem social, canonical, Open Graph, sitemap e CNAME configurados para `oticapupilajlle.com.br`. Ativação aguarda DNS e HTTPS. |
+| 5 — SEO absoluto | Robots, imagem social, canonical, Open Graph e sitemap configurados para `oticapupilajlle.com.br`. Ativação aguarda a associação no GitHub Pages, DNS e HTTPS. |
 | 6 — Filtros | Corrigido: ocultos com menos de dois produtos; público universal corrigido. |
 | 7 — Estoque contraditório | Corrigido: retiradas as promessas de estoque. |
 | 8 — Navegação/WhatsApp sem JS | Corrigido nas 18 páginas. |

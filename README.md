@@ -59,7 +59,7 @@ O navegador cobre as 33 páginas em 320, 375, 768, 901, 1024 e 1440 px. Verifica
 
 ## Preparação para publicação
 
-O domínio público configurado é `https://oticapupilajlle.com.br`. O build já gera canonical, `og:url`, `og:image`, `robots.txt`, `sitemap.xml` e o arquivo `CNAME` para o GitHub Pages.
+O domínio público configurado é `https://oticapupilajlle.com.br`. O build já gera canonical, `og:url`, `og:image`, `robots.txt` e `sitemap.xml` para esse endereço.
 
 Antes de publicar, conclua o apontamento DNS e associe esse domínio nas configurações do GitHub Pages. Depois, execute:
 

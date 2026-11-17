@@ -43,6 +43,5 @@ assert(!sitemap.includes('404.html') && !sitemap.includes('/marcas/'));
 assert(fs.existsSync(path.join(dist, 'assets/whatsapp.svg')), 'ícone de atendimento ausente no pacote');
 assert(fs.existsSync(path.join(dist, 'assets/whatsapp-solid.svg')), 'ícone flutuante ausente no pacote');
 assert(fs.readFileSync(path.join(dist, 'robots.txt'), 'utf8').includes('Sitemap: https://example.invalid/pupila/sitemap.xml'));
-assert.equal(fs.readFileSync(path.join(dist, 'CNAME'), 'utf8'), 'example.invalid\n');
 for (const file of ['site-config.json','package.json','docs','scripts','assets/catalog-products.js','assets/pages.js','assets/lens-pages.js']) assert(!fs.existsSync(path.join(dist,file)), `${file} exposto na publicação`);
 console.log('✓ Publicação: rejeita dados ausentes; gera canonical, sitemap, imagem social e política em fixture isolada');

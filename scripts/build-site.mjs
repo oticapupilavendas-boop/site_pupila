@@ -157,6 +157,5 @@ if (publish) {
     fs.copyFileSync(path.join(root, file), path.join(dist, file));
   }
   fs.cpSync(path.join(root, 'assets'), path.join(dist, 'assets'), { recursive: true, filter: file => !['catalog-products.js', 'pages.js', 'lens-pages.js', 'logo-meta.png', 'essilor-select-2026.jpeg'].includes(path.basename(file)) && !file.endsWith('.avif') });
-  if (siteUrl) fs.writeFileSync(path.join(dist, 'CNAME'), `${new URL(siteUrl).hostname}\n`);
 }
 console.log(`✓ ${Object.keys(pages).length} páginas estáticas ${check ? 'verificadas' : 'geradas'}${siteUrl ? ', SEO com domínio configurado' : '; domínio e política final pendentes'}`);
