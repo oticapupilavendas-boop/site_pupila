@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="pt-BR">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Armação Wayfarer · Prévia 3D</title>
+<link rel="icon" href="../../../assets/favicon.svg" type="image/svg+xml">
+<style>
+  :root { font: 16px/1.5 system-ui, sans-serif; color: #172b30; background: #f8f7f4; }
+  body { margin: 0; }
+  main { max-width: 62rem; margin: 2rem auto; padding: 0 1rem; }
+  h1 { margin: 0 0 1rem; font-size: clamp(1.5rem, 4vw, 2.25rem); }
+  .controls, dl { display: flex; flex-wrap: wrap; gap: .5rem; margin: 0 0 .8rem; }
+  button { font: inherit; color: inherit; background: #fff; border: 1px solid #64767b; border-radius: .3rem; padding: .42rem .72rem; cursor: pointer; }
+  button[aria-pressed="true"] { color: #fff; background: #173e48; border-color: #173e48; }
+  button:focus-visible { outline: 3px solid #984117; outline-offset: 3px; }
+  button:disabled { cursor: default; }
+  figure { margin: 0; }
+  .viewport { position: relative; background: radial-gradient(ellipse, #fff 12%, #e6e3de 100%); border: 1px solid #c8c7c2; border-radius: .5rem; }
+  canvas { width: 100%; height: clamp(13rem, 51vw, 27rem); display: block; }
+  .pivot { position: absolute; transform: translate(-50%, -50%); width: .8rem; height: .8rem; border-radius: 50%; border: 2px solid #fff; background: #ae214a; box-shadow: 0 0 0 1px #ae214a; pointer-events: none; }
+  figcaption { margin: .5rem 0 1rem; }
+  dl { gap: .5rem 1.5rem; }
+  dt { font-size: .88rem; }
+  dd { margin: 0; font-weight: 650; font-variant-numeric: tabular-nums; }
+</style>
+<main>
+  <h1>Armação Wayfarer · Prévia 3D</h1>
+  <div class="controls" role="group" aria-label="Vistas ortográficas">
+    <button type="button" data-view="front" aria-pressed="true" disabled>Frontal</button>
+    <button type="button" data-view="side" aria-pressed="false" disabled>Lateral</button>
+    <button type="button" data-view="back" aria-pressed="false" disabled>Traseira</button>
+    <button type="button" data-view="quarter" aria-pressed="false" disabled>Três quartos</button>
+    <button type="button" id="show-pivot" aria-pressed="true" disabled>Mostrar pivô</button>
+  </div>
+  <figure>
+    <div class="viewport">
+      <canvas role="img" aria-label="Armação preta de acetato com lentes escuras, hastes abertas e pivô na ponte"></canvas>
+      <span class="pivot" aria-hidden="true" hidden></span>
+    </div>
+    <figcaption id="status" role="status">Carregando o modelo…</figcaption>
+  </figure>
+  <dl>
+    <div><dt>Arquivo</dt><dd id="size">—</dd></div>
+    <div><dt>Triângulos</dt><dd id="triangles">—</dd></div>
+    <div><dt>Largura</dt><dd id="width">—</dd></div>
+    <div><dt>Pivô</dt><dd>0, 0, 0 · ponte</dd></div>
+    <div><dt>Frente / vertical</dt><dd>+Z / +Y</dd></div>
+  </dl>
+  <noscript>Ative o JavaScript para inspecionar o modelo.</noscript>
+</main>
+<script>
+  if (location.protocol === 'file:') {
+    document.querySelector('#status').textContent = 'Sirva a pasta repo com python -m http.server 8768 e abra http://localhost:8768/docs/previews/wayfarer-3d/.';
+  } else {
+    import('./preview.mjs');
+  }
+</script>
+</html>
