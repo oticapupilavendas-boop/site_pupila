@@ -120,7 +120,7 @@
   (async () => {
     try {
       if (!customElements.get('model-viewer')) {
-        await import('https://cdn.jsdelivr.net/npm/@google/model-viewer@4.4.0/dist/model-viewer.min.js');
+        await import('./vendor/model-viewer-4.4.0.min.js');
       }
     } catch {
       fallback();
