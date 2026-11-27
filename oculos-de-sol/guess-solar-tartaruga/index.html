@@ -22,8 +22,14 @@
   <link rel="stylesheet" href="../../assets/site.css?v=3">
   <link rel="preload" as="font" href="../../assets/fonts/dm-sans-latin.woff2" type="font/woff2" crossorigin>
 
+  <script>
+    document.documentElement.classList.add('js');
+    document.addEventListener('error', event => {
+      if (event.target instanceof HTMLScriptElement && event.target.hasAttribute('data-pupila-app')) document.documentElement.classList.remove('js');
+    }, true);
+  </script>
   <script defer src="../../assets/routes.js"></script>
-  <script src="../../assets/app.js"></script>
+  <script defer data-pupila-app src="../../assets/app.js"></script>
 </head>
 <body data-root="../../" data-page="oculos-de-sol">
   <div id="pupila-app">
@@ -39,7 +45,7 @@
     <header class="site-header">
 <div class="header-main wrap">
       <a href="../../" class="brand" aria-label="Ótica Pupila — início">
-<img src="../../assets/image-01.webp" width="650" height="318" alt="Ótica Pupila" class="brand-logo" decoding="async">
+<img src="../../assets/image-01.webp" width="650" height="318" alt="Ótica Pupila" class="brand-logo" decoding="async" fetchpriority="high">
 </a>
       <nav id="main-nav" class="main-nav" aria-label="Navegação principal">
         <a href="../../" class="nav-link">Início</a>
@@ -92,7 +98,7 @@
 </div>
     <div class="product-page-heading">
 <p class="eyebrow">ÓCULOS DE SOL</p>
-<h1 id="product-title">Guess</h1>
+<h1 id="product-title">Guess<span class="heading-location">Sua ótica em Joinville</span></h1>
 <p>Óculos de sol Guess com armação tartaruga âmbar de cantos elevados, lentes marrons em degradê e monograma metálico nas hastes.</p>
 <a class="button primary" href="https://wa.me/554734223223?text=Ol%C3%A1!%20Vi%20os%20%C3%B3culos%20de%20sol%20Guess%20no%20site%20da%20Pupila.%20Qual%20o%20pre%C3%A7o%20e%20a%20disponibilidade%3F" rel="noreferrer noopener" target="_blank">Quero conhecer de perto<svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
 <path d="M4 12h16M13 5l7 7-7 7"/>
