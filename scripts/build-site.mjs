@@ -24,11 +24,11 @@ const pages = context.window.PUPILA_PAGES;
 const escape = value => String(value).replaceAll('&', '&amp;').replaceAll('"', '&quot;').replaceAll('<', '&lt;').replaceAll('>', '&gt;');
 const publicPath = route => route === 'index.html' ? '' : route.replace(/index\.html$/, '');
 const descriptions = {
-  'index.html': 'Óculos de grau e de sol, lentes, relógios e semijoias. Conheça a Ótica Pupila, no Centro de Joinville, desde 1992.',
+  'index.html': 'Sua ótica em Joinville desde 1992. Conheça óculos de grau e de sol, lentes, relógios e semijoias da Pupila, no Centro. Consulte nossa equipe.',
   'contato/index.html': 'Visite a Ótica Pupila na Rua Abdon Batista, 59, Centro de Joinville. Consulte endereço, horários, telefone e atendimento pelo WhatsApp.',
   'nossa-historia/index.html': 'Conheça a história da Ótica Pupila, em Joinville desde 1992, e o cuidado da equipe na escolha de óculos, lentes e acessórios.',
   'perguntas-frequentes/index.html': 'Tire dúvidas sobre limpeza, conservação, proteção UV e escolha de óculos e lentes com as orientações da Ótica Pupila.',
-  'privacidade/index.html': 'Saiba como funciona o site da Ótica Pupila e como entrar em contato sobre privacidade.',
+  'privacidade/index.html': 'Conheça as informações de privacidade da Ótica Pupila: funcionamento do site, mapas, atendimento pelo WhatsApp e canal para solicitações sobre seus dados.',
   'oculos-de-grau/index.html': 'Conheça a seleção de óculos de grau da Ótica Pupila em Joinville. Consulte armações, lentes e disponibilidade com nossa equipe.',
   'oculos-de-sol/index.html': 'Explore a seleção de óculos de sol da Ótica Pupila em Joinville. Filtre por marca e público e consulte a disponibilidade.',
   'relogios/index.html': 'Explore relógios Orient, Lince e X-Games na Ótica Pupila, em Joinville. Veja os detalhes de cada peça e consulte preço e disponibilidade com a loja.',
@@ -122,8 +122,14 @@ for (const [route, page] of Object.entries(pages)) {
   ${route === 'index.html' ? `<link rel="preload" as="font" href="${prefix}assets/fonts/cormorant-garamond-italic-latin.woff2" type="font/woff2" crossorigin>
   <link rel="preload" as="image" href="${prefix}assets/image-04.webp" imagesrcset="${prefix}assets/image-04-480.webp 480w, ${prefix}assets/image-04-768.webp 768w, ${prefix}assets/image-04.webp 1152w" imagesizes="90vw" media="(max-width: 650px)" fetchpriority="high">
   <link rel="preload" as="image" href="${prefix}assets/models/timberland-solar-poster.png?v=2" media="(min-width: 651px)" fetchpriority="high">` : ''}
+  <script>
+    document.documentElement.classList.add('js');
+    document.addEventListener('error', event => {
+      if (event.target instanceof HTMLScriptElement && event.target.hasAttribute('data-pupila-app')) document.documentElement.classList.remove('js');
+    }, true);
+  </script>
   <script defer src="${prefix}assets/routes.js"></script>
-  <script src="${prefix}assets/app.js"></script>${route === 'index.html' ? `\n  <script defer src="${prefix}assets/sunglasses.js?v=8"></script>` : ''}
+  <script defer data-pupila-app src="${prefix}assets/app.js"></script>${route === 'index.html' ? `\n  <script defer src="${prefix}assets/sunglasses.js?v=8"></script>` : ''}
 </head>
 <body data-root="${prefix}" data-page="${route.split('/')[0].replace('.html', '')}">
   <div id="pupila-app">${content}</div>

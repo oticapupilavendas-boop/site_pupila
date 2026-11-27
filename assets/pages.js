@@ -207,7 +207,7 @@ const existing = {
 </nav>
 <section class="page-intro wrap">
 <p class="eyebrow">JOINVILLE · DESDE 1992</p>
-<h1>Uma história de confiança.</h1>
+<h1>Uma história de confiança.<span class="heading-location">Sua ótica em Joinville</span></h1>
 <p class="lede">Conheça um pouco da nossa trajetória e do espaço onde recebemos você.</p>
 </section>
 <section class="wrap history-spread">
@@ -243,7 +243,7 @@ const existing = {
 </nav>
 <section class="page-intro wrap">
 <p class="eyebrow">ESTAMOS POR PERTO</p>
-<h1>Vamos conversar?</h1>
+<h1>Vamos conversar?<span class="heading-location">Sua ótica em Joinville</span></h1>
 <p class="lede">Visite nossa loja ou entre em contato. Será um prazer receber você.</p>
 </section>
 <section class="wrap contact-layout">
@@ -317,7 +317,7 @@ content: `<nav class="breadcrumb wrap" aria-label="Caminho da página">
 </nav>
 <section class="page-intro wrap">
 <p class="eyebrow">CLAREZA PARA ESCOLHER</p>
-<h1>Perguntas frequentes.</h1>
+<h1>Perguntas frequentes.<span class="heading-location">Sua ótica em Joinville</span></h1>
 <p class="lede">${faqTotal} respostas sobre óculos, lentes, acessórios e atendimento.</p>
 </section>
 <div class="wrap faq-full">
@@ -336,14 +336,14 @@ ${faqTopics.map(topic => `<section class="faq-group" aria-labelledby="${topic.id
 </nav>
 <section class="page-intro wrap">
 <p class="eyebrow">TRANSPARÊNCIA</p>
-<h1>Política de privacidade.</h1>
+<h1>Política de privacidade.<span class="heading-location">Sua ótica em Joinville</span></h1>
 <p class="lede">Informações sobre o funcionamento desta versão do site.</p>
 </section>
 <article class="wrap prose"><p>Esta prévia aguarda os dados oficiais da empresa e da hospedagem para concluir a política de privacidade.</p></article>` },
 
 "404.html": { title: "Página não encontrada | Ótica Pupila", content: `<section class="page-intro wrap">
 <p class="eyebrow">404</p>
-<h1>Vamos encontrar o caminho.</h1>
+<h1>Vamos encontrar o caminho.<span class="heading-location">Sua ótica em Joinville</span></h1>
 <p class="lede">A página que você procura não está disponível.</p>
 </section>
 <div class="wrap section-tight">
@@ -465,7 +465,7 @@ ${autoplay ? `<button class="motion-control" type="button" data-motion-toggle ar
     <header class="site-header">
 <div class="header-main wrap">
       <a href="#/index.html" class="brand" aria-label="Ótica Pupila — início">
-<img src="assets/image-01.webp" width="650" height="318" alt="Ótica Pupila" class="brand-logo" decoding="async">
+<img src="assets/image-01.webp" width="650" height="318" alt="Ótica Pupila" class="brand-logo" decoding="async" fetchpriority="high">
 </a>
       <nav id="main-nav" class="main-nav" aria-label="Navegação principal">
         <a href="#/index.html" class="nav-link">Início</a>
@@ -527,8 +527,7 @@ ${autoplay ? `<button class="motion-control" type="button" data-motion-toggle ar
       <div class="hero-copy">
 <p class="eyebrow">ÓTICA PUPILA · DESDE 1992</p>
 <h1 id="hero-title">Um novo olhar.<br>A mesma<br>
-<em>confiança.</em>
-</h1>
+<em>confiança.</em><span class="heading-location">Sua ótica em Joinville</span></h1>
 <p class="hero-description">O estilo é seu. O cuidado é nosso.<br>Óculos, relógios e semijoias para acompanhar<br class="desktop-break"> quem você é, em cada momento.</p>
 <div class="hero-buttons">
 <a href="#/index.html#categorias" class="button primary">Encontre seu estilo</a>${chat('Converse com a gente', homeMessage, 'button accent')}</div>
@@ -641,7 +640,7 @@ ${productBrands}
 <section class="wrap visioffice-hero" aria-labelledby="visioffice-title">
 <div>
 <p class="eyebrow">UMA DAS ÚNICAS EM JOINVILLE</p>
-<h1 id="visioffice-title">Visioffice 3 na Ótica Pupila</h1>
+<h1 id="visioffice-title">Visioffice 3 na Ótica Pupila<span class="heading-location">Sua ótica em Joinville</span></h1>
 <p class="visioffice-lead">Somos uma das únicas óticas de Joinville com essa tecnologia.</p>
 <p class="lede">Na Pupila, em Joinville, usamos a torre de medição da Essilor com a armação escolhida no rosto. O Visioffice 3 registra a posição dos olhos e da armação para ajudar a definir onde as lentes devem ficar em relação às pupilas.</p>
 <a class="text-link" href="#como-funciona">Como fazemos a medição ${icon('arrow')}</a>
@@ -763,7 +762,7 @@ ${link('lentes/essilor', `Conheça as lentes Essilor e Varilux ${icon('arrow')}`
     return `${crumb(name)}<section class="page-intro eyewear-intro wrap">
 <div>
 <p class="eyebrow">NOSSA SELEÇÃO</p>
-<h1>${name}, do seu jeito.</h1>
+<h1>${name}, do seu jeito.<span class="heading-location">Sua ótica em Joinville</span></h1>
 <p class="lede">${description} Conheça os modelos em destaque e consulte a disponibilidade com a equipe.</p>
 </div>
 <figure class="eyewear-photo-space"><img src="${editorialPhoto.src}" width="1586" height="992" alt="${editorialPhoto.alt}" loading="eager" decoding="async" fetchpriority="high"></figure>
@@ -821,7 +820,7 @@ ${brands.map(brand => `<button type="button" data-catalog-brand-option="${brand}
 </article>`;
   const watchPage = `${crumb('Relógios')}
 <section class="watch-hero wrap" aria-labelledby="watch-title">
-<div class="watch-hero-copy"><p class="eyebrow">RELÓGIOS · SELEÇÃO PUPILA</p><h1 id="watch-title">O tempo também tem <em>estilo.</em></h1>
+<div class="watch-hero-copy"><p class="eyebrow">RELÓGIOS · SELEÇÃO PUPILA</p><h1 id="watch-title">O tempo também tem <em>estilo.</em><span class="heading-location">Sua ótica em Joinville</span></h1>
 <p class="lede">Descubra relógios Orient, Lince e X-Games na Ótica Pupila, em Joinville. Explore formatos e acabamentos, depois consulte a peça escolhida com nossa equipe.</p>
 <a class="text-link" href="#colecao-relogios">Explorar a seleção ${icon('arrow')}</a></div>
 <figure class="watch-hero-photo"><img src="assets/relogios/orient-18.webp" width="720" height="960" alt="Relógio Orient automático prateado com mostrador verde" fetchpriority="high" decoding="async"><figcaption>Três marcas. Muitos jeitos de acompanhar o dia.</figcaption></figure>
@@ -847,7 +846,7 @@ ${watchBrands.map((brand, i) => `<section class="watch-chapter" id="relogios-${b
 <section class="jewelry-hero wrap" aria-labelledby="jewelry-title">
 <div class="jewelry-hero-copy">
 <p class="eyebrow">SEMIJOIAS · SELEÇÃO PUPILA</p>
-<h1 id="jewelry-title">Detalhes que combinam com <em>você.</em></h1>
+<h1 id="jewelry-title">Detalhes que combinam com <em>você.</em><span class="heading-location">Sua ótica em Joinville</span></h1>
 <p class="lede">Na Pupila, você também encontra semijoias para presentear, combinar e usar todos os dias.</p>
 <a class="text-link" href="#tipos-semijoias">Conheça as opções ${icon('arrow')}</a>
 </div>
@@ -883,8 +882,7 @@ ${jewelryItems.map(([number, name, description]) => `<li><span class="jewelry-nu
     const accessories = route === 'relogios';
     return `${crumb(name)}<section class="page-intro wrap">
 <p class="eyebrow">NOSSA SELEÇÃO</p>
-<h1>${name}, do seu jeito.
-</h1>
+<h1>${name}, do seu jeito.<span class="heading-location">Sua ótica em Joinville</span></h1>
 <p class="lede">${description} Conheça de perto as opções da Pupila, com atenção aos detalhes e orientação em cada escolha.</p>
 </section>
 <section class="wrap catalog-section">
@@ -906,6 +904,7 @@ ${availableProducts.length ? `<div class="catalog-grid">${availableProducts.map(
 </section>`;
   }
   function productPage(product, message) {
+    const model = product.modelDetail || product.facts.find(([term]) => term === 'Modelo')?.[1];
     const catalogCategory = categories.find(([route]) => route === product.categories[0]);
     const facts = `<dl class="product-facts">${product.facts.map(([term, detail]) => `<div><dt>${term}</dt><dd>${detail}</dd></div>`).join('')}</dl>`;
     const help = product.slug === 'ray-ban-meta' ? productHelp('ray-ban-meta', 'oculos-de-grau') : productHelp(catalogCategory[0], 'cuidados');
@@ -925,7 +924,7 @@ ${availableProducts.length ? `<div class="catalog-grid">${availableProducts.map(
 </div>
     <div class="product-page-heading">
 <p class="eyebrow">${product.eyebrow || product.label}</p>
-<h1 id="product-title">${product.brand}</h1>
+<h1 id="product-title">${product.brand}${model ? ` ${model}` : ''}<span class="heading-location">Sua ótica em Joinville</span></h1>
 <p>${product.description}</p>
 ${chat('Quero conhecer de perto', message)}<p class="availability-note">Tamanho, preço e disponibilidade sob consulta à loja.</p>
 ${link(catalogCategory[0], `Voltar para ${catalogCategory[1].toLowerCase()}`, 'text-link')}

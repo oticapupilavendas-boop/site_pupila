@@ -4,12 +4,12 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#123442">
-  <meta name="description" content="Saiba como funciona o site da Ótica Pupila e como entrar em contato sobre privacidade.">
+  <meta name="description" content="Conheça as informações de privacidade da Ótica Pupila: funcionamento do site, mapas, atendimento pelo WhatsApp e canal para solicitações sobre seus dados.">
 
   <meta property="og:type" content="website">
   <meta property="og:locale" content="pt_BR">
   <meta property="og:title" content="Política de privacidade | Ótica Pupila">
-  <meta property="og:description" content="Saiba como funciona o site da Ótica Pupila e como entrar em contato sobre privacidade.">
+  <meta property="og:description" content="Conheça as informações de privacidade da Ótica Pupila: funcionamento do site, mapas, atendimento pelo WhatsApp e canal para solicitações sobre seus dados.">
   <meta name="twitter:card" content="summary_large_image">
   <link rel="canonical" href="https://oticapupilajlle.com.br/privacidade/">
   <meta property="og:url" content="https://oticapupilajlle.com.br/privacidade/">
@@ -22,8 +22,14 @@
   <link rel="stylesheet" href="../assets/site.css?v=3">
   <link rel="preload" as="font" href="../assets/fonts/dm-sans-latin.woff2" type="font/woff2" crossorigin>
 
+  <script>
+    document.documentElement.classList.add('js');
+    document.addEventListener('error', event => {
+      if (event.target instanceof HTMLScriptElement && event.target.hasAttribute('data-pupila-app')) document.documentElement.classList.remove('js');
+    }, true);
+  </script>
   <script defer src="../assets/routes.js"></script>
-  <script src="../assets/app.js"></script>
+  <script defer data-pupila-app src="../assets/app.js"></script>
 </head>
 <body data-root="../" data-page="privacidade">
   <div id="pupila-app">
@@ -39,7 +45,7 @@
     <header class="site-header">
 <div class="header-main wrap">
       <a href="../" class="brand" aria-label="Ótica Pupila — início">
-<img src="../assets/image-01.webp" width="650" height="318" alt="Ótica Pupila" class="brand-logo" decoding="async">
+<img src="../assets/image-01.webp" width="650" height="318" alt="Ótica Pupila" class="brand-logo" decoding="async" fetchpriority="high">
 </a>
       <nav id="main-nav" class="main-nav" aria-label="Navegação principal">
         <a href="../" class="nav-link">Início</a>
@@ -72,7 +78,7 @@
 </nav>
 <section class="page-intro wrap">
 <p class="eyebrow">TRANSPARÊNCIA</p>
-<h1>Política de privacidade.</h1>
+<h1>Política de privacidade.<span class="heading-location">Sua ótica em Joinville</span></h1>
 <p class="lede">Informações sobre o funcionamento desta versão do site.</p>
 </section>
 <article class="wrap prose"><p>Atualizada em 10/11/2026.</p><h2>Responsável pelo site</h2><p>Ótica Pupila Ltda · CNPJ 85.346.955/0001-58.<br>Rua Abdon Batista, 59, Centro, Joinville/SC, CEP 89201-010.</p>

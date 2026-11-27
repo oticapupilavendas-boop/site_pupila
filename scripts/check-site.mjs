@@ -27,15 +27,24 @@ const productRoutes = new Set([
 assert(context.window.PUPILA_META_VIEWS.length === 6, 'a galeria deve oferecer seis ângulos');
 let imageCount = 0;
 const titles = new Set();
+const descriptions = new Set();
+const internalLinks = new Map();
 for (const route of Object.keys(pages)) {
   const source = read(route);
   const ids = [...source.matchAll(/\bid="([^"]+)"/g)].map(([, id]) => id);
   const pageDir = path.dirname(path.join(root, route));
+  const destinations = new Set();
+  internalLinks.set(route, destinations);
   assert(source.startsWith('<!doctype html>'), `${route}: doctype ausente`);
   assert(source.includes('<html lang="pt-BR">'), `${route}: idioma ausente`);
   assert(source.includes('name="viewport"'), `${route}: viewport ausente`);
   assert(new Set(ids).size === ids.length, `${route}: IDs duplicados`);
   assert((source.match(/<h1\b/g) || []).length === 1, `${route}: deve haver um h1 no HTML`);
+  const headings = [...source.matchAll(/<h([1-6])\b[^>]*>([\s\S]*?)<\/h\1>/g)];
+  const headingText = headings[0]?.[2].replace(/<[^>]+>/g, ' ');
+  assert(/ótica em Joinville/i.test(headingText || ''), `${route}: h1 sem intenção local`);
+  assert(!/aria-hidden="true"|class="(?:sr-only|visually-hidden)"/.test(headings[0]?.[0] || ''), `${route}: h1 local deve ser visível`);
+  assert(headings.every((heading, index) => !index || Number(heading[1]) <= Number(headings[index - 1][1]) + 1), `${route}: salto de nível nos headings`);
   assert((source.match(/<main\b/g) || []).length === 1, `${route}: deve haver um main`);
   assert(source.includes('id="conteudo" tabindex="-1"'), `${route}: destino do skip link ausente`);
   assert(!source.includes('pupila-asset:') && !source.includes('data:image/'), `${route}: imagem inválida`);
@@ -47,6 +56,12 @@ for (const route of Object.keys(pages)) {
   titles.add(title);
   const description = source.match(/<meta name="description" content="([^"]+)"/)?.[1];
   assert(description?.length > 30 && description.length <= 160, `${route}: descrição inválida`);
+  assert(!descriptions.has(description), `${route}: descrição duplicada`);
+  descriptions.add(description);
+  const canonical = [...source.matchAll(/<link rel="canonical" href="([^"]+)"/g)].map(([, href]) => href);
+  const expectedUrl = config.siteUrl ? `${config.siteUrl.replace(/\/$/, '')}/${route.replace(/index\.html$/, '')}` : '';
+  assert(route === '404.html' || !config.siteUrl ? canonical.length === 0 : canonical.length === 1 && canonical[0] === expectedUrl, `${route}: canonical divergente ou duplicado`);
+  assert(/<meta name="robots" content="noindex, follow">/.test(source) === (route === '404.html'), `${route}: diretiva de indexação inesperada`);
   if (config.siteUrl && route !== '404.html') assert(source.includes('rel="canonical"') && source.includes('property="og:image"'), `${route}: SEO absoluto ausente`);
   for (const [tag] of source.matchAll(/<(?:img|iframe|script|link|a)\b[^>]*>/g)) {
     const attr = attributes(tag);
@@ -79,6 +94,7 @@ for (const route of Object.keys(pages)) {
       let target = localPath.startsWith('/') ? path.resolve(root, `.${localPath.split('?')[0]}`) : path.resolve(pageDir, localPath.split('?')[0] || path.basename(route));
       if (!pathname) target = path.join(root, route);
       else if (pathname.endsWith('/')) target = path.join(target, 'index.html');
+      if (tag.startsWith('<a') && !fragment && target.endsWith('.html')) destinations.add(path.relative(root, target).split(path.sep).join('/'));
       assert(fs.existsSync(target), `${route}: recurso inexistente ${ref}`);
       if (fragment && fs.existsSync(target) && target.endsWith('.html')) assert(read(path.relative(root, target)).includes(`id="${fragment}"`), `${route}: âncora inexistente ${ref}`);
     }
@@ -105,7 +121,7 @@ const catalogPhotos = new Set();
 for (const product of products) {
   const route = `${product.route}/index.html`;
   const source = read(route);
-  assert(source.includes(`<h1 id="product-title">${product.brand}</h1>`) && source.includes('Ficha do modelo') && product.views.length >= 3, `${route}: marca, ficha ou ângulos ausentes`);
+  assert(source.includes(`<h1 id="product-title">${product.brand}`) && source.includes('Ficha do modelo') && product.views.length >= 3, `${route}: marca, ficha ou ângulos ausentes`);
   for (const { image, alt } of product.views) {
     if (image.startsWith('assets/catalogo/')) catalogPhotos.add(image);
     const bytes = fs.readFileSync(path.join(root, image));
@@ -169,7 +185,14 @@ assert(fs.statSync(path.join(root, 'assets/logo-meta-small.webp')).size <= 15000
 assert(fs.statSync(path.join(root, 'assets/image-03-480.webp')).size <= 120000, 'fachada móvel muito grande');
 if (config.siteUrl) {
   const sitemap = read('sitemap.xml');
+  const urls = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map(([, url]) => url);
+  const expectedUrls = Object.keys(pages).filter(route => route !== '404.html').map(route => `${config.siteUrl.replace(/\/$/, '')}/${route.replace(/index\.html$/, '')}`);
+  assert(urls.length === expectedUrls.length && new Set(urls).size === urls.length && urls.every(url => expectedUrls.includes(url)), 'sitemap deve conter exatamente as páginas canônicas, sem 404 ou duplicatas');
+  assert(read('robots.txt') === `User-agent: *\nAllow: /\nSitemap: ${config.siteUrl.replace(/\/$/, '')}/sitemap.xml\n`, 'robots deve permitir rastreamento e indicar sitemap correto');
   for (const route of Object.keys(pages).filter(route => route !== '404.html')) assert(sitemap.includes(`${config.siteUrl.replace(/\/$/,'')}/${route.replace('index.html','')}`), `${route}: ausente no sitemap`);
 } else assert(!fs.existsSync(path.join(root, 'sitemap.xml')), 'sitemap não pode inventar domínio');
+const reachable = new Set(['index.html']);
+for (const route of reachable) for (const destination of internalLinks.get(route) || []) if (Object.hasOwn(pages, destination)) reachable.add(destination);
+assert(Object.keys(pages).filter(route => route !== '404.html').every(route => reachable.has(route)), 'há página pública sem caminho de links rastreáveis a partir da home');
 if (failures.length) { console.error(failures.map(message => `✗ ${message}`).join('\n')); process.exitCode = 1; }
 else console.log(`✓ ${Object.keys(pages).length} páginas HTML, ${imageCount} imagens, metadados, links e recursos verificados`);

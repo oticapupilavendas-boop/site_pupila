@@ -22,8 +22,14 @@
   <link rel="stylesheet" href="../assets/site.css?v=3">
   <link rel="preload" as="font" href="../assets/fonts/dm-sans-latin.woff2" type="font/woff2" crossorigin>
 
+  <script>
+    document.documentElement.classList.add('js');
+    document.addEventListener('error', event => {
+      if (event.target instanceof HTMLScriptElement && event.target.hasAttribute('data-pupila-app')) document.documentElement.classList.remove('js');
+    }, true);
+  </script>
   <script defer src="../assets/routes.js"></script>
-  <script src="../assets/app.js"></script>
+  <script defer data-pupila-app src="../assets/app.js"></script>
 </head>
 <body data-root="../" data-page="lentes">
   <div id="pupila-app">
@@ -39,7 +45,7 @@
     <header class="site-header">
 <div class="header-main wrap">
       <a href="../" class="brand" aria-label="Ótica Pupila — início">
-<img src="../assets/image-01.webp" width="650" height="318" alt="Ótica Pupila" class="brand-logo" decoding="async">
+<img src="../assets/image-01.webp" width="650" height="318" alt="Ótica Pupila" class="brand-logo" decoding="async" fetchpriority="high">
 </a>
       <nav id="main-nav" class="main-nav" aria-label="Navegação principal">
         <a href="../" class="nav-link">Início</a>
@@ -65,7 +71,7 @@
 </button>
 </div>
     </div>
-</header><main id="conteudo" tabindex="-1"><nav class="breadcrumb wrap" aria-label="Caminho da página"><a href="../">Início</a><span aria-hidden="true">/</span><span aria-current="page">Lentes para óculos</span></nav><div class="lens-glasses-hero"><section class="page-intro wrap lens-page-intro lens-page-intro--illustrated"><div class="lens-intro-copy"><p class="eyebrow">LENTES PARA ÓCULOS · JOINVILLE</p><h1>Tecnologia para o seu olhar.</h1><p class="lede">Trabalhamos com as principais tecnologias de HOYA, ZEISS e Essilor. Com sua prescrição em mãos, nossa equipe ajuda você a escolher as lentes mais adequadas à sua rotina. Produtos e prazos sob consulta.</p><p class="lens-prescription"><strong>Para comprar qualquer lente, é necessária uma receita médica.</strong> Isso vale para lentes de óculos e lentes de contato. Nossa equipe ajuda na escolha do produto conforme a prescrição; a loja não realiza consulta ou adaptação médica.</p></div><div class="lens-hero-art lens-hero-art--glasses"><img src="../assets/lenses/hero-glasses-simple.webp" width="1774" height="887" alt="Imagem ilustrativa: lente transparente em destaque em uma armação preta de óculos" loading="eager" decoding="async"></div></section></div>
+</header><main id="conteudo" tabindex="-1"><nav class="breadcrumb wrap" aria-label="Caminho da página"><a href="../">Início</a><span aria-hidden="true">/</span><span aria-current="page">Lentes para óculos</span></nav><div class="lens-glasses-hero"><section class="page-intro wrap lens-page-intro lens-page-intro--illustrated"><div class="lens-intro-copy"><p class="eyebrow">LENTES PARA ÓCULOS · JOINVILLE</p><h1>Tecnologia para o seu olhar.<span class="heading-location">Sua ótica em Joinville</span></h1><p class="lede">Trabalhamos com as principais tecnologias de HOYA, ZEISS e Essilor. Com sua prescrição em mãos, nossa equipe ajuda você a escolher as lentes mais adequadas à sua rotina. Produtos e prazos sob consulta.</p><p class="lens-prescription"><strong>Para comprar qualquer lente, é necessária uma receita médica.</strong> Isso vale para lentes de óculos e lentes de contato. Nossa equipe ajuda na escolha do produto conforme a prescrição; a loja não realiza consulta ou adaptação médica.</p></div><div class="lens-hero-art lens-hero-art--glasses"><img src="../assets/lenses/hero-glasses-simple.webp" width="1774" height="887" alt="Imagem ilustrativa: lente transparente em destaque em uma armação preta de óculos" loading="eager" decoding="async"></div></section></div>
 <section class="lens-service section"><div class="wrap"><div class="lens-service-heading"><div><p class="eyebrow">COMPRA COM RECEITA MÉDICA</p><h2>Como funciona o atendimento.</h2></div><p>A equipe da Pupila orienta a escolha das lentes para óculos com base na sua prescrição. Consultas, exames e adaptação médica não são realizados na loja.</p></div><div class="lens-service-steps"><div><span>01</span><h3>Traga sua receita</h3><p>Apresente a prescrição médica para as lentes que você procura.</p></div><div><span>02</span><h3>Converse com a equipe</h3><p>Conte como usa seus óculos no trabalho, na leitura e no dia a dia.</p></div><div><span>03</span><h3>Consulte as opções</h3><p>Verificamos produtos, configurações e prazos para sua escolha.</p></div></div><a class="button primary" href="https://wa.me/554734223223?text=Ol%C3%A1!%20Vi%20as%20lentes%20para%20%C3%B3culos%20no%20site%20da%20Pupila.%20Gostaria%20de%20consultar%20op%C3%A7%C3%B5es%2C%20valores%20e%20prazos%20conforme%20a%20receita." rel="noreferrer noopener" target="_blank">Consultar minhas lentes<svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
 <path d="M4 12h16M13 5l7 7-7 7"/>
 </svg></a></div></section>

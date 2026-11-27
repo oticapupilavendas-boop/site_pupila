@@ -22,8 +22,14 @@
   <link rel="stylesheet" href="../assets/site.css?v=3">
   <link rel="preload" as="font" href="../assets/fonts/dm-sans-latin.woff2" type="font/woff2" crossorigin>
 
+  <script>
+    document.documentElement.classList.add('js');
+    document.addEventListener('error', event => {
+      if (event.target instanceof HTMLScriptElement && event.target.hasAttribute('data-pupila-app')) document.documentElement.classList.remove('js');
+    }, true);
+  </script>
   <script defer src="../assets/routes.js"></script>
-  <script src="../assets/app.js"></script>
+  <script defer data-pupila-app src="../assets/app.js"></script>
 </head>
 <body data-root="../" data-page="nossa-historia">
   <div id="pupila-app">
@@ -39,7 +45,7 @@
     <header class="site-header">
 <div class="header-main wrap">
       <a href="../" class="brand" aria-label="Ótica Pupila — início">
-<img src="../assets/image-01.webp" width="650" height="318" alt="Ótica Pupila" class="brand-logo" decoding="async">
+<img src="../assets/image-01.webp" width="650" height="318" alt="Ótica Pupila" class="brand-logo" decoding="async" fetchpriority="high">
 </a>
       <nav id="main-nav" class="main-nav" aria-label="Navegação principal">
         <a href="../" class="nav-link">Início</a>
@@ -72,7 +78,7 @@
 </nav>
 <section class="page-intro wrap">
 <p class="eyebrow">JOINVILLE · DESDE 1992</p>
-<h1>Uma história de confiança.</h1>
+<h1>Uma história de confiança.<span class="heading-location">Sua ótica em Joinville</span></h1>
 <p class="lede">Conheça um pouco da nossa trajetória e do espaço onde recebemos você.</p>
 </section>
 <section class="wrap history-spread">

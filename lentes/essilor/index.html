@@ -22,8 +22,14 @@
   <link rel="stylesheet" href="../../assets/site.css?v=3">
   <link rel="preload" as="font" href="../../assets/fonts/dm-sans-latin.woff2" type="font/woff2" crossorigin>
 
+  <script>
+    document.documentElement.classList.add('js');
+    document.addEventListener('error', event => {
+      if (event.target instanceof HTMLScriptElement && event.target.hasAttribute('data-pupila-app')) document.documentElement.classList.remove('js');
+    }, true);
+  </script>
   <script defer src="../../assets/routes.js"></script>
-  <script src="../../assets/app.js"></script>
+  <script defer data-pupila-app src="../../assets/app.js"></script>
 </head>
 <body data-root="../../" data-page="lentes">
   <div id="pupila-app">
@@ -39,7 +45,7 @@
     <header class="site-header">
 <div class="header-main wrap">
       <a href="../../" class="brand" aria-label="Ótica Pupila — início">
-<img src="../../assets/image-01.webp" width="650" height="318" alt="Ótica Pupila" class="brand-logo" decoding="async">
+<img src="../../assets/image-01.webp" width="650" height="318" alt="Ótica Pupila" class="brand-logo" decoding="async" fetchpriority="high">
 </a>
       <nav id="main-nav" class="main-nav" aria-label="Navegação principal">
         <a href="../../" class="nav-link">Início</a>
@@ -65,7 +71,7 @@
 </button>
 </div>
     </div>
-</header><main id="conteudo" tabindex="-1"><nav class="breadcrumb wrap" aria-label="Caminho da página"><a href="../../">Início</a><span aria-hidden="true">/</span><a href="../../lentes/">Lentes para óculos</a><span aria-hidden="true">/</span><span aria-current="page">Essilor</span></nav><section class="page-intro wrap lens-page-intro"><p class="eyebrow">LENTES PARA ÓCULOS · JOINVILLE</p><div class="lens-brand-heading"><div><h1>Lentes Essilor.</h1><p class="lede">Lentes e tecnologias para diferentes necessidades visuais, incluindo progressivas, soluções para a rotina digital e opções de proteção.</p></div><div class="lens-brand-mark"><img class="lens-logo" src="../../assets/lenses/essilor.png" width="504" height="250" alt="Essilor" loading="lazy" decoding="async"></div></div><p class="lens-prescription"><strong>Para comprar qualquer lente, é necessária uma receita médica.</strong> Isso vale para lentes de óculos e lentes de contato. Nossa equipe ajuda na escolha do produto conforme a prescrição; a loja não realiza consulta ou adaptação médica.</p></section>
+</header><main id="conteudo" tabindex="-1"><nav class="breadcrumb wrap" aria-label="Caminho da página"><a href="../../">Início</a><span aria-hidden="true">/</span><a href="../../lentes/">Lentes para óculos</a><span aria-hidden="true">/</span><span aria-current="page">Essilor</span></nav><section class="page-intro wrap lens-page-intro"><p class="eyebrow">LENTES PARA ÓCULOS · JOINVILLE</p><div class="lens-brand-heading"><div><h1>Lentes Essilor.<span class="heading-location">Sua ótica em Joinville</span></h1><p class="lede">Lentes e tecnologias para diferentes necessidades visuais, incluindo progressivas, soluções para a rotina digital e opções de proteção.</p></div><div class="lens-brand-mark"><img class="lens-logo" src="../../assets/lenses/essilor.png" width="504" height="250" alt="Essilor" loading="lazy" decoding="async"></div></div><p class="lens-prescription"><strong>Para comprar qualquer lente, é necessária uma receita médica.</strong> Isso vale para lentes de óculos e lentes de contato. Nossa equipe ajuda na escolha do produto conforme a prescrição; a loja não realiza consulta ou adaptação médica.</p></section>
 <section class="lens-select-banner"><div class="wrap"><p class="eyebrow">ÓTICA PUPILA · JOINVILLE</p><h2>Essilor Varilux<br><em>Especialista Select 2026.</em></h2><p>Certificação concedida pela EssilorLuxottica à Ótica Pupila de Joinville.</p><a class="text-link" href="../../visioffice-3/">Conheça a medição digital com o Visioffice 3 <span aria-hidden="true">↗</span></a></div></section>
 <section class="wrap section"><div class="section-heading lens-section-heading"><div><p class="eyebrow">FAMÍLIAS ESSILOR</p><h2>Da prescrição à sua rotina.</h2></div><p>Conheça as principais linhas com que trabalhamos.</p></div><div class="lens-family-grid lens-family-grid-three"><article class="lens-family"><span class="lens-family-number">01</span><h3>Varilux</h3><p>Lentes multifocais progressivas para visão de perto, intermediária e de longe.</p></article><article class="lens-family"><span class="lens-family-number">02</span><h3>Eyezen</h3><p>Lentes de visão simples desenvolvidas para hábitos visuais atuais.</p></article><article class="lens-family"><span class="lens-family-number">03</span><h3>Stellest</h3><p>Tecnologia para manejo da miopia infantil, conforme indicação do oftalmologista.</p></article></div></section>
 <section class="lens-needs section"><div class="wrap"><div class="section-heading lens-section-heading"><div><p class="eyebrow">TECNOLOGIAS ESSILOR</p><h2>Proteção e conforto visual.</h2></div><p>As opções dependem da lente, da prescrição e das configurações disponíveis.</p></div><div class="lens-family-grid lens-family-grid-three"><article class="lens-family"><span class="lens-family-number">04</span><h3>Crizal</h3><p>Tratamentos antirreflexo e de proteção da superfície da lente.</p></article><article class="lens-family"><span class="lens-family-number">05</span><h3>Transitions</h3><p>Lentes fotocromáticas que se adaptam às mudanças de luz.</p></article><article class="lens-family"><span class="lens-family-number">06</span><h3>Xperio</h3><p>Lentes solares polarizadas para reduzir o brilho intenso.</p></article></div></div></section>

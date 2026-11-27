@@ -4,12 +4,12 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#123442">
-  <meta name="description" content="Óculos de grau e de sol, lentes, relógios e semijoias. Conheça a Ótica Pupila, no Centro de Joinville, desde 1992.">
+  <meta name="description" content="Sua ótica em Joinville desde 1992. Conheça óculos de grau e de sol, lentes, relógios e semijoias da Pupila, no Centro. Consulte nossa equipe.">
 
   <meta property="og:type" content="website">
   <meta property="og:locale" content="pt_BR">
   <meta property="og:title" content="Ótica Pupila | Ótica em Joinville desde 1992">
-  <meta property="og:description" content="Óculos de grau e de sol, lentes, relógios e semijoias. Conheça a Ótica Pupila, no Centro de Joinville, desde 1992.">
+  <meta property="og:description" content="Sua ótica em Joinville desde 1992. Conheça óculos de grau e de sol, lentes, relógios e semijoias da Pupila, no Centro. Consulte nossa equipe.">
   <meta name="twitter:card" content="summary_large_image">
   <link rel="canonical" href="https://oticapupilajlle.com.br/">
   <meta property="og:url" content="https://oticapupilajlle.com.br/">
@@ -24,8 +24,14 @@
   <link rel="preload" as="font" href="./assets/fonts/cormorant-garamond-italic-latin.woff2" type="font/woff2" crossorigin>
   <link rel="preload" as="image" href="./assets/image-04.webp" imagesrcset="./assets/image-04-480.webp 480w, ./assets/image-04-768.webp 768w, ./assets/image-04.webp 1152w" imagesizes="90vw" media="(max-width: 650px)" fetchpriority="high">
   <link rel="preload" as="image" href="./assets/models/timberland-solar-poster.png?v=2" media="(min-width: 651px)" fetchpriority="high">
+  <script>
+    document.documentElement.classList.add('js');
+    document.addEventListener('error', event => {
+      if (event.target instanceof HTMLScriptElement && event.target.hasAttribute('data-pupila-app')) document.documentElement.classList.remove('js');
+    }, true);
+  </script>
   <script defer src="./assets/routes.js"></script>
-  <script src="./assets/app.js"></script>
+  <script defer data-pupila-app src="./assets/app.js"></script>
   <script defer src="./assets/sunglasses.js?v=8"></script>
 </head>
 <body data-root="./" data-page="index">
@@ -42,7 +48,7 @@
     <header class="site-header">
 <div class="header-main wrap">
       <a href="./" class="brand" aria-label="Ótica Pupila — início">
-<img src="./assets/image-01.webp" width="650" height="318" alt="Ótica Pupila" class="brand-logo" decoding="async">
+<img src="./assets/image-01.webp" width="650" height="318" alt="Ótica Pupila" class="brand-logo" decoding="async" fetchpriority="high">
 </a>
       <nav id="main-nav" class="main-nav" aria-label="Navegação principal">
         <a href="./" aria-current="page" class="nav-link">Início</a>
@@ -73,8 +79,7 @@
       <div class="hero-copy">
 <p class="eyebrow">ÓTICA PUPILA · DESDE 1992</p>
 <h1 id="hero-title">Um novo olhar.<br>A mesma<br>
-<em>confiança.</em>
-</h1>
+<em>confiança.</em><span class="heading-location">Sua ótica em Joinville</span></h1>
 <p class="hero-description">O estilo é seu. O cuidado é nosso.<br>Óculos, relógios e semijoias para acompanhar<br class="desktop-break"> quem você é, em cada momento.</p>
 <div class="hero-buttons">
 <a href="./#categorias" class="button primary">Encontre seu estilo</a><a class="button accent" href="https://wa.me/554734223223?text=Ol%C3%A1!%20Vi%20a%20sele%C3%A7%C3%A3o%20da%20%C3%93tica%20Pupila%20no%20site%20e%20gostaria%20de%20ajuda%20para%20escolher%20um%20produto." rel="noreferrer noopener" target="_blank">Converse com a gente<svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">

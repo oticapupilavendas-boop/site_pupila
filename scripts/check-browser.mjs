@@ -67,6 +67,8 @@ try {
       assert.equal(result.overflow,false,`${route} em ${width}px: rolagem horizontal`);
       assert.deepEqual(result.broken,[],`${route}: imagens quebradas`);
       assert.equal(result.h1,1,route);
+      assert.match(await page.locator('h1').innerText(), /ótica em Joinville/i, route);
+      assert.equal(await page.locator('h1 .heading-location').isVisible(), true, `${route} em ${width}px: intenção local invisível`);
       assert.deepEqual(result.small,[],`${route} em ${width}px: texto informativo pequeno`);
       if (route === 'oculos-de-grau/' || route === 'oculos-de-sol/') {
         const aligned = await page.locator('[data-catalog-card]').evaluateAll(cards => {
@@ -127,8 +129,10 @@ try {
   const directionsHref = await directions.getAttribute('href');
   assert.equal(await page.getByRole('link', { name: 'Centro de Joinville, SC' }).getAttribute('href'), directionsHref);
   assert.equal(new URL(directionsHref).searchParams.get('dir_action'), 'navigate');
-  await directions.click();
-  await page.waitForURL(directionsHref);
+  const [directionsPage] = await Promise.all([page.waitForEvent('popup'), directions.click()]);
+  await directionsPage.waitForURL(directionsHref);
+  assert.equal(new URL(page.url()).origin, new URL(base).origin, 'rota deve preservar o site na aba original');
+  await directionsPage.close();
   await page.goto(base+'contato/#atendimento');
   assert.equal(await page.locator('#atendimento .contact-phone').innerText(), '(47) 3422-3223');
   await page.goto(base+'ray-ban-meta/');
@@ -162,7 +166,8 @@ try {
     assert.equal(await angles.last().getAttribute('aria-pressed'),'true',route);
     assert.equal(await page.locator('.meta-gallery-count').innerText(),'03 / 03',route);
     const cta = new URL(await page.getByRole('link',{name:'Quero conhecer de perto'}).getAttribute('href'), page.url());
-    const brand = await page.locator('h1').innerText();
+    const brand = await page.locator('.breadcrumb [aria-current="page"]').innerText();
+    assert((await page.locator('h1').innerText()).startsWith(brand), `${route}: h1 sem identificação da marca`);
     assert(cta.searchParams.get('text').includes(brand) && cta.searchParams.get('text').includes(category === 'oculos-de-sol' ? 'óculos de sol' : 'armação de grau'), route);
     assert.equal(await page.locator('.floating-contact').getAttribute('href'), cta.href, route);
     const details = page.getByRole('region',{name:'Ficha do modelo'});
@@ -209,14 +214,16 @@ try {
   const clipContact = page.getByRole('link', { name: 'Quero conhecer de perto' });
   const clipHref = await clipContact.getAttribute('href');
   assert.match(new URL(clipHref).searchParams.get('text'), /Emporio Armani com clip solar.*preço.*disponibilidade/);
-  await clipContact.click();
-  await page.waitForURL(clipHref);
+  const [clipPage] = await Promise.all([page.waitForEvent('popup'), clipContact.click()]);
+  await clipPage.waitForURL(clipHref);
+  await clipPage.close();
   await page.goto(base+'oculos-de-grau/');
   const catalogContact = page.getByRole('link', { name: 'Consultar a seleção' });
   const catalogHref = await catalogContact.getAttribute('href');
   assert.match(new URL(catalogHref).searchParams.get('text'), /seleção de óculos de grau/);
-  await catalogContact.click();
-  await page.waitForURL(catalogHref);
+  const [catalogPage] = await Promise.all([page.waitForEvent('popup'), catalogContact.click()]);
+  await catalogPage.waitForURL(catalogHref);
+  await catalogPage.close();
   for (const route of legacyRoutes) {
     await page.goto(base+'#/'+route);
     await page.waitForURL(url=>!url.hash.startsWith('#/'));
@@ -268,6 +275,8 @@ try {
   for(const route of routes) {
     await plain.goto(base+route);
     assert.equal(await plain.locator('h1').count(),1);
+    assert.match(await plain.locator('h1').innerText(), /ótica em Joinville/i, route);
+    assert.equal(await plain.locator('h1 .heading-location').isVisible(), true, `${route}: intenção local invisível sem JavaScript`);
     assert.equal(await plain.locator('#main-nav').isVisible(),true,route);
     assert.equal(await plain.locator('.menu-toggle').isVisible(),false,route);
     const href=await plain.locator('.floating-contact').getAttribute('href');
@@ -316,6 +325,10 @@ try {
   await page.setViewportSize({width:1440,height:1000});
   await page.goto(base);
   await page.screenshot({path:path.join(output,'home-desktop.png'),fullPage:true});
+  await page.locator('.hero').screenshot({path:path.join(output,'home-heading-desktop.png')});
+  await page.goto(base+'ray-ban-meta/');
+  await page.locator('.product-page-heading').screenshot({path:path.join(output,'h1-ficha-desktop.png')});
+  await page.goto(base);
   await page.locator('#avaliacoes').screenshot({path:path.join(output,'avaliacoes-desktop.png')});
   await page.locator('#marcas-de-oculos').screenshot({path:path.join(output,'marcas-desktop.png')});
   await page.goto(base+'visioffice-3/');
@@ -324,6 +337,9 @@ try {
   await page.screenshot({path:path.join(output,'visioffice-mobile.png'),fullPage:true});
   await page.goto(base);
   await page.screenshot({path:path.join(output,'home-mobile.png'),fullPage:true});
+  await page.locator('.hero').screenshot({path:path.join(output,'home-heading-mobile.png')});
+  await page.goto(base+'ray-ban-meta/');
+  await page.locator('.product-page-heading').screenshot({path:path.join(output,'h1-ficha-mobile.png')});
   await page.goto(base+'oculos-de-grau/');
   await page.screenshot({path:path.join(output,'categoria-mobile.png'),fullPage:true});
   await page.setViewportSize({width:1280,height:850});

@@ -44,6 +44,7 @@ figure { margin: 0; }
 p { color: var(--muted); font-size: 16px; line-height: 1.8; margin: 0 0 22px; }
 h1, h2, h3 { margin: 0; font-weight: 500; line-height: 1.12; letter-spacing: -.055em; text-wrap: balance; }
 h1 { font-size: clamp(42px, 5.5vw, 78px); }
+.heading-location { display: block; margin-top: 18px; font-size: clamp(18px, 1.6vw, 22px); font-weight: 500; line-height: 1.4; letter-spacing: -.01em; text-wrap: pretty; }
 h2 { font-size: clamp(34px, 3.7vw, 53px); }
 h3 { font-size: 24px; letter-spacing: -.035em; }
 em { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 500; letter-spacing: -.04em; }
@@ -154,6 +155,7 @@ summary::-webkit-details-marker { display: none; }
 .meta-feature-grid { display: grid; grid-template-columns: .85fr 1.15fr; gap: 70px; align-items: center; }
 .meta-feature-copy h2 { font-size: clamp(40px, 4.2vw, 62px); margin-bottom: 22px; }
 .brand-accent { color: var(--red); }
+.meta-feature .brand-accent, .visit-cta .brand-accent { color: var(--paper); text-decoration: underline; text-decoration-color: var(--red); text-decoration-thickness: .045em; text-underline-offset: .12em; }
 .meta-feature-copy > p:not(.product-name) { color: #d1dcdb; font-size: 14px; max-width: 41ch; }
 .meta-feature-copy .button { margin-top: 8px; }
 .meta-feature-art { background: #e6e7df; color: var(--navy); padding: 18px 22px 0; overflow: hidden; }
